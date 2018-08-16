@@ -1,0 +1,15 @@
+#pager UL {
+	BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none; TEXT-TRANSFORM: uppercase; TEXT-ALIGN: center; BORDER-RIGHT-STYLE: none; MARGIN: 0px auto; DISPLAY: block
+}
+#pager UL.pages LI {
+	LIST-STYLE-TYPE: none; FONT-SIZE: 12px; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #ccc 1px solid; BORDER-BOTTOM: #ccc 1px solid; FLOAT: left; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 8px; TEXT-DECORATION: none; MARGIN: 0px 5px 0px 0px; BORDER-LEFT: #ccc 1px solid; DISPLAY: block; PADDING-RIGHT: 8px
+}
+#pager UL.pages LI:hover {
+	BORDER-TOP: #f18d66 1px solid; BORDER-RIGHT: #f18d66 1px solid; BORDER-BOTTOM: #f18d66 1px solid; COLOR: #ffffff; BORDER-LEFT: #f18d66 1px solid; BACKGROUND-COLOR: #c20000
+}
+#pager UL.pages LI.pgEmpty {
+	BORDER-TOP: #eee 1px solid; BORDER-RIGHT: #eee 1px solid; BORDER-BOTTOM: #eee 1px solid; COLOR: #eee; BORDER-LEFT: #eee 1px solid
+}
+#pager UL.pages LI.pgCurrent {
+	BORDER-TOP: #f18d66 1px solid; BORDER-RIGHT: #f18d66 1px solid; BORDER-BOTTOM: #f18d66 1px solid; FONT-WEIGHT: 700; COLOR: #fff; BORDER-LEFT: #f18d66 1px solid; BACKGROUND-COLOR: #c20000
+}

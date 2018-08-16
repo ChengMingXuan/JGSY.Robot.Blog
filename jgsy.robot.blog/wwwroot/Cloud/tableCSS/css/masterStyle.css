@@ -1,0 +1,37 @@
+﻿body {
+}
+
+  /*------------------------加载div Layer 样式----------------------------------------*/
+        .loadingLayer {
+            z-index: 1001;
+            vertical-align: 50%;
+            text-align:center;
+            height:auto;
+            line-height:50%;
+            position: absolute;
+            padding-left: 50%;
+        }
+        .white_contentLayer {
+            display: none;
+            position: absolute;
+            /*border: 1px solid lightblue;*/
+            background-color:antiquewhite; /**#CAE4F7;*/
+            z-index: 9999;
+            -moz-opacity:0.5;
+            opacity: .50;
+            filter: alpha(opacity=50);
+            vertical-align: middle;
+            top:0px;
+            text-align:center;
+        }
+ 
+        
+ /*-------------------------------------------------------------------------*/
+    .pageIndexShow {
+        display:none;  
+    }
+    .pageIndexHide {
+        display:block;
+    }
+    .errorIndex{color:red;}
+   

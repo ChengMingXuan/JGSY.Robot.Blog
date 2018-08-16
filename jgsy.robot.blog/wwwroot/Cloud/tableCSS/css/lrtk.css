@@ -1,0 +1,21 @@
+* {
+	PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; MARGIN: 0px; PADDING-RIGHT: 0px
+}
+* HTML {
+	BACKGROUND-IMAGE: url(about:blank); BACKGROUND-ATTACHMENT: fixed
+}
+#tbox {
+	HEIGHT: 73px; RIGHT: 0px; POSITION: fixed; FLOAT: right; WIDTH: 47px; _position: absolute; _bottom: auto; _margin-bottom: 10px
+}
+#jianyi {
+	CURSOR: pointer; HEIGHT: 25px; BACKGROUND: url(../imagess/suggest.png) no-repeat; POSITION: absolute; WIDTH: 47px; BOTTOM: 0px
+}
+#gotop {
+	CURSOR: pointer; HEIGHT: 47px; BACKGROUND: url(../imagess/top01.png) no-repeat; POSITION: absolute; DISPLAY: none; TOP: 0px; WIDTH: 47px
+}
+#jianyi:hover {
+	BACKGROUND: url(../imagess/suggest.png) no-repeat 0px -26px
+}
+#gotop:hover {
+	BACKGROUND: url(../imagess/top02.png) no-repeat
+}
