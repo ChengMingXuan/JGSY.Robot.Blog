@@ -37,7 +37,6 @@ F:\2018\JGSY.Robot.Blog\jgsy.robot.blog\bin\Debug\netcoreapp2.1\jgsy.robot.blog.
 F:\2018\JGSY.Robot.Blog\jgsy.robot.blog\bin\Debug\netcoreapp2.1\jgsy.robot.blog.pdb
 F:\2018\JGSY.Robot.Blog\jgsy.robot.blog\bin\Debug\netcoreapp2.1\jgsy.robot.blog.Views.dll
 F:\2018\JGSY.Robot.Blog\jgsy.robot.blog\bin\Debug\netcoreapp2.1\jgsy.robot.blog.Views.pdb
-F:\2018\JGSY.Robot.Blog\jgsy.robot.blog\obj\Debug\netcoreapp2.1\jgsy.robot.blog.csprojAssemblyReference.cache
 F:\2018\JGSY.Robot.Blog\jgsy.robot.blog\obj\Debug\netcoreapp2.1\jgsy.robot.blog.csproj.CoreCompileInputs.cache
 F:\2018\JGSY.Robot.Blog\jgsy.robot.blog\obj\Debug\netcoreapp2.1\jgsy.robot.blog.RazorAssemblyInfo.cache
 F:\2018\JGSY.Robot.Blog\jgsy.robot.blog\obj\Debug\netcoreapp2.1\jgsy.robot.blog.RazorAssemblyInfo.cs
