@@ -23,6 +23,13 @@
         .robotCenter {
             text-align: center;
         }
+
+        div.robotCenter.robotAlertUpdate {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            padding: 10px;
+        }
+       
     </style>
 </head>
 <body>
@@ -50,13 +57,18 @@
 
 
     <div class="container body-content">
-        <div class="row"><div class="col-lg-12 col-md-12 col-sm-12 robotCenter"> <label class="text-success" style="line-height:30px">博客升级中.....</label> </div> </div>
+        <div class="alert alert-success robotCenter robotAlertUpdate">
+            <a href="#" class="close" data-dismiss="alert">
+                &times;
+            </a>
+            <strong>提示！</strong> 博客升级更新中.....
+        </div>
         @RenderBody()
         <hr />
-        <footer  class="robotCenter" >
+        <footer class="robotCenter">
 
             <p>&copy; 2018 - 小萝卜儿头的博客</p>
-          
+
             <p>
                 <img src="/biao.png"> 京ICP备<a href="javascript:;">18020242</a>号
             </p>

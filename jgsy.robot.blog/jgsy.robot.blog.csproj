@@ -6,6 +6,32 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\BigData\Controllers\" />
+    <Folder Include="Areas\BigData\Data\" />
+    <Folder Include="Areas\BigData\Models\" />
+    <Folder Include="Areas\BigData\Views\" />
+    <Folder Include="Areas\DesignPatterns\Controllers\" />
+    <Folder Include="Areas\DesignPatterns\Data\" />
+    <Folder Include="Areas\DesignPatterns\Models\" />
+    <Folder Include="Areas\DesignPatterns\Views\" />
+    <Folder Include="Areas\Go\Controllers\" />
+    <Folder Include="Areas\Go\Data\" />
+    <Folder Include="Areas\Go\Models\" />
+    <Folder Include="Areas\Go\Views\" />
+    <Folder Include="Areas\NodeJs\Controllers\" />
+    <Folder Include="Areas\NodeJs\Data\" />
+    <Folder Include="Areas\NodeJs\Models\" />
+    <Folder Include="Areas\NodeJs\Views\" />
+    <Folder Include="Areas\Theory\Controllers\" />
+    <Folder Include="Areas\Theory\Data\" />
+    <Folder Include="Areas\Theory\Models\" />
+    <Folder Include="Areas\Theory\Views\" />
+    <Folder Include="Areas\Tools\Data\" />
+    <Folder Include="Areas\Tools\Models\" />
   </ItemGroup>
 
 </Project>
