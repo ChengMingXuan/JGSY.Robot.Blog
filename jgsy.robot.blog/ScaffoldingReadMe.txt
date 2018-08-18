@@ -1,5 +1,5 @@
 ﻿测试一下
-
+测试一下
 Scaffolding has generated all the files and added the required dependencies.
 
 However the Application's Startup code may required additional changes for things to work end to end.
