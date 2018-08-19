@@ -12230,11 +12230,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\2018blog\\github\\JGSY.Robot.Blog\\jgsy.robot.blog\\jgsy.robot.blog.csproj",
+      "projectUniqueName": "E:\\2018blog\\JGSY.Robot.Blog\\jgsy.robot.blog\\jgsy.robot.blog.csproj",
       "projectName": "jgsy.robot.blog",
-      "projectPath": "E:\\2018blog\\github\\JGSY.Robot.Blog\\jgsy.robot.blog\\jgsy.robot.blog.csproj",
+      "projectPath": "E:\\2018blog\\JGSY.Robot.Blog\\jgsy.robot.blog\\jgsy.robot.blog.csproj",
       "packagesPath": "C:\\Users\\jack\\.nuget\\packages\\",
-      "outputPath": "E:\\2018blog\\github\\JGSY.Robot.Blog\\jgsy.robot.blog\\obj\\",
+      "outputPath": "E:\\2018blog\\JGSY.Robot.Blog\\jgsy.robot.blog\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
