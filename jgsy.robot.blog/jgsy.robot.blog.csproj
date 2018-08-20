@@ -29,10 +29,8 @@
     <Folder Include="Areas\Go\Data\" />
     <Folder Include="Areas\Go\Models\" />
     <Folder Include="Areas\Go\Views\" />
-    <Folder Include="Areas\NodeJs\Controllers\" />
     <Folder Include="Areas\NodeJs\Data\" />
     <Folder Include="Areas\NodeJs\Models\" />
-    <Folder Include="Areas\NodeJs\Views\" />
     <Folder Include="Areas\Theory\Controllers\" />
     <Folder Include="Areas\Theory\Data\" />
     <Folder Include="Areas\Theory\Models\" />

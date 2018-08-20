@@ -1,0 +1,178 @@
+﻿
+@{
+    ViewData["Title"] = "nodejs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/robot-com.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-3 col-md-3 col-sm-3 robotLNav">
+            <div class="col-lg-12 col-md-12 col-sm-12">node js</div>
+            <div class="robotToggle">
+                <ul>
+                    <li class="active">入门了解node js</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-9 robotRNav">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5>1、入门了解node js</h5>
+                    <h6 class="text-danger">注意：Node是指node.js  js是指JavaScript。</h6>
+                    <h6 class="text-danger">注意：这里Node是安装在win10环境中。开发工具使用的vsCode</h6>
+                    <h6 class="text-danger">注意：除了vsCode（推荐） 你也可以使用WebStorm 等开发工具</h6>
+                    <h6>Node是运行在服务端的js。</h6>
+                    <h6>Node是一个基于Chrome js运行时建立的一个平台。</h6>
+                    <h6>Node是一个（异步）事件驱动I/O服务端js环境，基于Google的V8引擎，V8引擎执行js的速度非常快，性能非常好。</h6>
+                    <h6>学习该Node教程也可以帮助后端程序员部署一些高性能的服务。</h6>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5>2、node js安装</h5>
+                    <h6><a href="http://www.runoob.com/nodejs/nodejs-install-setup.html" target="_blank">参考1</a></h6>
+                    <h6><a href="https://www.w3cschool.cn/nodejs/nodejs-install-setup.html" target="_blank">参考2</a></h6>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5>3、环境变量查看 验证安装是否成功 打印 Hello world及交互模式</h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <img src="~/nodejs/20180820/node/01.jpg" />
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <img src="~/nodejs/20180820/node/1.jpg" />
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <img src="~/nodejs/20180820/node/2.jpg" />
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h6>打开终端，键入node进入命令交互模式，可以输入一条代码语句后立即执行并显示结果，例如：</h6>
+                    <img src="~/nodejs/20180820/node/3.jpg" />
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5 />4、辅助工具和一些插件安装 以便帮助我们快速开发应用</h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h6>npm: Nodejs下的包管理器。</h6>
+                    <h6>通过npm安装bower。及设置国内镜像</h6>
+                    <!--  <h6>node js自带的npm 如果不是最新的 可以自己更新一下(npm update XXX)</h6>
+        <h6> <a href="https://www.cnblogs.com/goldlong/p/8027997.html" target="_blank">npm更新及配置</a></h6>-->
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h6>用npm包管理工具下载并全局安装bower：npm install -g bower</h6>
+                    <h6>全局安装bower 后，可以查看Bower的帮助信息，使用命令：bower help</h6>
+                    <h6>初始化当前工程的bower，此操作会在当前目录下生成bower.json文件：bower init</h6>
+                    <h6>bower的使用如下</h6>
+                    <h6>
+                        a、使用了bower的项目都会在目录下有一个bower.json文件。在该文件同级目录下，使用如下命令即可安装相关依赖库：bower install  注：bower下载安装依赖库实际上是使用git进行下载。对于linux系统，由于默认都有安装git，所以一般没问题。但是windows系统一般没有git。在windows系统下需要确定安装了git客户端，建议使用同捆的git bash命令行来执行bower install命令。或者把git目录加入windows的环境变量中，再在命令行中执行bower install命令。
+                    </h6>
+                    <h6>使用bower安装某个特定类库或多个，例如jquery或bootstrap  小写： bower install jquery / bower install bootstrap或多个bower install jquery bootstrap</h6>
+                    <h6>使用bower更新 如： bower update jquery</h6>
+                    <h6>使用bower卸载 如： bower uninstall jquery （前提条件未被引用）</h6>
+                    <h6>为了方便管理 添加.bowerrc文件 设置目录。默认会安装在如 执行bower install jquery underscore bootstrap 文件会在  ./bower_components/文件夹下 </h6>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <img src="~/nodejs/20180820/node/4.jpg" />
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <img src="~/nodejs/20180820/node/5.jpg" />
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <img src="~/nodejs/20180820/node/6.jpg" />
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <img src="~/nodejs/20180820/node/7.jpg" />
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h6>临时使用：npm --registry https://registry.npm.taobao.org install express </h6>
+                    <h6>持久使用：npm config set registry https://registry.npm.taobao.org</h6>
+                    <h6>npm info express 或 npm config get registry</h6>
+                    <h6>通过cnpm使用:cnpm install express 或  npm install -g cnpm --registry=https://registry.npm.taobao.org </h6>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h6><a href="https://blog.csdn.net/chszs/article/details/50986354" target="_blank">NPM的使用</a></h6>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> 创建第一个应用</h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h6>  引入required模块：我们可以使用require指令来载入Node.js模块。</h6>
+                    <h6> 创建服务器：服务器可以监听客户端的请求，类似于Apache 、Nginx等HTTP服务器。 </h6>
+                    <h6> 接收请求与响应请求：服务器很容易创建，客户端可以使用浏览器或终端发送HTTP请求，服务器接收请求后返回响应数据。</h6>
+                    <h6>引入required模块，我们使用require指令来载入http模块，并将实例化的HTTP赋值给变量http，实例如下: demo.js文件添加如下代码</h6>
+                    <p>
+                        var http = require("http");
+                        http.createServer(function(request,respone){
+                        respone.writeHead(200,{'Content-Type':'text/plain'});
+                        respone.end("Hello World!\n");
+                        }).listen(9999);
+                        console.log("Server running at http://127.0.0.1:9999/");
+
+                        当前目录下执行：node demo.js
+                    </p>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-repl.html" target="_blank">Node.js REPL(交互式解释器)</a></h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-callback.html" target="_blank">Node.js 回调函数</a></h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-event-loop.html" target="_blank">Node.js 事件循环</a></h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-event.html" target="_blank">Node.js 事件</a></h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-buffer.html" target="_blank">Node.js Buffer(缓冲区)</a></h5>
+                </div>  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-stream.html" target="_blank">Node.js Stream(流)</a></h5>
+                </div>  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-module-system.html" target="_blank">Node.js模块系统</a></h5>
+                </div>  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-function.html" target="_blank">Node.js 函数</a></h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-router.html" target="_blank">Node.js 路由</a></h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-global-object.html" target="_blank">Node.js 全局对象</a></h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-util.html" target="_blank">Node.js 常用工具 util</a></h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-fs.html" target="_blank">Node.js 文件系统</a></h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-utitlity-module.html" target="_blank">Node.js 工具模块</a></h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-web-module.html" target="_blank">Node.js Web 模块</a></h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-express-framework.html" target="_blank">Node.js Express 框架</a></h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-restful-api.html" target="_blank">Node.js RESTful API</a></h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-process.html" target="_blank">Node.js 多进程</a></h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h5> <a href="https://www.w3cschool.cn/nodejs/nodejs-jxcore-packaging.html" target="_blank">Node.js JXcore 打包</a></h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h3>友情链接</h3>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h6><a href="http://www.runoob.com/nodejs/" target="_blank">菜鸟教程</a></h6>
+                    <h6><a href="https://www.w3cschool.cn/nodejs/" target="_blank">w3cschool参考</a></h6>
+                </div>
+            </div>
+                </div>
+            </div>
+        </div>
+
+
+
