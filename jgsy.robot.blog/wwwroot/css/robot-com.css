@@ -4,37 +4,43 @@
     padding-right: 0;
 }
 
-    .robotLNav ul {
-        margin: 0;
-        padding: 0 0 0 10px;
-        list-style: none;
-        /*border: 1px solid blue;
-            border-radius: 6px;
-            border-top-left-radius: 6px;
-            border-top-right-radius: 6px;
-            border-bottom-right-radius: 6px;
-            border-bottom-left-radius: 6px;
-            -moz-border-radius-bottomright: 6px !important;
-            -moz-border-radius-bottomleft: 6px !important;
-            -moz-border-radius-topleft: 6px;
-            -moz-border-radius-topright: 6px;
-            -webkit-border-bottom-left-radius: 6px !important;
-            -webkit-border-bottom-right-radius: 6px !important;
-            -webkit-border-top-left-radius: 6px;
-            -webkit-border-top-right-radius: 6px;*/
+.robotLNav ul {
+    margin: 0;
+    padding: 0 0 0 10px;
+    list-style: none;
+/*border: 1px solid blue;
+    border-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    -moz-border-radius-bottomright: 6px !important;
+    -moz-border-radius-bottomleft: 6px !important;
+    -moz-border-radius-topleft: 6px;
+    -moz-border-radius-topright: 6px;
+    -webkit-border-bottom-left-radius: 6px !important;
+    -webkit-border-bottom-right-radius: 6px !important;
+    -webkit-border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;*/
     }
 
-        .robotLNav ul li {
-            line-height: 22px;
-            padding-left: 10px;
-            font-size: 14px;
-        }
-
-    .robotLNav .col-lg-12, .robotLNav .col-md-12, .robotLNav .col-sm-12 {
-        line-height: 45px;
-        font-size: large;
-    }
+.robotLNav ul li {
+    line-height: 22px;
+    padding-left: 10px;
+    font-size: 14px;
+}
+.robotLNav ul li:hover {
+           cursor:pointer;
+}
+.robotLNav .col-lg-12, .robotLNav .col-md-12, .robotLNav .col-sm-12 {
+    line-height: 45px;
+    font-size: large;
+}
 
 .robotRNav img {
     width: 100%;
+}
+.active {
+   font-size:large;
+   font-weight:bold;
 }

@@ -25,6 +25,8 @@
     <Folder Include="Areas\DesignPatterns\Data\" />
     <Folder Include="Areas\DesignPatterns\Models\" />
     <Folder Include="Areas\DesignPatterns\Views\" />
+    <Folder Include="Areas\DNC\Data\" />
+    <Folder Include="Areas\DNC\Models\" />
     <Folder Include="Areas\Go\Controllers\" />
     <Folder Include="Areas\Go\Data\" />
     <Folder Include="Areas\Go\Models\" />
@@ -37,6 +39,21 @@
     <Folder Include="Areas\Theory\Views\" />
     <Folder Include="Areas\Tools\Data\" />
     <Folder Include="Areas\Tools\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\DNC\Views\DNC\DNC3.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\DNC\Views\DNC\DNC2.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\NodeJs\Views\Node\Node2.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\NodeJs\Views\Node\Node3.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>

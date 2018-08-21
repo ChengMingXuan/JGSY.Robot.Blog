@@ -1,0 +1,128 @@
+﻿
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h5>1、DNC2.1部分视图的使用实现</h5>
+        <h6>a：创建一个DNC2.1的web(模型视图控制器)程序 </h6>
+        <h6>b：创建一个Area，名称为 DNC </h6>
+        <h6>c：再创建一个控制器 DNCController,代码如下 （简简单单哈）</h6>
+        <pre>
+            [Area("DNC")]
+            public class DNCController : Controller
+            {
+                public IActionResult Index()
+                {
+                    return View();
+                }
+                public IActionResult DNC1()
+                {
+                    return PartialView("DNC1");
+                }
+                public IActionResult DNC2()
+                {
+                    return PartialView("DNC2");
+                }
+                public IActionResult DNC3()
+                {
+                    return PartialView("DNC3");
+                }
+            }
+        </pre>
+        <h6>d：创建一个index视图和三个Partial view (DNC1、DNC2、DNC3)代码依次如下</h6>
+        <pre>
+        <xmp>
+
+                index视图
+
+                @@{
+                ViewData["Title"] = "asp net core";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                }
+        <link href="~/css/robot-com.css" rel="stylesheet" />
+
+
+
+
+
+        <script src="~/js/robot-com.js"></script>
+                @@section Scripts{
+                <script>
+                    $(function () { tabPartial('@@(Url.Action("action","dnc"))'); });
+               </script>
+               }
+               
+        <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-3 col-md-3 col-sm-3 robotLNav">
+        <div class="col-lg-12 col-md-12 col-sm-12">node js</div>
+        <div id="RobotLeftNode" class="robotToggle col-lg-12 col-md-12 col-sm-12">
+        <ul>
+        <li action="dnc1" class="">入门了解DNC(aspNetCore)</li>
+        <li action="dnc2" class="active">DNC2.1部分视图的使用</li>
+        <li action="dnc3" class="">入门了解node js</li>
+                                </ul>
+                            </div>
+                        </div>
+        <div id="RobotRightNode" class="col-lg-9 col-md-9 col-sm-9 robotRNav">
+                            @@{
+                            await Html.RenderPartialAsync("DNC1");
+                            }
+                        </div>
+                    </div>
+       </div>
+             
+        <script src="~/js/robot-com.js"></script>  对应的代码
+            </xmp>
+            function tabPartial(defaultUrl) {
+                if ($.trim(defaultUrl) != "" && defaultUrl.indexOf('/') != -1) {
+                    var list = $('#RobotLeftNode').find('li');
+                    if (list.length > 0) {
+                        $.each(list, function (i, n) {
+                            if ($(n).attr('disabled') != "disabled") {
+                                $(n).on('click', function () {
+                                    $(this).addClass('active').siblings().removeClass('active');
+                                    var action = $(this).attr('action')
+                                    var url = defaultUrl.replace('action', action);
+                                    $("#RobotRightNode").load(url);
+                                });
+                            } else {
+                                $(n).css({ "cursor":"not-allowed"});
+                            }
+
+                        });
+                    }
+                }
+            }
+
+</pre>
+        <pre> 
+        <xmp>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+                    DNC1
+                </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12">
+                    DNC2
+                </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12">
+                    DNC3
+                </div>
+          </xmp>
+</pre> 
+        <h6>d：路由配置（这里建的是Area）,在Startup.cs添加路由代码如下</h6>
+        <pre>
+        app.UseMvc(routes =>
+            {
+                    //添加
+                routes.MapRoute(  
+                        name: "areasModule", 
+                        template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                        );
+
+                routes.MapRoute(  name: "default", template: "{controller=Home}/{action=Index}/{id?}");
+            });
+</pre>
+        <h6>e：注解 [Area("DNC")]这里就不多说了</h6>
+        <h6>f：到这里就结束了。</h6>
+    </div>
+</div>
