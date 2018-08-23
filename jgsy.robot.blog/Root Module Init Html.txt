@@ -1,0 +1,59 @@
+ViewBag.Blog 
+ /*************add new Module****************/
+<link href="~/css/robot-com.css" rel="stylesheet" />
+<script src="~/js/robot-com.js"></script>
+@section Scripts{
+    <script>
+    $(function () { tabPartial('@(Url.Action("action","node"))'); });
+    </script>
+}
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-3 col-md-3 col-sm-3 robotLNav">
+            <div class="col-lg-12 col-md-12 col-sm-12">node js</div>
+            <div id="RobotLeftNode" class="robotToggle col-lg-12 col-md-12 col-sm-12">
+                <ul>
+                    <li action="node1" class="active">1、入门了解Node.js</li>
+                    <li action="node2" disabled="disabled" class="">2、Node.js进阶（一）</li>
+                    <li action="node3" disabled="disabled" class="">3、Node.js进阶（二）</li>
+                </ul>
+            </div>
+        </div>
+        <div id="RobotRightNode" class="col-lg-9 col-md-9 col-sm-9 robotRNav">
+            @{
+                await Html.RenderPartialAsync("Node1");
+            }
+        </div>
+    </div>
+</div>
+
+  /************add new Module sub list*****************/
+
+
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h5>1、入门了解node js</h5>
+        <h6 class="text-danger">注意：Node是指node.js  js是指JavaScript。</h6>
+        <h6 class="text-danger">注意：这里Node是安装在win10环境中。开发工具使用的vsCode</h6>
+        <h6 class="text-danger">注意：除了vsCode（推荐） 你也可以使用WebStorm 等开发工具</h6>
+        <h6>Node是运行在服务端的js。</h6>
+        <h6>Node是一个基于Chrome js运行时建立的一个平台。</h6>
+        <h6>Node是一个（异步）事件驱动I/O服务端js环境，基于Google的V8引擎，V8引擎执行js的速度非常快，性能非常好。</h6>
+        <h6>学习该Node教程也可以帮助后端程序员部署一些高性能的服务。</h6>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h5>2、node js安装</h5>
+        <h6><a href="http://www.runoob.com/nodejs/nodejs-install-setup.html" target="_blank">参考1</a></h6>
+        <h6><a href="https://www.w3cschool.cn/nodejs/nodejs-install-setup.html" target="_blank">参考2</a></h6>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h5>3、环境变量查看 验证安装是否成功 打印 Hello world及交互模式</h5>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="~/nodejs/20180820/node/01.jpg" />
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="~/nodejs/20180820/node/1.jpg" />
+    </div>
+ </div>
+
