@@ -1,3 +1,33 @@
+
+
+var fs=require("fs");
+var modules='AI'
+ for(let i=0;i<50;i++){
+    fs.writeFile("AI"+(i+1)+".cshtml",'<div class="col-lg-12 col-md-12 col-sm-12"> 博客升级更新中.....</div>',function(err){
+        var str="public IActionResult "+modules+(i+1)+"()";
+        str+="{";
+        str+='return PartialView("'+modules+(i+1)+'");';
+        str+="}";
+        fs.appendFile('1.txt',str,function(err){
+            console.log(str)
+})
+    });
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ViewBag.Blog 
  /*************add new Module****************/
 <link href="~/css/robot-com.css" rel="stylesheet" />

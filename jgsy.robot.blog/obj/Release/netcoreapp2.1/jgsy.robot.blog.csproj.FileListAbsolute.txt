@@ -5,7 +5,6 @@ E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\bin\Release\netcoreapp2.1\jgsy.robot
 E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\bin\Release\netcoreapp2.1\jgsy.robot.blog.pdb
 E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\bin\Release\netcoreapp2.1\jgsy.robot.blog.Views.dll
 E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\bin\Release\netcoreapp2.1\jgsy.robot.blog.Views.pdb
-E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\jgsy.robot.blog.csprojAssemblyReference.cache
 E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\jgsy.robot.blog.csproj.CoreCompileInputs.cache
 E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\jgsy.robot.blog.RazorAssemblyInfo.cache
 E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\jgsy.robot.blog.RazorAssemblyInfo.cs
@@ -69,3 +68,11 @@ E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\Razor\Area
 E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\Razor\Areas\SqlServer\Views\SqlServer\Index.g.cshtml.cs
 E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\Razor\Areas\Technology\Views\Technology\Index.g.cshtml.cs
 E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\Razor\Areas\Vue\Views\Vue\Index.g.cshtml.cs
+E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\Razor\Areas\DNC\Views\DNC\DNC1.g.cshtml.cs
+E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\Razor\Areas\DNC\Views\DNC\DNC2.g.cshtml.cs
+E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\Razor\Areas\DNC\Views\DNC\DNC3.g.cshtml.cs
+E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\Razor\Areas\DNC\Views\DNC\Index.g.cshtml.cs
+E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\Razor\Areas\NodeJs\Views\Node\Node1.g.cshtml.cs
+E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\Razor\Areas\NodeJs\Views\Node\Node2.g.cshtml.cs
+E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\Razor\Areas\NodeJs\Views\Node\Node3.g.cshtml.cs
+E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\Razor\Areas\Xamarin\Views\Xamarin\Index.g.cshtml.cs
