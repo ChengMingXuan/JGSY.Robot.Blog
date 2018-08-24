@@ -77,17 +77,20 @@
                 </div>
             </div>
         </div>
-            @RenderBody()
-            <hr />
-            <footer class="robotCenter">
-
+        @RenderBody()
+        <hr />
+        <footer class="robotCenter ">
+            <p>&copy; 2018 - 小萝卜儿头的博客</p>
+            <p> <img src="/biao.png"> 京ICP备<a href="javascript:;">18020242</a>号-2</p>
+        </footer>
+        @*<nav class="navbar navbar-default navbar-fixed-bottom">
+            <div class="container robotCenter">
                 <p>&copy; 2018 - 小萝卜儿头的博客</p>
+                <p> <img src="/biao.png"> 京ICP备<a href="javascript:;">18020242</a>号-2</p>
+            </div>
+        </nav>*@
 
-                <p>
-                    <img src="/biao.png"> 京ICP备<a href="javascript:;">18020242</a>号-2
-                </p>
-            </footer>
-        </div>
+    </div>
 
         <environment include="Development">
             <script src="~/lib/jquery/dist/jquery.js"></script>
