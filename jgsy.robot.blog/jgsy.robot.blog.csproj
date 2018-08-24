@@ -31,6 +31,8 @@
     <Folder Include="Areas\Go\Data\" />
     <Folder Include="Areas\Go\Models\" />
     <Folder Include="Areas\Go\Views\" />
+    <Folder Include="Areas\Linux\Data\" />
+    <Folder Include="Areas\Linux\Models\" />
     <Folder Include="Areas\NodeJs\Data\" />
     <Folder Include="Areas\NodeJs\Models\" />
     <Folder Include="Areas\Theory\Controllers\" />

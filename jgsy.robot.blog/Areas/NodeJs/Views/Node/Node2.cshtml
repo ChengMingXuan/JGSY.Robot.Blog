@@ -1,3 +1,55 @@
 ﻿<div class="col-lg-12 col-md-12 col-sm-12">
-    博客升级更新中.....
+    <h5>1、Node.js示例</h5>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <pre>
+var http = require('http');
+
+http.createServer(function (request, response) {
+  response.writeHead(200, {'Content-Type': 'text/plain'});
+  response.end('Hello World\n');
+}).listen(8080);
+
+console.log('Server running at http://127.0.0.1:8080/');
+</pre>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <h5>2、Node.js之断言（assert：单元测试）</h5>
+    <h6>require('assert')</h6>  
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <pre>
+assert.fail(actual, expected, message, operator)
+使用参数operator测试参数actual (实际值) 和expected（期望值）是否相等。
+
+assert(value[, message]), assert.ok(value[, message])
+测试参数value是否为true,此函数和assert.equal(true, !!value, message);等价。
+
+assert.equal(actual, expected[, message])
+判断实际值actual和期望值expected是否相等。
+
+assert.notEqual(actual, expected[, message])
+判断实际值actual和期望值expected是否不等。
+
+assert.deepEqual(actual, expected[, message])
+执行深度比较，判断实际值actual和期望值expected是否相等。
+
+assert.notDeepEqual(actual, expected[, message])
+深度比较两个参数是否不相等。
+
+assert.strictEqual(actual, expected[, message])
+深度比较两个参数是否相等。
+
+assert.notStrictEqual(actual, expected[, message])
+此函数使用操作符 ‘!==’ 严格比较是否两参数不相等。
+
+assert.throws(block[, error][, message])
+声明一个block用来抛出错误（error），error可以是构造函数，正则表达式或其他验证器。
+
+assert.doesNotThrow(block[, message])
+声明block不抛出错误，详细信息参见assert.throws。
+
+assert.ifError(value)
+判断参数value是否为false ，如果是true，则抛出异常。通常用来测试回调中第一个参数error。
+</pre>
 </div>
