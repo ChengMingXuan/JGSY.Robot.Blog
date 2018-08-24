@@ -1,8 +1,36 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Kubenetes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/css/robot-com.css" rel="stylesheet" />
+<script src="~/js/robot-com.js"></script>
+@section Scripts{
+    <script>
+    $(function () { tabPartial('@(Url.Action("action", ViewData["Title"]))'); });
+    </script>
+}
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-3 col-md-3 col-sm-3 robotLNav">
+            <div class="col-lg-12 col-md-12 col-sm-12">@ViewData["Title"]</div>
+            <div id="RobotLeftNode" class="robotToggle col-lg-12 col-md-12 col-sm-12">
+                <ul>
+                    <li action="@ViewData["Title"]1" class="active">1、入门了解 @ViewData["Title"]</li>
+                    <li action="@ViewData["Title"]2" disabled="disabled" class="">2、@ViewData["Title"]进阶（一）</li>
+                    <li action="@ViewData["Title"]3" disabled="disabled" class="">3、@ViewData["Title"]进阶（二）</li>
+                </ul>
+            </div>
+        </div>
+        <div id="RobotRightNode" class="col-lg-9 col-md-9 col-sm-9 robotRNav">
+            @{
+                await Html.RenderPartialAsync(ViewData["Title"] + "1");
+            }
+        </div>
+    </div>
+</div>
 
-<h2>Index</h2>
+
+
+
 
