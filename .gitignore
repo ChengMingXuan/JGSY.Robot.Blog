@@ -3,3 +3,5 @@
 ################################################################################
 
 /.vs/jgsy.robot
+/jgsy.robot.blog/Areas/MongoDB/Data/test/trash/TheCrawler/node_modules
+/jgsy.robot.blog/Areas/MongoDB/Data/test/trash/TheCrawler/static/node_modules

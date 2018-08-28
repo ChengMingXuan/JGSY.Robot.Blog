@@ -2,6 +2,47 @@
     <h4>nodejs 入门简单爬虫案例</h4>
 </div>
 <div class="col-lg-12 col-md-12 col-sm-12">
+    <h4>express 是 Node.js 上最流行的 Web 开发框架，下面就使用express框架实现一个入门级的小案例</h4>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <h5>备注：推荐 淘宝 NPM 镜像，如 cnpm install express --save</h5>
+    <h5>
+        1、创建一个文件夹，TheCrawler,在文件夹中添加一个app.js。通过 npm init命令创建一个package.json文件，package.json主要是用来管理依赖版本，初始化文件时会有一些设置，空文件夹entry point你默认的是（index.js），
+        这里我已经提前创建了，默认就会是app.js。,其它的设置可以忽略，一路回车即可。当然也可以通过package.json修改文件来设置
+    </h5>
+    <h5>2、接下来安装express ,并且通过命令 --save 保存到package.json（<a title="了解 package.json 是如何起作用的" href="https://docs.npmjs.com/files/package.json" target="_blank">more</a>）文件中。执行命令：npm install express --save （临时安装命令：npm install express）</h5>
+    <h6>安装 Node 模块时，如果指定了 --save 参数，那么此模块将被添加到 package.json 文件中 dependencies 依赖列表中。 然后通过 npm install 命令即可自动安装依赖列表中所列出的所有模块。</h6>
+    <h5>3、简单测试一下环境</h5>
+    <pre>
+var express = require('express');
+var app = express();
+
+app.get('/',  (req, res) =>{
+  res.send('测试成功!');
+});
+
+var server = app.listen(3000,   () =>{
+  var host = server.address().address;
+  var port = server.address().port;
+  console.log('服务启动成功',);
+  console.log('访问服务测试路径> http://%s:%s', host=='::'?'localhost':host, port);
+});
+</pre>
+    <h5>4、创建文件夹static,用与存放静态资源文件 ，并在该文件加下安装jquery、bootstrap</h5>
+    <h5>5、使用中间件处理更便捷、灵活。</h5>
+    <pre>
+        body-parser ：解析body中的数据，并将其保存为Request对象的body属性。
+
+        cookie-parser ：解析客户端cookie中的数据，并将其保存为Request对象的cookie属性
+
+        express-session ：解析服务端生成的sessionid对应的session数据，并将其保存为Request对象的session属性
+
+        query：这个中间件将一个查询字符串从URL转换为JS对象，并将其保存为Request对象的query属性。这个中间件在第四个版本中已经内置了无需安装。
+
+    </pre>
+    <h5>这里我们用到 body-parser 安装 cnpm i body-parser --save </h5>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12">
     <h5><a href="https://npm.taobao.org./">淘宝 NPM 镜像 </a></h5>
     <h5><a href="https://npm.taobao.org./package/gbk">乱码处理,安装 cnpm i gbk ，转换utf-8</a></h5>
     <h5><a href="https://npm.taobao.org./package/jsdom">虚拟dom环境,安装 cnpm i jsdom 获取信息 </a></h5> 
