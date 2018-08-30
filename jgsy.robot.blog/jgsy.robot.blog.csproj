@@ -6,13 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\NodeJs\Data\test\trash\**" />
+    <Compile Remove="Areas\MongoDB\Data\test\**" />
+    <Compile Remove="Areas\NodeJs\Data\test\**" />
     <Compile Remove="wwwroot\Cloud\**" />
-    <Content Remove="Areas\NodeJs\Data\test\trash\**" />
+    <Content Remove="Areas\MongoDB\Data\test\**" />
+    <Content Remove="Areas\NodeJs\Data\test\**" />
     <Content Remove="wwwroot\Cloud\**" />
-    <EmbeddedResource Remove="Areas\NodeJs\Data\test\trash\**" />
+    <EmbeddedResource Remove="Areas\MongoDB\Data\test\**" />
+    <EmbeddedResource Remove="Areas\NodeJs\Data\test\**" />
     <EmbeddedResource Remove="wwwroot\Cloud\**" />
-    <None Remove="Areas\NodeJs\Data\test\trash\**" />
+    <None Remove="Areas\MongoDB\Data\test\**" />
+    <None Remove="Areas\NodeJs\Data\test\**" />
     <None Remove="wwwroot\Cloud\**" />
   </ItemGroup>
 
@@ -70,13 +74,13 @@
     <Folder Include="Areas\Linux\Models\" />
     <Folder Include="Areas\Memcached\Data\test\trash\" />
     <Folder Include="Areas\Memcached\Models\" />
-    <Folder Include="Areas\MongoDB\Data\test\trash\" />
+    <Folder Include="Areas\MongoDB\Data\" />
     <Folder Include="Areas\MongoDB\Models\" />
     <Folder Include="Areas\MySql\Data\test\trash\" />
     <Folder Include="Areas\MySql\Models\" />
     <Folder Include="Areas\NetworkProtocol\Data\test\trash\" />
     <Folder Include="Areas\NetworkProtocol\Models\" />
-    <Folder Include="Areas\NodeJs\Data\test\" />
+    <Folder Include="Areas\NodeJs\Data\" />
     <Folder Include="Areas\NodeJs\Models\" />
     <Folder Include="Areas\Oracle\Data\test\trash\" />
     <Folder Include="Areas\Oracle\Models\" />

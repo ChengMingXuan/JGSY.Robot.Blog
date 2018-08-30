@@ -404,19 +404,7 @@ var server = app.listen(3000,  () =>{
                         var name = urlpath.value;
                         if (name == '') {
                             return alert('路径不能为空！');
-                        }
-
-                        //     ajax({
-                        // 	url:'http://localhost:3000/api/cralwer/get',
-                        // 	type:'get',
-                        // 	data:{
-                        // 		urlpath:name
-                        // 	}, success(data){
-                        // 		var json = eval('('+data+')').data;
-
-
-                        // 	}
-                        //   })
+                        } 
                         $.ajax({
                             url: 'http://localhost:3000/api/cralwer/get',
                             type: 'get',
@@ -434,14 +422,7 @@ var server = app.listen(3000,  () =>{
                                 console.log(textStatus)
                                 console.log(errorThrown)
                             }
-                        });
-
-
-
-                        // $.get("http://localhost:3000/api/cralwer/get", { urlpath:name  },
-                        //   function(data){
-                        //                     alert("Data Loaded: " + data);
-                        //     });
+                        }); 
                     }
 
 
