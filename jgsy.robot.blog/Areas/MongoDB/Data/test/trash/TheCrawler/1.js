@@ -14,13 +14,16 @@ var segment = new Segment();
 // 使用默认的识别模块及字典，载入字典文件需要1秒，仅初始化时执行一次即可
 segment.useDefault();
 
-  var JSOM =require('jsdom').JSDOM;
+var JSOM =require('jsdom').JSDOM;
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));// extended: true 可解析nested json
 app.use(express.static(path.join(__dirname,'static')));//指定静态文件站点资源路径
 
 var redirectCount=0;//
-
+app.get('/',  (req, res) =>{ 
+    // console.log(req,res) 
+  res.send(path.join(__dirname, '/static', '/index.html'));
+  });
 app.get('/api/cralwer/get',(req,res)=>{
     var urlpath=req.query.urlpath;
     requestByUrl(urlpath,(data)=>{
@@ -32,7 +35,7 @@ app.get('/api/cralwer/get',(req,res)=>{
    /*************************************************************** */
         var DOM = new JSOM(data); //虚拟浏览器document
         var getDocument = DOM.window.document; 
-        var myword = getDocument.querySelector('.chapter-main').innerHTML.replace(/<[^>]+>/g,'')//去除标签 获取小说内容
+        var myword = getDocument.querySelector('.read-content').innerHTML.replace(/<[^>]+>/g,'')//去除标签 获取小说内容
         var arr = segment.doSegment(myword);//w 表示词的内容，p 表示词性
         var myArr=[];//去除标点符号 即 p=2048
         for(let i=0;i<arr.length;i++){
@@ -112,13 +115,14 @@ var server = app.listen(3000,  () =>{
 //  盘古分词组件
 var arr = segment.doSegment(myword);//w 表示词的内容，p 表示词性
 // console.log(arr);
+////// var result = segment.doSegment(myword, {  stripPunctuation: true });//去除标点符号
+//////console.log(result);
 var myArr=[];//去除标点符号 即 p=2048
 for(let i=0;i<arr.length;i++){
         if(arr[i].p!=2048)
         myArr.push(arr[i].w);
 }
-////// var result = segment.doSegment(myword, {  stripPunctuation: true });//去除标点符号
-//////console.log(result);
+
 var arrCount={};
 myArr.forEach(element => {
     if(!arrCount[element])

@@ -6,11 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    
     <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="node_modules/bootstrap/dist//js/bootstrap.js"></script>
+   
     <script type="text/javascript" src="node_modules/echarts/dist/echarts.js"></script>
-    <script type="text/javascript" src="node_modules/echarts/dist/echarts-en.common.js"></script>
-    <script type="text/javascript" src="ajax.js"></script>
+   <!--  <script type="text/javascript" src="node_modules/echarts/dist/echarts-en.common.js"></script>  -->
     <script>
 
       function login(){
@@ -18,32 +19,36 @@
         if( name == ''){
             return alert('路径不能为空！');
         }
-
-        ajax({
-		url:'http://localhost:3000/api/cralwer/get',
-		type:'get',
-		data:{
-			urlpath:name
-		},
-		success(data){
-			var json = eval('('+data+')').data;
+        
+    //     ajax({
+	// 	url:'http://localhost:3000/api/cralwer/get',
+	// 	type:'get',
+	// 	data:{
+	// 		urlpath:name
+	// 	}, success(data){
+	// 		var json = eval('('+data+')').data;
  
-			 alert()
-		}  
-  	  })
-        // $.ajax({
-        //     url:'http://localhost:3000/api/cralwer/get',
-        //     type:'get',
-        //     data:{ urlpath:name  } ,
-        //     success: function(data){
-        //       var json=  eval('('+data+')').data
-        //         alert(json)
-        //     },
-        //     error:function(a,b){
-        //       console.log(a)
-        //       console.log(b)
-        //     }
-        // });
+			
+	// 	}  
+  	//   })
+        $.ajax({
+            url:'http://localhost:3000/api/cralwer/get',
+            type:'get',
+            data:{ urlpath:name  } ,
+            dataType:"json",
+            success: function(data, textStatus, jqXHR){
+                if(data)
+                initData(data.data)
+                console.log(data)
+                 console.log(textStatus)
+                 console.log(jqXHR)
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) {
+                 console.log(XMLHttpRequest)
+                 console.log(textStatus)
+                 console.log(errorThrown)
+            }
+        });
         
 
  
@@ -54,14 +59,59 @@
       }
 
 
+function initData(json){
+	var arr = []
+			json.forEach(data=>{
+				arr.push({
+					name:data.w,
+					value:data.c
+				})
+			});
+			console.log(arr)
+			
+			option = {
+			    title : {
+			        text: '该小说网站的数据',
+			        subtext: '纯属虚构',
+			        x:'center'
+			    },
+			    tooltip : {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b} : {c} ({d}%)"
+			    },
+			    legend: {
+			        orient: 'vertical',
+			        left: 'left',
+			        data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+			    },
+			    series : [
+			        {
+			            name: '访问来源',
+			            type: 'pie',
+			            radius : '55%',
+			            center: ['50%', '60%'],
+			            data:arr,
+			            itemStyle: {
+			                emphasis: {
+			                    shadowBlur: 10,
+			                    shadowOffsetX: 0,
+			                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+			                }
+			            }
+			        }
+			    ]
+			};
+            var myChart = echarts.init(document.getElementById('main'));
+			 myChart.setOption(option);
+}
     </script>
 </head>
 <body >
-    <div class="container">
+ <div class="container">
   <div  class="row" style='padding-top: 100px'>  </div>
   <div class="row">
     <div class="col-md-12">
-        <form class="form-horizontal" role="form" onsubmit="login(); ">
+        <form class="form-horizontal" role="form" >
             <div class="form-group">
             <label for="urlpath" class="col-sm-2 control-label">路径 </label>
             <div class="col-sm-10">
@@ -70,12 +120,21 @@
             </div>
             <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">登录</button>
+                <button type="button" onclick="login()" class="btn btn-default">登录</button>
             </div>
             </div>
         </form>
     </div>
+
+
+
 </div> 
+<div class="row">
+         <div class="col-md-12">
+             <div  id="main" style="width: 100%;height:2000px;"></div>
+        </div>  
+    </div>
 </div>
+
 </body>
 </html>
