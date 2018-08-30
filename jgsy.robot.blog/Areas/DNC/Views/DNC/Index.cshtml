@@ -16,15 +16,15 @@
             <div class="col-lg-12 col-md-12 col-sm-12">@ViewData["Title"]（AspNetCore）</div>
             <div id="RobotLeftNode" class="robotToggle col-lg-12 col-md-12 col-sm-12">
                 <ul>
-                    <li action="@ViewData["Title"]1" class="active">入门了解DNC(aspNetCore)</li>
-                    <li action="@ViewData["Title"]2" class="">DNC2.1部分视图的使用</li>
-                    <li action="@ViewData["Title"]3" class="">DNC2.1进阶（一）</li>
+                    <li action="@ViewData["Title"]1" class="">1、入门了解DNC(aspNetCore)</li>
+                    <li action="@ViewData["Title"]2" class="active">2、DNC2.1部分视图的使用</li>
+                    <li action="@ViewData["Title"]3" class="">3、DNC2.1进阶（一）</li>
                 </ul>
             </div>
         </div>
         <div id="RobotRightNode" class="col-lg-9 col-md-9 col-sm-9 robotRNav">
             @{
-                await Html.RenderPartialAsync(ViewData["Title"] + "1");
+                await Html.RenderPartialAsync(ViewData["Title"] + "2");
             }
         </div>
     </div>

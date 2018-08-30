@@ -1,1 +1,121 @@
-<div class="col-lg-12 col-md-12 col-sm-12"> 博客升级更新中.....</div>
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h6>1、从头开始，很快就能搞定,基本不会有什么坑.....如果你是大神级人物..嘿嘿..那就开始正题吧！  </h6>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h6>2、在github上创建一个仓库，有代码先提交。然后再在vsts上创建一仓库，复制github路径，通过导入的方式导入到vsts仓库。  </h6>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/1.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/2.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/2.1.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/2.2.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h6>3、注意了 注意了 注意了  重要的事情，要说三遍....在VSTS上创建CI来完成同步配置。  </h6>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/3.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/4.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/4.1.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/4.2.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/4.4.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/4.5.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/4.6.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/4.7.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/4.8.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/4.9.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/4.10.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/4.11.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/4.12.png">
+
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/4.13.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/4.15.png">
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h6>4、 vsts to github ： git  pull https://github.com/ChengMingXuan/JGSY.Robot.Blog.git master </h6>
+        <h6>    vsts to github ： git  push https://$(bloggithubToken)@@github.com/ChengMingXuan/JGSY.Robot.Blog.git head:master </h6>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h6>5、bloggithubToken </h6>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/01.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/02.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/03.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h6>6、 github to vsts ： git pull https://$(vstsTokenForGithub)@@18810114757-163.visualstudio.com/_git/JGSY.Robot.Blog  master </h6>
+        <h6>    github to vsts ： git push https://$(vstsTokenForGithub)@@18810114757-163.visualstudio.com/_git/JGSY.Robot.Blog head:master </h6>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h6>7、vstsTokenForGithub </h6>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/001.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/002.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/003.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <img src="/vsts/1/20180816/GithubAndVstsSync/004.png">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h3>友情链接</h3>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <a href="https://nkdagility.com/open-source-vsts-tfs-github-better-devops/" target="_blank">配置参考博客</a>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <a href="https://blog.csdn.net/ups216/article/details/51549692" target="_blank">配置参考博客</a>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <a href="https://www.cnblogs.com/ups216/p/5475389.html" target="_blank">配置参考博客</a>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <a href="https://ke.qq.com/course/list/Asp.NET%20Core2.0%20EF%20Core%20%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%E5%85%A5%E9%97%A8%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B" target="_blank">  Asp.NET Core2.0 EF Core 项目实战入门视频教程 22年12月过期 35RMB</a>
+    </div>
+
+</div>

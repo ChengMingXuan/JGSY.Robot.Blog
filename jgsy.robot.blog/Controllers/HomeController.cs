@@ -28,7 +28,11 @@ namespace jgsy.robot.blog.Controllers
 
             return View();
         }
-
+        public IActionResult UpdateLog()
+        {
+             
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

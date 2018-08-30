@@ -35,6 +35,7 @@ app.get('/api/cralwer/get',(req,res)=>{
    /*************************************************************** */
         var DOM = new JSOM(data); //虚拟浏览器document
         var getDocument = DOM.window.document; 
+        //获取内容 这里.read-content定位获取内容 不同小说网站的定位不一样 
         var myword = getDocument.querySelector('.read-content').innerHTML.replace(/<[^>]+>/g,'')//去除标签 获取小说内容
         var arr = segment.doSegment(myword);//w 表示词的内容，p 表示词性
         var myArr=[];//去除标点符号 即 p=2048
@@ -98,6 +99,14 @@ var server = app.listen(3000,  () =>{
            
  }
 
+
+
+
+
+
+
+
+
  function wordByDomToSegment(data,res)
  {
       var DOM = new JSOM(data); //虚拟浏览器document
@@ -108,7 +117,7 @@ var server = app.listen(3000,  () =>{
 
 // var myHtml = getDocument.querySelector('.chapter-main').innerHTML;
 //  console.log(myHtml)
-
+//获取内容 chapter-main 不同小说网站的定位不一样 read-content 
  var myword = getDocument.querySelector('.chapter-main').innerHTML.replace(/<[^>]+>/g,'')//去除标签 获取小说内容
 //  console.log(myword)
 
