@@ -10,6 +10,7 @@
     <script type="text/javascript" src="node_modules/bootstrap/dist//js/bootstrap.js"></script>
     <script type="text/javascript" src="node_modules/echarts/dist/echarts.js"></script>
     <script type="text/javascript" src="node_modules/echarts/dist/echarts-en.common.js"></script>
+    <script type="text/javascript" src="ajax.js"></script>
     <script>
 
       function login(){
@@ -18,20 +19,34 @@
             return alert('路径不能为空！');
         }
 
-        $.ajax({
-            url:'http://localhost:3000/api/cralwer/get',
-            type:'get',
-            data:{ urlpath:name  } ,
-            success: function(data){
-              var json=  eval('('+data+')').data
-                alert(json)
-            },
-            error:function(a,b){
-              console.log(a)
-              console.log(b)
-            }
-        });
+        ajax({
+		url:'http://localhost:3000/api/cralwer/get',
+		type:'get',
+		data:{
+			urlpath:name
+		},
+		success(data){
+			var json = eval('('+data+')').data;
+ 
+			 alert()
+		}  
+  	  })
+        // $.ajax({
+        //     url:'http://localhost:3000/api/cralwer/get',
+        //     type:'get',
+        //     data:{ urlpath:name  } ,
+        //     success: function(data){
+        //       var json=  eval('('+data+')').data
+        //         alert(json)
+        //     },
+        //     error:function(a,b){
+        //       console.log(a)
+        //       console.log(b)
+        //     }
+        // });
+        
 
+ 
         // $.get("http://localhost:3000/api/cralwer/get", { urlpath:name  },
         //   function(data){
         //                     alert("Data Loaded: " + data);

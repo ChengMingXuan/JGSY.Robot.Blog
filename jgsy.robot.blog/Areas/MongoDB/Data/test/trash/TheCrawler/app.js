@@ -20,7 +20,10 @@ app.use(express.static(path.join(__dirname,'static')));//指定静态文件站�
   * 全局参数 统计重定向次数  如淘宝
   */
 var redirectCount=0;
-
+app.get('/',  (req, res) =>{ 
+  // console.log(req,res) 
+res.send(path.join(__dirname, '/static', '/index.html'));
+});
 app.get('/',  (req, res) =>{ 
     // console.log(req,res) 
   res.send('测试成功!');

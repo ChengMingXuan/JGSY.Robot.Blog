@@ -28,9 +28,37 @@ app.get('/api/cralwer/get',(req,res)=>{
     //         if(err) throw err;
     //             console.log('页面抓取成功')
     //     });
-      wordByDomToSegment(data,res);
-   
- 
+    //   wordByDomToSegment(data,res);
+   /*************************************************************** */
+        var DOM = new JSOM(data); //虚拟浏览器document
+        var getDocument = DOM.window.document; 
+        var myword = getDocument.querySelector('.chapter-main').innerHTML.replace(/<[^>]+>/g,'')//去除标签 获取小说内容
+        var arr = segment.doSegment(myword);//w 表示词的内容，p 表示词性
+        var myArr=[];//去除标点符号 即 p=2048
+        for(let i=0;i<arr.length;i++){
+            if(arr[i].p!=2048)
+            myArr.push(arr[i].w);
+        }
+        var arrCount={};
+        myArr.forEach(element => {
+        if(!arrCount[element])
+        {
+            arrCount[element]=1;
+        }else
+        {
+            arrCount[element]++;
+        }
+        });
+        var getNewArr=[];
+        for(let i in arrCount){
+        if(arrCount[i]<=1) continue;
+        getNewArr.push({w:i,c:arrCount[i]})
+        } 
+        getNewArr.sort((a,b)=>b.c-a.c);
+        console.log({data:getNewArr});
+        res.send({data:getNewArr});
+        res.end();
+   /*************************************************************** */
     });
 });
 var server = app.listen(3000,  () =>{
@@ -120,3 +148,4 @@ res.send({data:getNewArr});
 res.end();
 
  }
+  
