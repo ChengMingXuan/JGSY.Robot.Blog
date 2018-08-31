@@ -1,1 +1,0 @@
-console.log("999999999进程 " + process.argv[2] + " 执行。" );
