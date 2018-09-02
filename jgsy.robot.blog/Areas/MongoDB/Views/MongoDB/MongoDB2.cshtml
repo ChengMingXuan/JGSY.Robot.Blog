@@ -1,1 +1,50 @@
-<div class="col-lg-12 col-md-12 col-sm-12"> 博客升级更新中.....</div>
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <h4>MongoDB安装</h4>
+    <h5>1、<a href="http://www.ybao.org/book/mongodb/5364.html" target="_blank">参考1</a></h5>
+    <h5>2、<a href="http://www.runoob.com/mongodb/mongodb-window-install.html" target="_blank">菜鸟编程</a></h5>
+    <h5>3、<a href="https://www.w3cschool.cn/mongodb/mongodb-window-install.html" target="_blank">w3cschool</a></h5>
+    <h5>MongoDB安装好后需要自己配置环境变量和数据库存储位置 日志存储位置 </h5>
+    <h5>创建文件夹E:\software\MongoDB\Server\data\db、E:\software\MongoDB\Server\data\log\，分别用来安装db和日志文件，在log文件夹下创建一个日志文件mongodb.log，即E:\software\MongoDB\Server\data\log\mongodb.log</h5>
+    <h5>①方案、如下a b两步骤</h5>
+    <code>a: &gt; mongod -dbpath "E:\software\MongoDB\Server\data\db"</code>
+    <code>b: &gt; mongod --dbpath "E:\software\MongoDB\Server\data\db" --logpath "E:\software\MongoDB\Server\data\log\mongodb.log" --remove --serviceName "MongoDB"</code>
+    <h5>②方案、①方案每次都得启动a、b,把a、b替换成windows服务，配置服务A,如下</h5>
+    <code>A: &gt; mongod --bind_ip 127.0.0.1 --logpath "E:\software\MongoDB\Server\data\log\mongodb.log" --logappend --dbpath "E:\software\MongoDB\Server\data\db" --port 27017 --serviceName "mongodb" --serviceDisplayName "mongodb" --install</code>
+    <h5>启动 MongoDB 服务 <code>net start mongodb </code></h5>
+    <h5>停止 MongoDB 服务 <code>net stop mongodb </code></h5>
+    <h6>备注：</h6>
+    <pre>
+参数说明:
+
+　　--bind_ip:　　 　　　　　  　　绑定服务IP，若绑定127.0.0.1，则只能本机访问，不指定默认本地所有IP      
+
+　　--logpath:　　 　　　　　　　  定MongoDB日志文件，注意是指定文件不是目录
+
+　　--logappend: 　　　　　　　　使用追加的方式写日志
+
+　　--dbpath: 　　　　　　　　     指定数据库路径
+
+　　--port: 　　　　　　　　　　　指定服务端口号，默认端口27017
+
+　　--serviceName: 　　　　　　  指定服务名称
+
+　　--serviceDisplayName: 　　　指定服务名称，有多个mongodb服务时执行。
+
+　　--install: 　　　　　　　　　　指定作为一个Windows服务安装。
+</pre>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <h4>mongo可视化工具</h4>
+    <h5><a href="https://robomongo.org/download">Robomongo</a></h5>
+    <h5><a href="https://github.com/mrvautin/adminMongo">adminMongo</a> </h5>
+    <h6>adminMongo 1、<code>git clone https://github.com/mrvautin/adminMongo</code></h6>
+    <h6>adminMongo 2、<code>cd adminMongo</code></h6>
+    <h6>adminMongo 3、<code>npm install</code></h6>
+    <h6>adminMongo 4、<code>npm start</code></h6>
+    <h6>adminMongo 5、访问<code>http://localhost:1234</code></h6>
+    <h6> 6、如下图，添加一个连接</h6>
+    <img src="~/nodejs/20180902/1.jpg" />
+    <h6> 7、如下图，连接</h6>
+    <img src="~/nodejs/20180902/2.jpg" />
+    <h5> <a href="htps://blog.csdn.net/weixin_42231507/article/details/81013820?tdsourcetag=s_pctim_aiomsg">adminMongo 安装使用</a></h5>
+</div>

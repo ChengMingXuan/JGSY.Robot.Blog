@@ -1,1 +1,29 @@
-<div class="col-lg-12 col-md-12 col-sm-12"> 博客升级更新中.....</div>
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <h4>连接MongoDB遇到的问题</h4>
+    <pre>
+   E:\software\MongoDB>mongo 127.0.0.1:27017/blog
+    MongoDB shell version v3.4.6
+    connecting to: mongodb://127.0.0.1:27017/blog
+    MongoDB server version: 3.4.6
+    Server has startup warnings:
+    2018-09-02T11:09:12.537+0800 I CONTROL  [initandlisten]
+    2018-09-02T11:09:12.537+0800 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+    2018-09-02T11:09:12.537+0800 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+    2018-09-02T11:09:12.537+0800 I CONTROL  [initandlisten]
+</pre>
+    <h4>解决方式:创建管理员  </h4>
+    <pre>
+    <code>&gt; use admin</code>
+    <code>&gt;  db.createUser(
+                {
+                user: "admin", //用户名
+                pwd: "P@ssw0rd", //密码
+                roles: [ { role: "userAdminAnyDatabase", db: "admin" } ] //权限
+                }
+                )
+    </code>
+   
+</pre>
+    <h4>重启MongoDB服务器 </h4>
+    <code>mongod --auth --port 27017 --dbpath E:\software\MongoDB\DATA\db</code>
+</div>
