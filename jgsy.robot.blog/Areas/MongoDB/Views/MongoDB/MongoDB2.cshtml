@@ -8,7 +8,7 @@
     <h5>①方案、如下a b两步骤</h5>
     <code>a: &gt; mongod -dbpath "E:\software\MongoDB\Server\data\db"</code>
     <code>b: &gt; mongod --dbpath "E:\software\MongoDB\Server\data\db" --logpath "E:\software\MongoDB\Server\data\log\mongodb.log" --remove --serviceName "MongoDB"</code>
-    <h5>②方案、①方案每次都得启动a、b,把a、b替换成windows服务，配置服务A,如下</h5>
+    <h5>②方案、①方案每次都得启动a、b,把a、b替换成windows服务，配置服务A,以管理员的身份运行，执行如下命令</h5>
     <code>A: &gt; mongod --bind_ip 127.0.0.1 --logpath "E:\software\MongoDB\Server\data\log\mongodb.log" --logappend --dbpath "E:\software\MongoDB\Server\data\db" --port 27017 --serviceName "mongodb" --serviceDisplayName "mongodb" --install</code>
     <h5>启动 MongoDB 服务 <code>net start mongodb </code></h5>
     <h5>停止 MongoDB 服务 <code>net stop mongodb </code></h5>
@@ -46,5 +46,5 @@
     <img src="~/nodejs/20180902/1.jpg" />
     <h6> 7、如下图，连接</h6>
     <img src="~/nodejs/20180902/2.jpg" />
-    <h5> <a href="htps://blog.csdn.net/weixin_42231507/article/details/81013820?tdsourcetag=s_pctim_aiomsg">adminMongo 安装使用</a></h5>
+    <h5> <a href="https://blog.csdn.net/weixin_42231507/article/details/81013820?tdsourcetag=s_pctim_aiomsg">adminMongo 安装使用</a></h5>
 </div>
