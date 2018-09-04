@@ -25,6 +25,7 @@ namespace jgsy.robot.blog.Areas.NodeJs.Controllers
         {
             return PartialView("Node3");
         }
+        public IActionResult nodeTop() { return PartialView("nodeTop"); }
         public IActionResult Node4() { return PartialView("Node4"); }
         public IActionResult Node6() { return PartialView("Node6"); }
         public IActionResult Node7() { return PartialView("Node7"); }
