@@ -2,10 +2,10 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <h4>node + express 项目实战</h4>
     </div>
-    <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="col-lg-12 col-md-12 col-sm-12 hide">
         <img src="~/nodejs/20180905/1.jpg" />
     </div>
-    <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="col-lg-12 col-md-12 col-sm-12 hide">
         <img src="~/nodejs/20180905/2.jpg" />
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12">
@@ -16,17 +16,277 @@
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12">
         <img src="~/nodejs/20180905/5.jpg" />
+
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
         <pre>
              1、windows 权限问题 需设置一下
-             2 、npm install -g cnpm --registry=https://registry.npm.taobao.org bower -g
+             2、npm install -g cnpm --registry=https://registry.npm.taobao.org bower -g
+             3、这里不使用bower  
         </pre>
     </div>
-  
     <div class="col-lg-12 col-md-12 col-sm-12">
         <img src="~/nodejs/20180905/6.jpg" />
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12">
         <img src="~/nodejs/20180905/7.jpg" />
     </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h4>模拟伪数据</h4>
+        <pre>
+var express =  require('express')
+var path =  require('path') 
+var bodyParser =  require('body-parser') 
+var port = process.env.PORT || 3000
+var app =express()
 
+app.set('views','./views/page')
+app.set('view engine','jade')
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:false}))
+// app.use(express.static(path.join(__dirname,'bower_components')))
+app.use('/static',express.static(path.join(__dirname,'node_modules')))
+
+app.set('port',port)
+app.listen(port)
+
+console.log(port)
+  
+app.get('/',(req,res)=>{ 
+    res.render('index',{title:'电影中心首页',movies:[
+        {title:'地球重构',_id:1,poster:'https://p.ssl.qhimg.com/dmfd/125_71_/t01754c5282ae2aae31.webp?size=633x414'},
+        {title:'地球重构',_id:2,poster:'https://p.ssl.qhimg.com/dmfd/125_71_/t01754c5282ae2aae31.webp?size=633x414'},
+        {title:'地球重构',_id:3,poster:'https://p.ssl.qhimg.com/dmfd/125_71_/t01754c5282ae2aae31.webp?size=633x414'},
+        {title:'地球重构',_id:4,poster:'https://p.ssl.qhimg.com/dmfd/125_71_/t01754c5282ae2aae31.webp?size=633x414'},
+        {title:'地球重构',_id:5,poster:'https://p.ssl.qhimg.com/dmfd/125_71_/t01754c5282ae2aae31.webp?size=633x414'},
+        {title:'地球重构',_id:6,poster:'https://p.ssl.qhimg.com/dmfd/125_71_/t01754c5282ae2aae31.webp?size=633x414'},
+        {title:'地球重构',_id:7,poster:'https://p.ssl.qhimg.com/dmfd/125_71_/t01754c5282ae2aae31.webp?size=633x414'},
+        {title:'地球重构',_id:8,poster:'https://p.ssl.qhimg.com/dmfd/125_71_/t01754c5282ae2aae31.webp?size=633x414'},
+        {title:'地球重构',_id:9,poster:'https://p.ssl.qhimg.com/dmfd/125_71_/t01754c5282ae2aae31.webp?size=633x414'}
+       ]})
+})
+
+app.get('/admin/movie',(req,res)=>{
+    res.render('admin',{title:'后台录入页',movie:{
+        doctor:'',
+        country:'',
+        title:'',
+        year:'',
+        poster:'',
+        language:'',
+        flash:'',
+        summary:''
+    }})
+})
+app.get('/admin/list',(req,res)=>{
+    res.render('list',{title:'电影列表',movie:{
+        doctor:'电影迷',
+        country:'滚出地球',
+        title:'地球重构',
+        year:2300,
+        poster:'https://p.ssl.qhimg.com/dmfd/125_71_/t01754c5282ae2aae31.webp?size=633x414',
+        language:'火星语',
+        flash:'',
+        summary:'电影迷'
+    }})
+})
+app.get('/movie/:id',(req,res)=>{
+    res.render('detial',{title:'电影详情页',movie:{
+        doctor:'电影迷',
+        country:'电影迷',
+        title:'地球重构',
+        year:2300,
+        poster:'https://p.ssl.qhimg.com/dmfd/125_71_/t01754c5282ae2aae31.webp?size=633x414',
+        language:'火星语',
+        flash:'',
+        summary:'电影迷'
+    }})
+})
+
+</pre>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h4>先看一下结构，然后直接上代码</h4>
+        <img src="~/nodejs/20180905/11.jpg" />
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h4> app.js核心代码  </h4>
+        <h5> 备注：mongoose function(err){}写成“(err)=> {}”目前不可以  </h5>
+        <pre>
+ 
+var express = require('express')
+var path = require('path')
+var bodyParser = require('body-parser')
+var mongoose = require('mongoose')
+var Movie = require('./models/movie')
+var _ = require('underscore')
+var port = process.env.PORT || 3000
+var app = express()
+mongoose.connect('mongodb://localhost/movie',{useNewUrlParser: true},(err)=>{
+    if(err) console.log("链接mongodb数据库出错了！！！！",err) 
+    else console.log('成功链接到mongodb数据库。')
+})
+
+app.set('views', './views/page')
+app.set('view engine', 'jade')
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+// app.use(express.static(path.join(__dirname,'bower_components')))
+app.use('/static', express.static(path.join(__dirname, 'node_modules')))
+app.use('/static', express.static(path.join(__dirname, 'public')))
+
+
+app.locals.moment = require('moment')
+app.set('port', port)
+app.listen(port)
+console.log(port)
+app.get('/', (req, res) => {
+    Movie.fetch((err, movies) => {
+        if (err) console.log(err)
+        res.render('index', { title: '电影中心首页', movies })
+    })
+})
+app.get('/admin/movie', (req, res) => {
+    res.render('admin', {
+        title: '后台录入页', movie: {
+            doctor: '',
+            country: '',
+            title: '',
+            year: '',
+            poster: '',
+            language: '',
+            flash: '',
+            summary: ''
+        }
+    })
+})
+app.post('/admin/movie/new', (req, res) => {
+    console.log(req.body)
+    var id = req.body.movie._id
+    var movieModel = req.body.movie
+    var _movie
+    if (id !== "undefined") 
+    {
+        Movie.findById(id, (err, movie) => {
+            if (err) console.log(err)
+            _movie = _.extend(movie, movieModel)
+            _movie.save((err, movie) => {
+                if (err) console.log(err)
+                res.redirect('/movie/' + movie._id)
+            })
+        })
+    } else {
+        _movie = new Movie({
+            doctor: movieModel.doctor,
+            title: movieModel.title,
+            country: movieModel.country,
+            language: movieModel.language,
+            summary: movieModel.summary,
+            poster: movieModel.poster,
+            year: movieModel.year,
+            flash: movieModel.flash 
+        })
+
+        _movie.save((err, movie) => {
+            if (err) console.log(err)
+            res.redirect('/movie/' + movie.id)
+        })
+    }
+
+})
+app.get('/admin/update/:id', (req, res) => {
+    var id = req.params.id
+    if (id) {
+        Movie.findById(id, (err, movie) => {
+            res.render('admin', { title: '后台更新', movie })
+        })
+    }
+})
+app.get('/admin/list', (req, res) => { 
+    Movie.fetch((err, movies) => {
+        if (err) console.log(err)
+        console.log(movies)
+        res.render('list', { title: '电影列表', movies })
+    })
+})
+app.delete('/admin/list', function(req, res)  {
+    var id = req.query.id  // url:'/admin/list?id='+id,
+    // var id = req.body.id //  data:{id:id}
+    if (id) {
+        Movie.remove({ _id: id }, function(err, movie) {
+            res.json({ success: 1 })
+        })
+    }
+})
+app.get('/movie/:id', (req, res) => {
+    var id = req.params.id
+    Movie.findById(id, (err, movie) => {
+        if(!err)
+        res.render('detial', { title: movie.title, movie })
+        else
+            console.log(err)
+    })
+})
+
+</pre>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h4> list.jade模板页面  </h4>
+        <h5> script(src="/static/js/admin.js")前面要空格</h5>
+        <pre>
+  
+extends ../layout
+block content
+ .container
+   .row
+     table.table.table-hover.table-bordered
+       thead
+         tr
+            th 电影名称
+            th 导演
+            th 国家
+            th 上映年代
+            th 录入时间
+            th 查看
+            th 更新
+            th 删除
+        tbody
+         each item in movies
+           tr(class="item-id-#{item._id}")
+             td #{item.title}
+             td #{item.doctor}
+             td #{item.country}
+             td #{item.year}
+             td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
+             td: a(class="btn btn-primary",tartget="_blank",href="../movie/#{item._id}") 查看
+             td: a(class="btn btn-info",tartget="_blank",href="../admin/update/#{item._id}") 修改
+             td  
+                 button.btn.btn-danger.del(type="button",data-id="#{item._id}") 删除
+  script(src="/static/js/admin.js")
+        </pre>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h4> head.jade页面  </h4>
+        <pre>
+link(href="/static/bootstrap/dist/css/bootstrap.css",rel="stylesheet" )
+script(src="/static/jquery/dist/jquery.js")
+script(src="/static/bootstrap/dist/js/bootstrap.js")
+        </pre>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h4> header.jade页面  </h4>
+        <pre>
+.container
+    .row
+        .page-header
+          h1=title
+          samll 重度科幻片
+        </pre>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <a href="/common/download?filepath=" class="btn btn-default disabled" style="cursor:not-allowed" target="dw_iframe">代码下载</a>
+        <iframe name="dw_iframe" scrolling="no" style="display:none !important"></iframe>
+    </div>
 </div>
