@@ -311,4 +311,27 @@ script(src="/static/bootstrap/dist/js/bootstrap.js")
         <h5>密码加密</h5>
         <code>&gt; cnpm i bcrypt --save</code>
     </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h4>遇到问题</h4>
+        <pre>
+Sat, 08 Sep 2018 03:47:42 GMT express-session deprecated undefined resave option; provide resave option at app.js:34:9
+Sat, 08 Sep 2018 03:47:42 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at app.js:3
+添加  resave ,saveUninitialized, 
+app.use(session({
+    secret: 'robot', 
+    resave: false,  
+    saveUninitialized: true,  
+    cookie: {maxAge:3600000},  
+    store: new mongoStore({  
+        db: dbOptions.dbName,  
+        url: dbOptions.mongodnUrl  
+    })  
+}))
+</pre>
+
+        <pre>
+ 
+
+</pre>
+    </div>
 </div>

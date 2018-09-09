@@ -24,6 +24,20 @@
     </code>
    
 </pre>
-    <h4>重启MongoDB服务器 </h4>
-    <code>mongod --auth --port 27017 --dbpath E:\software\MongoDB\DATA\db</code>
+    创建用户名和密码
+    <code>
+        &gt;   use admin
+        &gt;   db.createUser(
+        {
+        user: "admin", //用户名
+        pwd: "P@ssw0rd", //密码
+        roles: [ { role: "userAdminAnyDatabase", db: "admin" } ] //权限
+        }
+        );
+    </code>
+    停止mongodb服务 <code>&gt;  net stop mongodb </code>
+    删除mongodb服务 <code>&gt;  sc delete mongodb </code>
+    重新安装mongodb服务<code>A: &gt; mongod --auth --bind_ip 127.0.0.1 --logpath "E:\software\MongoDB\Server\data\log\mongodb.log" --logappend --dbpath "E:\software\MongoDB\Server\data\db" --port 27017 --serviceName "mongodb" --serviceDisplayName "mongodb" --install</code>
+    登录 mongo 或 mongo --port 27017    或者指定用户登录 mongo --port 27017 -u "admin" -p "P@ssw0rd" --authenticationDatabase "admin"
+    完成
 </div>

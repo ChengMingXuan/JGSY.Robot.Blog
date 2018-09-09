@@ -13,8 +13,30 @@
     <h5>以管理员的身份运行cmd 启动 MongoDB 服务 <code>net start mongodb </code></h5>
     <h5>以管理员的身份运行cmd 停止 MongoDB 服务 <code>net stop mongodb </code></h5>
     <h6>备注：</h6>
+    <pre>由于mongodb数据库版本问题,建立数据库连接时出现了warning会出现警告,需要建立安全的数据库 必须要进行验证
+    <code>WARNING: Access control is not enabled for the database.</code>
+    创建用户名和密码
+    <code>
+        &gt;   use admin
+        &gt;   db.createUser(
+        {
+        user: "admin", //用户名
+        pwd: "P@ssw0rd", //密码
+        roles: [ { role: "userAdminAnyDatabase", db: "admin" } ] //权限
+        }
+        );
+    </code>
+    停止mongodb服务 <code>&gt;  net stop mongodb </code>
+    删除mongodb服务 <code>&gt;  sc delete mongodb </code>
+    重新安装mongodb服务<code>A: &gt; mongod --auth --bind_ip 127.0.0.1 --logpath "E:\software\MongoDB\Server\data\log\mongodb.log" --logappend --dbpath "E:\software\MongoDB\Server\data\db" --port 27017 --serviceName "mongodb" --serviceDisplayName "mongodb" --install</code>
+    登录 mongo 或 mongo --port 27017    或者指定用户登录 mongo --port 27017 -u "admin" -p "P@ssw0rd" --authenticationDatabase "admin"
+    完成
+</pre>
+   
+
     <pre>
 参数说明:
+     --auth                            访问数据库需要认证
 
 　　--bind_ip:　　 　　　　　  　　绑定服务IP，若绑定127.0.0.1，则只能本机访问，不指定默认本地所有IP      
 
