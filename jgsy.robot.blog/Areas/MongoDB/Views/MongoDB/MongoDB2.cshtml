@@ -32,8 +32,6 @@
     登录 mongo 或 mongo --port 27017    或者指定用户登录 mongo --port 27017 -u "admin" -p "P@ssw0rd" --authenticationDatabase "admin"
     完成
 </pre>
-   
-
     <pre>
 参数说明:
      --auth                            访问数据库需要认证
@@ -59,10 +57,10 @@
     <h4>mongo可视化工具</h4>
     <h5><a href="https://robomongo.org/download">Robomongo</a></h5>
     <h5><a href="https://github.com/mrvautin/adminMongo">adminMongo</a> </h5>
-    <h6>adminMongo 1、<code>git clone https://github.com/mrvautin/adminMongo</code></h6>
-    <h6>adminMongo 2、<code>cd adminMongo</code></h6>
-    <h6>adminMongo 3、<code>npm install</code></h6>
-    <h6>adminMongo 4、<code>npm start</code></h6>
+    <h6>adminMongo 1、<code>&gt;  git clone https://github.com/mrvautin/adminMongo</code></h6>
+    <h6>adminMongo 2、<code>&gt;  cd adminMongo</code></h6>
+    <h6>adminMongo 3、<code>&gt;  npm install</code></h6>
+    <h6>adminMongo 4、<code>&gt;  npm start</code></h6>
     <h6>adminMongo 5、访问<code>http://localhost:1234</code></h6>
     <h6> 6、如下图，添加一个连接</h6>
     <img src="~/nodejs/20180902/1.jpg" />
@@ -73,4 +71,91 @@
 <div class="col-lg-12 col-md-12 col-sm-12">
     <h4>mongoose</h4>
     <h5><a href="https://mongoosejs.com/docs/api.html">mongodb中间件API  Schema Model Document 操作数据库</a></h5>
-    </div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <h4>mongodb的使用</h4>
+    <h5>mongodb上用户认证、端口权限。</h5>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <h4>登录 mongo demo -u "robot" -p "P@ssw0rd"</h4>
+    <code>&gt;  db.createUser({user: "robot",pwd: "P@ssw0rd",roles: [ { role: "dbAdmin", db: "demo" },{ role: "readWrite", db: "demo" }] });</code>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <h5>1、登录</h5>
+    <code>&gt;  mongo</code>
+    <h5>2、登录</h5>
+    <code>&gt;  use admin </code>
+    <h5>添加超级管理员</h5>
+    <code>&gt; db.createUser({user: "robot",pwd: "P@ssw0rd",roles: [ { role: "root", db: "demo" }] });</code>
+    <h5>root表示超级权限，这样就创建了具有超级权限的账号了。可以通过以下命令来查看用户。</h5>
+    <h5>MongoDB数据库角色</h5>
+    <pre>
+    @*role指角色，管理控制数据库的权限，第一个用户最好是root用户，可以执行任何操作，*@
+    初始化最好创建root权限的用户，当开启auth模式，任何操作都需要权限才能执行。也千万不能直接auth启动后台运行模式，否则你就没有权限用户去关闭数据库。
+    •Read：允许用户读取指定数据库
+    •readWrite：允许用户读写指定数据库
+    •dbAdmin：允许用户在指定数据库中执行管理函数，如索引创建、删除，查看统计或访问system.profile
+    •userAdmin：允许用户向system.users集合写入，可以找指定数据库里创建、删除和管理用户
+    •clusterAdmin：只在admin数据库中可用，赋予用户所有分片和复制集相关函数的管理权限。
+    •readAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读权限
+    •readWriteAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读写权限
+    •userAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的userAdmin权限
+    •dbAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的dbAdmin权限。
+    @*•root：只在admin数据库中可用。超级账号，超级权限*@
+
+</pre>
+    <h5> <code>&gt;  db.auth('root','P@ssw0rd')</code>成功返回1  失败返回0 </h5>
+    @*mongoose.db('mongodb://your name: your pwd@localhost:27017/db?authSource=admin');*@
+    <h5>然后，切换到其他库，创建用户密码 </h5>
+    <pre>
+&gt;   use demo
+&gt;   db.createUser({user: "robot",pwd: "P@ssw0rd",roles: [ { role: "dbAdmin", db: "demo" },{ role: "readWrite", db: "demo" }] });
+&gt;   use movie
+&gt;   db.createUser({user: "robot",pwd: "P@ssw0rd",roles: [ { role: "dbAdmin", db: "movie" },{ role: "readWrite", db: "movie" }] });
+    用户登录  
+&gt;     mongo demo -u "robot" -p  "P@ssw0rd"
+&gt;     mongo movie -u "robot" -p "P@ssw0rd"
+
+</pre>
+    <pre>
+在 demo 库下面创建了一个 robot 密码为 P@ssw0rd 有读写权限
+
+查看库下面所有用户
+
+use demo
+db.getUsers()
+使用admin用户修改普通用户密码
+
+use admin
+db.changeUserPassword("robot", "SOh3TbYhx8ypJPxmt1oOfL")
+删除库下面用户
+
+use demo
+db.dropUser("robot");
+删除库下面所有用户
+
+use demo
+db.dropAllUsers()
+获取角色信息
+
+use demo
+db.getUser("robot")
+
+auth授权
+use demo
+ db.auth("robot","P@ssw0rd")
+use movie
+ db.auth("robot","P@ssw0rd")
+use demo
+db.robot.insert({"a","a"})
+use movie
+db.robot.insert({"a","a"})
+</pre>
+</div>
+@*db.createUser({user: "robot",pwd: "robot",roles: [ { role: "root", db: "movie" },{ role: "readWrite", db: "movie" }] });
+    db.createUser({user: "robot",pwd: "P@ssw0rd",roles: [ { role: "dbAdmin", db: "movie" },{ role: "readWrite", db: "movie" }] });
+
+    db.createUser({user: "robot",pwd: "robot",roles: [ { role: "readWrite", db: "movie" }] });
+
+    mongodb://user:pass@localhost:port,anotherhost:port,yetanother:port/mydatabase
+*@
