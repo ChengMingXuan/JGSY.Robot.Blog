@@ -2169,6 +2169,5 @@ E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Debug\netcoreapp2.1\Razor\Areas\
 E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Debug\netcoreapp2.1\Razor\Areas\Vue\Views\Vue\Vue7.g.cshtml.cs
 E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Debug\netcoreapp2.1\Razor\Areas\Vue\Views\Vue\Vue8.g.cshtml.cs
 E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Debug\netcoreapp2.1\Razor\Areas\Vue\Views\Vue\Vue9.g.cshtml.cs
-E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Debug\netcoreapp2.1\jgsy.robot.blog.csprojAssemblyReference.cache
 E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Debug\netcoreapp2.1\Razor\Areas\NodeJs\Views\Node\nodeTop.g.cshtml.cs
 E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Debug\netcoreapp2.1\Razor\Views\Home\UpdateLog.g.cshtml.cs

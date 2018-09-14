@@ -2072,3 +2072,4 @@ E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\jgsy.robot
 E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\jgsy.robot.blog.dll
 E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\jgsy.robot.blog.pdb
 E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\jgsy.robot.blog.csproj.CopyComplete
+E:\2018blog\JGSY.Robot.Blog\jgsy.robot.blog\obj\Release\netcoreapp2.1\Razor\Areas\NodeJs\Views\Node\nodeTop.g.cshtml.cs
