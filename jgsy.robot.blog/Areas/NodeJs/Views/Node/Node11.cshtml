@@ -1,1 +1,65 @@
-<div class="col-lg-12 col-md-12 col-sm-12"> 博客升级更新中.....</div>
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h4>nodejs Nginx express jade </h4>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h5>部署结构</h5>
+        <img src="~/nodejs/20180916/1.png" />
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h5>ssh无密码登录</h5>
+        <img src="~/nodejs/20180916/s1.png" />
+        <img src="~/nodejs/20180916/s2.png" />
+        <img src="~/nodejs/20180916/s3.png" />
+        <pre>
+1. 安装openssh-server
+    yum install -y openssl openssh-server
+    2. 修改配置文件
+    用vim打开配置文件/etc/ssh/sshd_config
+
+    将PermitRootLogin，RSAAuthentication，PubkeyAuthentication的设置打开。
+
+    启动ssh的服务：
+
+    systemctl start sshd.service
+    设置开机自动启动ssh服务
+
+    systemctl enable sshd.service
+    设置文件夹~/.ssh的访问权限：
+
+    $ cd ~
+    $ chmod 700 .ssh                                                                                                
+    $ chmod 600 .ssh/*                                                                                              
+    $ ls -la .ssh                                                                                                   
+    total 16
+    drwx------. 2 root root   58 May 15 00:23 .
+    dr-xr-x---. 8 root root 4096 May 15 00:26 ..
+    -rw-------. 1 root root  403 May 15 00:22 authorized_keys
+    -rw-------. 1 root root 1766 May 15 00:21 id_rsa
+    -rw-------. 1 root root  403 May 15 00:21 id_rsa.pub
+    authorized_keys文件存储的是客户端的公共密钥。
+
+
+
+    查看状态：
+
+    systemctl status sshd.service
+
+    启动服务：
+
+    systemctl start sshd.service
+
+    重启服务：
+
+    systemctl restart sshd.service
+
+    开机自启：
+
+    systemctl enable sshd.service
+
+
+</pre>
+        <code>ssh-copy-id -i C:/Users/jack/.ssh/id_rsa.pub root@109.19.104.211 </code>
+    </div>
+
+</div>
