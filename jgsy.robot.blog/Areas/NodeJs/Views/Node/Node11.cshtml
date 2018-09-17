@@ -18,27 +18,34 @@
     安装客户端 sudo apt-get install openssh-client（我这里是windows 不需要了,如果是两台linux系统双向登录 都得安装）
     
     ssh -l ubuntu 119.29.104.251     （ssh -l [用户名] [远程ip]）本地 ssh localhost
-    测试登录成功后，生成ssh key（最好不要用root用户生成）
+    测试登录成功后，
+
+    生成ssh key（最好不要用root用户生成）
     ssh-keygen -t rsa -b 4096 -C "XXX@162.com" 回车默认 或者ssh-keygen -t rsa -P "" 、ssh-keygen 等
     @*ssh-keygen -t rsa -b 4096 -C "18810114757@163.com"*@
     将公钥追加到 authorized_keys 文件中 cat .ssh/id_rsa.pub >> .ssh/authorized_keys
-    赋予 authorized_keys 文件权限 chmod 600 .ssh/authorized_keys
+
+    赋予 authorized_keys 文件权限 chmod 700 .ssh chmod 600 .ssh/authorized_keys
     ssh localhost  第一次需要输入 yes 
+
     测试登录成功后 本机基本设置已完成 以A为客户端B为服务端 执行以下命令
     
     ⑴复制 A 的公钥到 B 上 都是Linux
     ①scp robot@119.29.104.251:/home/robot/.ssh/id_rsa.pub /home/robot  （scp master_userName@master_ip:master_file A _folder）
     将 A 公钥追加到 B 的 authorized_keys 文件中，删除 A 公钥文件
     ②cat /home/robot/id_rsa.pub >> .ssh/authorized_keys
-    ③rm /home/robot/id_rsa.pub
-        
-        eval"(ssh-agent -s)"  开启代理
-       /etc/ssh/sshd_config  配置需要修改 
-       sudo service ssh restart
+    ③rm /home/robot/id_rsa.pub     
+    ④eval "$(ssh-agent -s)"  开启代理 
+    ssh-add ~/.ssh/id_rsa   把key加入到代理中
+    /etc/ssh/sshd_config  配置需要修改    添加或自改为 PermitRootLogin yes
+    sudo service ssh restart
     ⑵这里是windows直接通过putty 登录copy到
         ssh 119.29.104.251
 
     完活
+    sudo ps -e |grep ssh 查看服务是否启动
+    sudo service ssh start" 服务就会启动
+  
 </pre>
  <h5><a href="https://blog.csdn.net/u010458114/article/details/70161486">content</a></h5>
  
