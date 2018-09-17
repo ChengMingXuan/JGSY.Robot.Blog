@@ -38,14 +38,32 @@
     ④eval "$(ssh-agent -s)"  开启代理 
     ssh-add ~/.ssh/id_rsa   把key加入到代理中
     /etc/ssh/sshd_config  配置需要修改    添加或自改为 PermitRootLogin yes
+        /etc/ssh/sshd_config默认端口是22 修改  最下面添加 
+        AllowUsers ubuntu 保存重启ssh服务  sudo service ssh restart
+        
+        ubuntu 属于 sudo 用户组 
+          addUser  ubuntu  输入密码 这里输入的信息最好记录一下XX.txt
+          gpasswd -a ubuntu sudo  添加到sudo 组
+                
+          sudo visudo   更改内容如下 对用户生效
+                    ubuntu ALL=(ALL:ALL) ALL  
+                            1 all、 对所有sudo生效
+                            2 all、 ubuntu可以以任何用户执行命令
+                            3 all、 ubuntu可以以任何组执行命令
+                            4 all、 ubuntu使用所有组
+                           ctrl+s 回车 Y 
+        禁用掉root登录 无密码登录 
+        PermitRootLogin no
+        PasswordAuthentication no
+        PermitEmptyPasswords no
     sudo service ssh restart
-    ⑵这里是windows直接通过putty 登录copy到
-        ssh 119.29.104.251
-
+    ⑵这里是windows直接通过putty 登录copy到 如果改了 port=22 --> port=30000 
+        ssh  ubuntu@119.29.104.251
+        ssh -p 30000  ubuntu@119.29.104.251
     完活
     sudo ps -e |grep ssh 查看服务是否启动
     sudo service ssh start" 服务就会启动
-  
+   
 </pre>
  <h5><a href="https://blog.csdn.net/u010458114/article/details/70161486">content</a></h5>
  
