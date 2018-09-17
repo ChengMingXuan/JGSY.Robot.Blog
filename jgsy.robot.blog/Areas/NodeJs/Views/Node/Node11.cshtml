@@ -12,12 +12,53 @@
         <img src="~/nodejs/20180916/s2.png" />
         <img src="~/nodejs/20180916/s3.png" />
         <pre>
-1. 安装openssh-server
+    Ubuntu Server 16.04.1 LTS 64位
+    首先更新源 sudo apt-get update
+    安装服务端 openssh(默认已安装) sudo apt-get install openssh-server （备注未安装 会有输入提示：输入大写的 Y）
+    安装客户端 sudo apt-get install openssh-client（我这里是windows 不需要了,如果是两台linux系统双向登录 都得安装）
+    
+    ssh -l ubuntu 119.29.104.251     （ssh -l [用户名] [远程ip]）本地 ssh localhost
+    测试登录成功后，生成ssh key（最好不要用root用户生成）
+    ssh-keygen -t rsa -b 4096 -C "XXX@162.com" 回车默认 或者ssh-keygen -t rsa -P "" 、ssh-keygen 等
+    @*ssh-keygen -t rsa -b 4096 -C "18810114757@163.com"*@
+    将公钥追加到 authorized_keys 文件中 cat .ssh/id_rsa.pub >> .ssh/authorized_keys
+    赋予 authorized_keys 文件权限 chmod 600 .ssh/authorized_keys
+    ssh localhost  第一次需要输入 yes 
+    测试登录成功后 本机基本设置已完成 以A为客户端B为服务端 执行以下命令
+    
+    ⑴复制 A 的公钥到 B 上 都是Linux
+    ①scp robot@119.29.104.251:/home/robot/.ssh/id_rsa.pub /home/robot  （scp master_userName@master_ip:master_file A _folder）
+    将 A 公钥追加到 B 的 authorized_keys 文件中，删除 A 公钥文件
+    ②cat /home/robot/id_rsa.pub >> .ssh/authorized_keys
+    ③rm /home/robot/id_rsa.pub
+        
+        eval"(ssh-agent -s)"  开启代理
+       /etc/ssh/sshd_config  配置需要修改 
+       sudo service ssh restart
+    ⑵这里是windows直接通过putty 登录copy到
+        ssh 119.29.104.251
+
+    完活
+</pre>
+ <h5><a href="https://blog.csdn.net/u010458114/article/details/70161486">content</a></h5>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+   <pre class="hide">
+    1. 安装openssh-server
     yum install -y openssl openssh-server
     2. 修改配置文件
-    用vim打开配置文件/etc/ssh/sshd_config
-
-    将PermitRootLogin，RSAAuthentication，PubkeyAuthentication的设置打开。
+    用vim打开配置文件/etc/ssh/sshd_config  将PermitRootLogin，RSAAuthentication，PubkeyAuthentication的设置打开。
 
     启动ssh的服务：
 
@@ -27,17 +68,7 @@
     systemctl enable sshd.service
     设置文件夹~/.ssh的访问权限：
 
-    $ cd ~
-    $ chmod 700 .ssh                                                                                                
-    $ chmod 600 .ssh/*                                                                                              
-    $ ls -la .ssh                                                                                                   
-    total 16
-    drwx------. 2 root root   58 May 15 00:23 .
-    dr-xr-x---. 8 root root 4096 May 15 00:26 ..
-    -rw-------. 1 root root  403 May 15 00:22 authorized_keys
-    -rw-------. 1 root root 1766 May 15 00:21 id_rsa
-    -rw-------. 1 root root  403 May 15 00:21 id_rsa.pub
-    authorized_keys文件存储的是客户端的公共密钥。
+  
 
 
 
@@ -57,9 +88,9 @@
 
     systemctl enable sshd.service
 
-
+            <code>ssh-copy-id -i C:/Users/jack/.ssh/id_rsa.pub ubuntu@119.29.104.251 </code>
 </pre>
-        <code>ssh-copy-id -i C:/Users/jack/.ssh/id_rsa.pub root@109.19.104.211 </code>
+        
     </div>
-
+   
 </div>
