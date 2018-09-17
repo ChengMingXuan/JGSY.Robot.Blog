@@ -13,6 +13,7 @@ namespace jgsy.robot.blog.Areas.Git.Controllers
         {
             return View();
         }
+        public IActionResult GitTop() { return PartialView("GitTop"); }
         public IActionResult Git1() { return PartialView("Git1"); }
         public IActionResult Git5() { return PartialView("Git5"); }
         public IActionResult Git3() { return PartialView("Git3"); }

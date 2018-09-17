@@ -13,6 +13,7 @@ namespace jgsy.robot.blog.Areas.Tools.Controllers
         {
             return View();
         }
+        public IActionResult ToolsTop() { return PartialView("ToolsTop"); }
         public IActionResult Tools3() { return PartialView("Tools3"); }
         public IActionResult Tools4() { return PartialView("Tools4"); }
         public IActionResult Tools1() { return PartialView("Tools1"); }

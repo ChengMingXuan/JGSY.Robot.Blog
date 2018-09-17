@@ -230,6 +230,8 @@
     <Folder Include="Areas\NetworkProtocol\Models\" />
     <Folder Include="Areas\NodeJs\Data\" />
     <Folder Include="Areas\NodeJs\Models\" />
+    <Folder Include="Areas\Open\Data\" />
+    <Folder Include="Areas\Open\Models\" />
     <Folder Include="Areas\Oracle\Data\" />
     <Folder Include="Areas\Oracle\Models\" />
     <Folder Include="Areas\React\Data\" />
@@ -257,7 +259,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Areas\Git\Views\Git\GitTop.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\Tools\Views\Tools\Tools1.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Tools\Views\Tools\ToolsTop.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>
