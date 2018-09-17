@@ -57,14 +57,92 @@
         PasswordAuthentication no
         PermitEmptyPasswords no
     sudo service ssh restart
-    ⑵这里是windows直接通过putty 登录copy到 如果改了 port=22 --> port=30000 
+    ⑵这里是windows直接（通过putty登录） copy到authorized_keys 
+      或者  （ssh-copy-id -i C:/Users/jack/.ssh/id_rsa.pub ubuntu@119.29.104.251）     copy到authorized_keys
+      如果改了 port=22 --> port=30000 
         ssh  ubuntu@119.29.104.251
         ssh -p 30000  ubuntu@119.29.104.251
     完活
     sudo ps -e |grep ssh 查看服务是否启动
     sudo service ssh start" 服务就会启动
    
+
+    配置iptables和Fail2Ban增强安全防护
+    1、ubuntu系统
+    sudo apt-get update && sudo apt-get upgrade
+    iptables -F
+    sudo iptables -F 清楚默认配置
+    sudo vi /etc/iptables.up.rules  新建文件
+    *filter
+
+    #allow all connections
+    -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+    # allow out traffic
+    -A OUTPUT -j ACCEPT
+
+    #allow http https
+    -A INPUT -p -tcp --dport 443 -j ACCEPT
+    -A INPUT -p -tcp --dport 80 -j ACCEPT
+    #allow ssh port login
+    -A INPUT -p -tcp --m state --state NEW --dport 30000 -j ACCEPT
+    #allow ssh port login
+    -A INPUT -p -tcp --m state --state NEW --dport 22 -j ACCEPT
+    #ping
+    -A INPUT -p icmp -m -icmp --icmp-type 8 -j ACCEPT
+    # log denied calls
+     -A INPUT -m limit --limit  5/min -j LOG --log-prefix "iptables denied:" --log-level 7
+
+# drop incoming sensitive connections
+-A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --set
+-A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --update --seconds 60 --hitcount 150 -j DROP
+
+
+    # reject all other inbound
+    -A INPUT -j REJECT
+    -A FORWARD -j REJECT
+
+    COMMIT
+
+保存
+执行防火墙规则
+sudo iptables-restore < /etc/iptables.up.rules 
+
+
+sudo ufw status  查看 status : inactive
+sudo ufw enable 激活防火墙配置
+
+留用备用方案
+sudo vi /etc/network/if-up.d/iptables
+#!/bin/sh
+iptables-restore /etc/iptables.up.rules
+保存
+权限
+sudo chmod +x /etc/network/if-up.d/iptables
+
+安装Fail2ban
+sudo apt-get install fail2ban
+Y继续
+ sudo vi /etc/fail2ban/jail.conf
+
+bantime =3600
+
+destemail = 18810114757@163.com
+
+action = %(action_mw)s
+
+maxretry =6
+保存  
+
+sudo service fail2ban status
+
+sudo service fail2ban start
+sudo service fail2ban stop
+
+
+
+
 </pre>
+
  <h5><a href="https://blog.csdn.net/u010458114/article/details/70161486">content</a></h5>
  
 
