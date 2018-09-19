@@ -14,8 +14,10 @@
         <pre>
     Ubuntu Server 16.04.1 LTS 64位
     首先更新源 sudo apt-get update
-    安装服务端 openssh(默认已安装) sudo apt-get install openssh-server （备注未安装 会有输入提示：输入大写的 Y）
-    安装客户端 sudo apt-get install openssh-client（我这里是windows 不需要了,如果是两台linux系统双向登录 都得安装）
+    安装服务端 openssh(默认已安装) 
+    sudo apt-get install openssh-server （备注未安装 会有输入提示：输入大写的 Y）
+    安装客户端 
+    sudo apt-get install openssh-client（我这里是windows 不需要了,如果是两台linux系统双向登录 都得安装）
     
     ssh -l ubuntu 119.29.104.251     （ssh -l [用户名] [远程ip]）本地 ssh localhost
     测试登录成功后，
@@ -74,33 +76,32 @@
     sudo iptables -F 清楚默认配置
     sudo vi /etc/iptables.up.rules  新建文件
     *filter
-
-    #allow all connections
+     #allow all connections
     -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
     # allow out traffic
     -A OUTPUT -j ACCEPT
+     #allow http https
+    -A INPUT -p tcp --dport 443 -j ACCEPT
 
-    #allow http https
-    -A INPUT -p -tcp --dport 443 -j ACCEPT
-    -A INPUT -p -tcp --dport 80 -j ACCEPT
+    -A INPUT -p tcp --dport 80 -j ACCEPT
+
+    -A INPUT -p tcp --dport 8080 -j ACCEPT
+     #allow ssh port login
+    -A INPUT -p tcp -m state --state NEW --dport 30000 -j ACCEPT
     #allow ssh port login
-    -A INPUT -p -tcp --m state --state NEW --dport 30000 -j ACCEPT
-    #allow ssh port login
-    -A INPUT -p -tcp --m state --state NEW --dport 22 -j ACCEPT
+    -A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT
     #ping
-    -A INPUT -p icmp -m -icmp --icmp-type 8 -j ACCEPT
+    -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
     # log denied calls
-     -A INPUT -m limit --limit  5/min -j LOG --log-prefix "iptables denied:" --log-level 7
+    -A INPUT -m limit --limit  5/min -j LOG --log-prefix "iptables denied:" --log-level 7
+    # drop incoming sensitive connections
+    -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --set
 
-# drop incoming sensitive connections
--A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --set
--A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --update --seconds 60 --hitcount 150 -j DROP
+    -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --update --seconds 60 --hitcount 150 -j DROP
 
-
-    # reject all other inbound
     -A INPUT -j REJECT
-    -A FORWARD -j REJECT
 
+    -A FORWARD -j REJECT
     COMMIT
 
 保存
@@ -142,7 +143,37 @@ sudo service fail2ban stop
 
 
 </pre>
+        <a href="https://blog.csdn.net/piaocoder/article/details/54707533">iptables配置博客</a>
+        <pre>
+    nodejs部署  ubuntu
 
+    sudo apt-get update  更新
+
+    安装所需软件工具
+    sudo apt-get install vim openssl build-essential libssl-dev wget curl git 
+    
+
+    https://github.com/creationix/nvm
+    wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+    nvm install 8.0.0  、 nvm install v8.0.0
+    nvm use 8.0.0  、 nvm use 8.0.0 
+    nvm alias default 8.0.0
+    配置npm镜像 taobao
+    npm --registry=https://registry.npm.taobao.org install -g npm
+
+    echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p 文件监控数目
+
+    npm --registry=https://registry.npm.taobao.org install -g cnpm
+
+    cnpm 安装不上  cnpm sync koa
+    
+    其他辅助工具 不一定用的上
+    npm i pm2 webpack gulp grunt-cli -g
+
+
+
+
+</pre>
  <h5><a href="https://blog.csdn.net/u010458114/article/details/70161486">content</a></h5>
  
 
