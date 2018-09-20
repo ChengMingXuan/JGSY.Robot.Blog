@@ -355,8 +355,32 @@
 
     服务器基本环境完成
 </pre>
+        <h4>9、ubuntu 安装MongoDB数据库 </h4>
+        <a href="https://docs.mongodb.com/v3.0/tutorial/install-mongodb-on-ubuntu/">install-mongodb-on-ubuntu 官网API</a>
+
         <h4>9、ubuntu 安装Nginx </h4>
 
-    </div>
+        <pre>
+        1) sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+        2) echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+        3) sudo apt-get update
+        4) sudo apt-get install -y mongodb-org
+        5) 安装慢的话编辑  变更
+                sudo vi /etc/apt/sources.list.d/mongodb-org-3.0.list
+                sudo cat /etc/apt/sources.list.d/mongodb-org-4.0.list
+                由
+                deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/4.0 multiverse
+                变更为  我这里按照那个挺快 不用改了 
+                deb [ arch=amd64 ] https://mirrors.aliyun.com/mongodb/apt/ubuntu trusty/mongodb-org/4.0 multiverse
+        6) sudo apt-get update
+        7) sudo apt-get update
+        2) sudo apt-get update
+        2) sudo apt-get update
+        2) sudo apt-get update
+        2) sudo apt-get update
+</pre>
 
+
+
+    </div> 
 </div>
