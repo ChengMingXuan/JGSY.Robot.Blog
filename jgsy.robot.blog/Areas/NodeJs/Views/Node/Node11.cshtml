@@ -33,6 +33,7 @@
 
      更改相关配置
      gedit  /etc/ssh/sshd_config  或者 vi /etc/ssh/sshd_config
+               打开配置文件/etc/ssh/sshd_config  将PermitRootLogin，RSAAuthentication，PubkeyAuthentication的设置打开。
      gedit编辑器
          安装 gedit
         sudo apt-get update
@@ -40,6 +41,24 @@
         sudo apt-get install gedit-plugins
         sudo apt-get remove gedit
         sudo apt-get install gedit
+    
+
+    启动ssh的服务：
+    systemctl start sshd.service
+    设置开机自动启动ssh服务
+    systemctl enable sshd.service
+
+    查看状态：
+    systemctl status sshd.service
+
+    启动服务：
+    systemctl start sshd.service
+
+    重启服务：
+    systemctl restart sshd.service
+
+    开机自启：
+    systemctl enable sshd.service
  
 </pre>
         <h5>2、客户端、服务端配置生成ssh key</h5>
@@ -172,7 +191,7 @@
      ssh localhost  第一次需要输入 yes 不用输入密码即可在当前重新登录，即 本地无密码登录测试    
         </pre>
 
-        <h5>4、配置客户端远程登录服务器</h5>
+        <h5>5、配置客户端远程登录服务器</h5>
         <pre> 
       客户端执行以下命令
         ssh-copy-id -i C:/Users/jack/.ssh/id_rsa.pub robot@119.29.104.251
@@ -212,7 +231,7 @@
         
         </pre>
 
-        <h5>5、ssh 默认22端口登录不安全 </h5>
+        <h5>6、ssh 默认22端口登录不安全 </h5>
         <pre> 
         sudo vi /etc/ssh/sshd_config
         变更
@@ -223,7 +242,7 @@
          sudo service ssh restart
          登录 ssh  robot@119.29.104.251 变为  ssh -p 22222  ubuntu@119.29.104.251
         </pre>
-        <h5>6、配置iptables和Fail2Ban增强安全防护 </h5>
+        <h5>7、配置iptables和Fail2Ban增强安全防护 </h5>
         <pre>
     1、ubuntu系统
         sudo apt-get update && sudo apt-get upgrade
@@ -297,86 +316,46 @@
     sudo service fail2ban stop
 
 </pre>
-        <a href="https://blog.csdn.net/wenyun_kang/article/details/77413714">Ubuntu ssh免密参考</a>
-        <a href="https://blog.csdn.net/piaocoder/article/details/54707533">iptables配置博客</a>
-<pre>
+        <h5> <a href="https://blog.csdn.net/wenyun_kang/article/details/77413714">Ubuntu ssh免密参考</a></h5>
+        <h5><a href="https://blog.csdn.net/u010458114/article/details/70161486">Ubuntu ssh免密参考</a></h5>
+        <h5><a href="https://blog.csdn.net/piaocoder/article/details/54707533">iptables配置博客</a> </h5>
+
+        <h4>8、ubuntu 安装nodejs环境 </h4>
+        <pre>
     nodejs部署  ubuntu
-
-    sudo apt-get update  更新
-
+    更新 
+    sudo apt-get update  
     安装所需软件工具
     sudo apt-get install vim openssl build-essential libssl-dev wget curl git 
     
-
+    nvm管理nodejs版本
     https://github.com/creationix/nvm
     wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+    安装nodejs
+    重新打开命令面板
+    安装
     nvm install 8.0.0  、 nvm install v8.0.0
+    指定版本
     nvm use 8.0.0  、 nvm use 8.0.0 
+    指定版本默认就是8.0.0
     nvm alias default 8.0.0
+
+    快速下载镜像配置  国内淘宝
     配置npm镜像 taobao
     npm --registry=https://registry.npm.taobao.org install -g npm
-
-    echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p 文件监控数目
-
+    增加文件监控数目
+    echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p 
+    安装方式变更为 cnpm 注册
     npm --registry=https://registry.npm.taobao.org install -g cnpm
-
+    淘宝更新不及时可以同步到淘宝
     cnpm 安装不上  cnpm sync koa
     
-    其他辅助工具 不一定用的上
+    安装其他辅助工具 不一定用的上
     npm i pm2 webpack gulp grunt-cli -g
 
+    服务器基本环境完成
 </pre>
-
-        <h5><a href="https://blog.csdn.net/u010458114/article/details/70161486">content</a></h5>
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <pre class="hide">
-    1. 安装openssh-server
-    yum install -y openssl openssh-server
-    2. 修改配置文件
-    用vim打开配置文件/etc/ssh/sshd_config  将PermitRootLogin，RSAAuthentication，PubkeyAuthentication的设置打开。
-
-    启动ssh的服务：
-
-    systemctl start sshd.service
-    设置开机自动启动ssh服务
-
-    systemctl enable sshd.service
-    设置文件夹~/.ssh的访问权限：
-
-  
-
-
-
-    查看状态：
-
-    systemctl status sshd.service
-
-    启动服务：
-
-    systemctl start sshd.service
-
-    重启服务：
-
-    systemctl restart sshd.service
-
-    开机自启：
-
-    systemctl enable sshd.service
-
-        <code>ssh-copy-id -i C:/Users/jack/.ssh/id_rsa.pub ubuntu@119.29.104.251 </code>
-</pre>
+        <h4>9、ubuntu 安装Nginx </h4>
 
     </div>
 
