@@ -1,21 +1,44 @@
 <div class="col-lg-12 col-md-12 col-sm-12">
+
     <div class="col-lg-12 col-md-12 col-sm-12">
-        <h4><a href="https://www.linuxidc.com/Linux/2016-03/129204.htm">ssh无密码登录Centos 配置</a></h4>
+        <h4>Centos SSH 安装</h4>
     </div>
-    <pre>
-    yum install gedit 一路yes
-    </pre>
+
     <div class="col-lg-12 col-md-12 col-sm-12">
-        <h4><a href="https://jingyan.baidu.com/article/9c69d48fb9fd7b13c8024e6b.html">ssh无密码登录ubuntu配置</a></h4>
-    </div>
-    <pre>
-    sudo apt-get update
-    sudo apt-get install openssh-server  回车Y
-    sudo ps -e |grep ssh 查看服务是否启动
-    sudo service ssh start 启动服务
+        <h4>Ubuntu SSH 安装</h4>
+        <h5>Ubuntu Server 16.04.1 LTS 64位</h5>
+        <pre>
+    首先更新源 
+        sudo apt-get update
+    安装服务端 openssh(默认已安装)   未安装时，会有输入提示：输入大写的 Y
+        sudo apt-get install openssh-server 
+    安装客户端 
+        sudo apt-get install openssh-client
+            我这里是windows 使用git,如果是两台linux系统双向登录 都得安装 openssh-client和openssh-server
     
-    </pre>
-    <pre>
+    查看ssh服务是否启动
+        sudo ps -e |grep ssh
+    开启ssh服务
+        sudo service ssh start
+    ssh localhost  本地
+    测试登录密码成功后，服务器基础环境安装成功
+
+     更改相关配置
+     gedit  /etc/ssh/sshd_config  或者 vi /etc/ssh/sshd_config
+     gedit编辑器
+         安装 gedit
+        sudo apt-get update
+        sudo apt-get install gedit-gmate
+        sudo apt-get install gedit-plugins
+        sudo apt-get remove gedit
+        sudo apt-get install gedit
+ 
+</pre>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h4>Ubuntu gedit 安装</h4>
+        <pre>
     安装 gedit    
     sudo apt-get update 
 
@@ -36,14 +59,20 @@
     它会根据不同的语言高亮显现关键字和标识符。
 
     在命令行下输入：gedit  回车即可
-</pre>
+    </pre>
+    </div>
+
+
     <div class="col-lg-12 col-md-12 col-sm-12">
         <h4>zsh安装 <a href="http://www.zsh.org/">官网</a></h4>
         <h5><a href="https://blog.csdn.net/u010138906/article/details/78778627">参考博客</a></h5>
-
-    </div>
     <pre>
     CentOS 安装：sudo yum install -y zsh
     Ubuntu 安装：sudo apt-get install -y zsh
-</pre>
+    </pre>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h5><a href="https://www.linuxidc.com/Linux/2016-03/129204.htm">在Linux上ssh的相关安装和配置</a></h5>
+    </div>
 </div>

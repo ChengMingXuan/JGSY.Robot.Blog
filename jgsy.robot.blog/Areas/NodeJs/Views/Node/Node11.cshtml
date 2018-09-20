@@ -5,146 +5,301 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <h5>部署结构</h5>
         <img src="~/nodejs/20180916/1.png" />
+        <h5>ssh无密码登录配置</h5>
     </div>
-    <div class="col-lg-12 col-md-12 col-sm-12">
-        <h5>ssh无密码登录</h5>
+    <div class="col-lg-12 col-md-12 col-sm-12 hide">
         <img src="~/nodejs/20180916/s1.png" />
         <img src="~/nodejs/20180916/s2.png" />
         <img src="~/nodejs/20180916/s3.png" />
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h4>Ubuntu Server 16.04.1 LTS 64位</h4>
+        <h5>1、安装SSH</h5>
         <pre>
-    Ubuntu Server 16.04.1 LTS 64位
-    首先更新源 sudo apt-get update
-    安装服务端 openssh(默认已安装) 
-    sudo apt-get install openssh-server （备注未安装 会有输入提示：输入大写的 Y）
+    首先更新源 
+        sudo apt-get update
+    安装服务端 openssh(默认已安装)   未安装时，会有输入提示：输入大写的 Y
+        sudo apt-get install openssh-server 
     安装客户端 
-    sudo apt-get install openssh-client（我这里是windows 不需要了,如果是两台linux系统双向登录 都得安装）
+        sudo apt-get install openssh-client
+            我这里是windows 使用git,如果是两台linux系统双向登录 都得安装 openssh-client和openssh-server
     
-    ssh -l ubuntu 119.29.104.251     （ssh -l [用户名] [远程ip]）本地 ssh localhost
-    测试登录成功后，
+    查看ssh服务是否启动
+        sudo ps -e |grep ssh
+    开启ssh服务
+        sudo service ssh start
+    ssh localhost  本地
+    测试登录密码成功后，服务器基础环境安装成功
 
-    生成ssh key（最好不要用root用户生成）
-    ssh-keygen -t rsa -b 4096 -C "XXX@162.com" 回车默认 或者ssh-keygen -t rsa -P "" 、ssh-keygen 等
-    @*ssh-keygen -t rsa -b 4096 -C "18810114757@163.com"*@
-    将公钥追加到 authorized_keys 文件中 cat .ssh/id_rsa.pub >> .ssh/authorized_keys
+     更改相关配置
+     gedit  /etc/ssh/sshd_config  或者 vi /etc/ssh/sshd_config
+     gedit编辑器
+         安装 gedit
+        sudo apt-get update
+        sudo apt-get install gedit-gmate
+        sudo apt-get install gedit-plugins
+        sudo apt-get remove gedit
+        sudo apt-get install gedit
+ 
+</pre>
+        <h5>2、客户端、服务端配置生成ssh key</h5>
+        <pre>
+      配置生成ssh key（最好不要用root用户生成）
+        ssh-keygen -t rsa -b 4096 -C "XXX@162.com" 回车默认 或者ssh-keygen -t rsa -P "" 、ssh-keygen 等
+       @*ssh-keygen -t rsa -b 4096 -C "18810114757@163.com"*@
 
-    赋予 authorized_keys 文件权限 chmod 700 .ssh chmod 600 .ssh/authorized_keys
-    ssh localhost  第一次需要输入 yes 
+        eval "$(ssh-agent -s)"  开启代理 
+        ssh-add ~/.ssh/id_rsa   把key加入到代理中
+        1、ssh-keygen：
+        SSH 为 Secure Shell 的缩写，SSH 为建立在应用层基础上的安全协议。SSH 是目前较可靠，
+            专为远程登录会话和其他网络服务提供安全性的协议。利用 SSH 协议可以有效防止远程管理过程中的信息泄露问题。
+        从客户端来看，SSH提供两种级别的安全验证：
+                第一种级别（基于口令的安全验证）：只要你知道自己帐号和口令，就可以登录到远程主机。
+                        所有传输的数据都会被加密，但是不能保证你正在连接的服务器就是你想连接的服务器。
+                        可能会有别的服务器在冒充真正的服务器，也就是受到“中间人”这种方式的攻击。
+                第二种级别（基于密匙的安全验证）ssh-keygen：需要依靠密匙，你必须为自己创建一对密匙，
+                        并把公用密匙放在需要访问的服务器上。如果你要连接到SSH服务器上，客户端软件就会向服务器发出请求，
+                        请求用你的密匙进行安全验证。服务器收到请求之后，先在该服务器上你的主目录下寻找你的公用密匙，
+                        然后把它和你发送过来的公用密匙进行比较。如果两个密匙一致，服务器就用公用密匙加密“质询”
+                        （challenge）并把它发送给客户端软件。客户端软件收到“质询”之后就可以用你的私人密匙解密再把它发送给服务器。
+                        用这种方式，你必须知道自己密匙的口令。但是，与第一种级别相比，第二种级别不需要在网络上传送口令。
+                         第二种级别不仅加密所有传送的数据，而且“中间人”这种攻击方式也是不可能的（因为他没有你的私人密匙）。
+                        但是整个登录的过程可能需要10秒 。
+                ssh-keygen有很多的参数，比如这里的-t -b -C都是他的一些参数。
 
-    测试登录成功后 本机基本设置已完成 以A为客户端B为服务端 执行以下命令
-    
-    ⑴复制 A 的公钥到 B 上 都是Linux
-    ①scp robot@119.29.104.251:/home/robot/.ssh/id_rsa.pub /home/robot  （scp master_userName@master_ip:master_file A _folder）
-    将 A 公钥追加到 B 的 authorized_keys 文件中，删除 A 公钥文件
-    ②cat /home/robot/id_rsa.pub >> .ssh/authorized_keys
-    ③rm /home/robot/id_rsa.pub     
-    ④eval "$(ssh-agent -s)"  开启代理 
-    ssh-add ~/.ssh/id_rsa   把key加入到代理中
-    /etc/ssh/sshd_config  配置需要修改    添加或自改为 PermitRootLogin yes
-        /etc/ssh/sshd_config默认端口是22 修改  最下面添加 
-        AllowUsers ubuntu 保存重启ssh服务  sudo service ssh restart
-        
-        ubuntu 属于 sudo 用户组 
-          addUser  ubuntu  输入密码 这里输入的信息最好记录一下XX.txt
-          gpasswd -a ubuntu sudo  添加到sudo 组
+        2、-t rsa：t是type的缩写
+        -t即指定密钥的类型，密钥的类型有两种，一种是RSA，一种是DSA：
+                RSA：RSA加密算法是一种非对称加密算法，是由三个麻省理工的牛人弄出来的，RSA是他们三个人姓的开头首字母组合。
+                DSA：Digital Signature Algorithm (DSA)是Schnorr和ElGamal签名算法的变种。
+        为了让两个linux机器之间使用ssh不需要用户名和密码。所以采用了数字签名RSA或者DSA来完成这个操作。
+            ssh-keygen默认使用rsa密钥，所以不加-t rsa也行，如果你想生成dsa密钥，就需要加参数-t dsa。
+
+        3、-b 4096：b是bit的缩写
+        -b 指定密钥长度。对于RSA密钥，最小要求768位，默认是2048位。命令中的4096指的是RSA密钥长度为4096位。
+        DSA密钥必须恰好是1024位(FIPS 186-2 标准的要求)。
+
+        4、-C "邮箱"：C是comment的缩写
+        -C表示要提供一个新注释，用于识别这个密钥，所以“”里面不一定非要填邮箱，可以是任何内容，邮箱仅仅是识别用的key
+        总结：当你创建ssh的时候：-t 表示密钥的类型 ，-b表示密钥的长度，-C 用于识别这个密钥的注释 ，
+              这个注释你可以输入任何内容，很多网站和软件用这个注释作为密钥的名字
+    </pre>
+        <h5>3、创建普通用户，赋予相应的操作权限 sudo 组</h5>
+        <PRE>
+         ubuntu默认没有开启root用户
+        一、
+        其实这没有多大必要，因为当你需要 root 的权限时，使用 sudo 便可以了。
+        如果你实在需要在 Ubuntu 中启用 root 帐号的话，那么不妨执行下面的操作：
+
+          1.重新设置 root 的密码：
+          $sudo passwd root  #按照提示输入两次新的密码，并加以确认。
+          
+          2.启用root用户登录：
+          $sudo vi /etc/X11/gdm/gdm.conf #打开gnome的配置文件,在末行模式中输入：AllowRoot回车，
+            找到AllowRoot＝false ,把false改为true，保存后退出。
+          之后，重启系统时，就可以用 root 登录了。如果你想要禁用 root 帐号，则执行下列命令：
+
+          $sudo passwd -l root
+ 
+        二、
+        Ubuntu 中的 root 帐号默认是被禁用了的。在这种情况之下，如果你想要使用 root 的权限来干些事情，就需要 sudo 指令。对某些朋友来说，他们可能需要激活 Ubuntu 中的 root 帐号。
+
+        在 Ubuntu 中激活 root 帐号的过程如下：
+
+          1. 在终端执行 sudo passwd root 指令后，系统将会提示你设置一个新的 root 帐号密码。
+          2. 点击 System -> Preferences -> Login Window 菜单，并切换到 Security 选项页，然后选中其下的“Allow local system administrator login”选项。
+
+        执行上述两步后，你便可以使用 root 帐号登录 Ubuntu 系统了。
+        如果要再次禁用 root 帐号，那么可以执行 sudo passwd -l root。 
+        三、
+        如果一直想一直用root也可以"sudo -s"。
+</PRE>
+        <pre> 
+        添加用户 sudo adduser robot
+        执行结果成功
+        ubuntu@VM-0-10-ubuntu:~$ sudo adduser robot
+        Adding user `robot' ...
+        Adding new group `robot' (1000) ...
+        Adding new user `robot' (1000) with group `robot' ...
+        Creating home directory `/home/robot' ...
+        Copying files from `/etc/skel' ...
+        Enter new UNIX password:
+        Retype new UNIX password:
+        passwd: password updated successfully
+        Changing the user information for robot
+        Enter the new value, or press ENTER for the default
+                Full Name []: robot
+                Room Number []: robot
+                Work Phone []:
+                Home Phone []:
+                Other []: robot
+        Is the information correct? [Y/n] Y
+        ubuntu@VM-0-10-ubuntu:~$
+        赋予权限 sudo gpasswd -a robot sudo
+        ubuntu@VM-0-10-ubuntu:~$ sudo gpasswd -a robot sudo
+        Adding user robot to group sudo
+        ubuntu@VM-0-10-ubuntu:~$
+        重启ssh
+        sudo service ssh restart
+            
+
+        最终整理
+        sudo visudo 进入编辑
+           robot 属于 sudo 用户组 
+              addUser  robot  输入密码 这里输入的信息最好记录一下XX.txt
+              gpasswd -a robot sudo  添加到sudo 组
                 
-          sudo visudo   更改内容如下 对用户生效
-                    ubuntu ALL=(ALL:ALL) ALL  
-                            1 all、 对所有sudo生效
-                            2 all、 ubuntu可以以任何用户执行命令
-                            3 all、 ubuntu可以以任何组执行命令
-                            4 all、 ubuntu使用所有组
-                           ctrl+s 回车 Y 
-        禁用掉root登录 无密码登录 
-        PermitRootLogin no
-        PasswordAuthentication no
-        PermitEmptyPasswords no
-    sudo service ssh restart
-    ⑵这里是windows直接（通过putty登录） copy到authorized_keys 
-      或者  （ssh-copy-id -i C:/Users/jack/.ssh/id_rsa.pub ubuntu@119.29.104.251）     copy到authorized_keys
-      如果改了 port=22 --> port=30000 
-        ssh  ubuntu@119.29.104.251
-        ssh -p 30000  ubuntu@119.29.104.251
-    完活
-    sudo ps -e |grep ssh 查看服务是否启动
-    sudo service ssh start" 服务就会启动
-   
+              sudo visudo   更改内容如下 规则对用户robot生效
+                        robot ALL=(ALL:ALL) ALL  
+                                1 all、 对所有sudo生效
+                                2 all、 robot可以以任何用户执行命令
+                                3 all、 robot可以以任何组执行命令
+                                4 all、 robot使用所有组
+                               ctrl+s 回车 Y 
+            禁用掉root登录和无密码登录 
+            PermitRootLogin no
+            PasswordAuthentication no
+            PermitEmptyPasswords no
 
-    配置iptables和Fail2Ban增强安全防护
+            sudo ps -e |grep ssh 查看服务是否启动
+            sudo service ssh start" 服务就会启动
+</pre>
+        <h6>4、赋予操作权限</h6>
+        <pre>
+     这里没有赋予authorized_keys最大权限 777 权限如下 以便当前用户有权限操作 赋予 authorized_keys 文件权限 
+        chmod -R 700 .ssh &&   chmod -R 600 .ssh/authorized_keys  
+
+     将公钥追加到 authorized_keys 文件中 cat .ssh/id_rsa.pub >> .ssh/authorized_keys
+     ssh localhost  第一次需要输入 yes 不用输入密码即可在当前重新登录，即 本地无密码登录测试    
+        </pre>
+
+        <h5>4、配置客户端远程登录服务器</h5>
+        <pre> 
+      客户端执行以下命令
+        ssh-copy-id -i C:/Users/jack/.ssh/id_rsa.pub robot@119.29.104.251
+
+        执行结果成功
+            $ ssh-copy-id -i C:/Users/jack/.ssh/id_rsa.pub robot@119.29.104.251
+            /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "C:/Users/jack/.ssh/id_rsa.pub"
+            The authenticity of host '119.29.104.251 (119.29.104.251)' can't be established.
+            ECDSA key fingerprint is SHA256:VV7UrNsO5c9voIJJNoHLY/jciaq0YA9VUfpGJMoc6/g.
+            Are you sure you want to continue connecting (yes/no)? yes  这里手动输入
+            /usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+            /usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+            robot@119.29.104.251's password:
+
+            Number of key(s) added: 1
+
+            Now try logging into the machine, with:   "ssh 'robot@119.29.104.251'"
+            and check to make sure that only the key(s) you wanted were added.
+
+
+        登录
+         ssh robot@119.29.104.251  无密码登录
+         执行结果成功
+            $ ssh robot@119.29.104.251
+            Welcome to Ubuntu 16.04.1 LTS (GNU/Linux 4.4.0-130-generic x86_64)
+
+             * Documentation:  https://help.ubuntu.com
+             * Management:     https://landscape.canonical.com
+             * Support:        https://ubuntu.com/advantage
+            New release '18.04.1 LTS' available.
+            Run 'do-release-upgrade' to upgrade to it.
+
+
+            Last login: Thu Sep 20 14:38:39 2018 from 222.130.143.240
+            robot@VM-0-10-ubuntu:~$
+        
+        
+        </pre>
+
+        <h5>5、ssh 默认22端口登录不安全 </h5>
+        <pre> 
+        sudo vi /etc/ssh/sshd_config
+        变更
+        port 22222
+        UseDNS no
+        最下面 添加 AllowUsers robot
+         改了 port=22 --> port=22222 
+         sudo service ssh restart
+         登录 ssh  robot@119.29.104.251 变为  ssh -p 22222  ubuntu@119.29.104.251
+        </pre>
+        <h5>6、配置iptables和Fail2Ban增强安全防护 </h5>
+        <pre>
     1、ubuntu系统
-    sudo apt-get update && sudo apt-get upgrade
-    iptables -F
-    sudo iptables -F 清楚默认配置
-    sudo vi /etc/iptables.up.rules  新建文件
-    *filter
-     #allow all connections
-    -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-    # allow out traffic
-    -A OUTPUT -j ACCEPT
-     #allow http https
-    -A INPUT -p tcp --dport 443 -j ACCEPT
+        sudo apt-get update && sudo apt-get upgrade
+            update是下载源里面的metadata的. 包括这个源有什么包, 每个包什么版本之类的.
+            upgrade是根据update命令下载的metadata决定要更新什么包(同时获取每个包的位置).
+        iptables -F
+        sudo iptables -F 清楚默认配置
+        sudo vi /etc/iptables.up.rules  新建文件
+        *filter
+         #allow all connections
+        -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+        # allow out traffic
+        -A OUTPUT -j ACCEPT
+         #allow http https
+        -A INPUT -p tcp --dport 443 -j ACCEPT
 
-    -A INPUT -p tcp --dport 80 -j ACCEPT
+        -A INPUT -p tcp --dport 80 -j ACCEPT
 
-    -A INPUT -p tcp --dport 8080 -j ACCEPT
-     #allow ssh port login
-    -A INPUT -p tcp -m state --state NEW --dport 30000 -j ACCEPT
-    #allow ssh port login
-    -A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT
-    #ping
-    -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
-    # log denied calls
-    -A INPUT -m limit --limit  5/min -j LOG --log-prefix "iptables denied:" --log-level 7
-    # drop incoming sensitive connections
-    -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --set
+        -A INPUT -p tcp --dport 8080 -j ACCEPT
+         #allow ssh port login
+        -A INPUT -p tcp -m state --state NEW --dport 22222 -j ACCEPT
+        #allow ssh port login
+        -A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT
+        #ping
+        -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
+        # log denied calls
+        -A INPUT -m limit --limit  5/min -j LOG --log-prefix "iptables denied:" --log-level 7
+        # drop incoming sensitive connections
+        -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --set
 
-    -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --update --seconds 60 --hitcount 150 -j DROP
+        -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --update --seconds 60 --hitcount 150 -j DROP
 
-    -A INPUT -j REJECT
+        -A INPUT -j REJECT
 
-    -A FORWARD -j REJECT
-    COMMIT
+        -A FORWARD -j REJECT
+        COMMIT
 
-保存
-执行防火墙规则
-sudo iptables-restore < /etc/iptables.up.rules 
-
-
-sudo ufw status  查看 status : inactive
-sudo ufw enable 激活防火墙配置
-
-留用备用方案
-sudo vi /etc/network/if-up.d/iptables
-#!/bin/sh
-iptables-restore /etc/iptables.up.rules
-保存
-权限
-sudo chmod +x /etc/network/if-up.d/iptables
-
-安装Fail2ban
-sudo apt-get install fail2ban
-Y继续
- sudo vi /etc/fail2ban/jail.conf
-
-bantime =3600
-
-destemail = 18810114757@163.com
-
-action = %(action_mw)s
-
-maxretry =6
-保存  
-
-sudo service fail2ban status
-
-sudo service fail2ban start
-sudo service fail2ban stop
+    保存
+    执行防火墙规则
+    sudo iptables-restore < /etc/iptables.up.rules 
 
 
+    sudo ufw status  查看 status : inactive
+    sudo ufw enable 激活防火墙配置
 
+    留用备用方案
+    sudo vi /etc/network/if-up.d/iptables
+    #!/bin/sh
+    iptables-restore /etc/iptables.up.rules
+    保存
+    权限
+    sudo chmod +x /etc/network/if-up.d/iptables
+
+    安装Fail2ban
+    sudo apt-get install fail2ban
+    Y继续
+     sudo vi /etc/fail2ban/jail.conf
+
+    bantime =3600
+
+    destemail = 18810114757@163.com
+
+    action = %(action_mw)s
+
+    maxretry =6
+    保存  
+
+    sudo service fail2ban status
+
+    sudo service fail2ban start
+    sudo service fail2ban stop
 
 </pre>
+        <a href="https://blog.csdn.net/wenyun_kang/article/details/77413714">Ubuntu ssh免密参考</a>
         <a href="https://blog.csdn.net/piaocoder/article/details/54707533">iptables配置博客</a>
-        <pre>
+<pre>
     nodejs部署  ubuntu
 
     sudo apt-get update  更新
@@ -170,12 +325,9 @@ sudo service fail2ban stop
     其他辅助工具 不一定用的上
     npm i pm2 webpack gulp grunt-cli -g
 
-
-
-
 </pre>
- <h5><a href="https://blog.csdn.net/u010458114/article/details/70161486">content</a></h5>
- 
+
+        <h5><a href="https://blog.csdn.net/u010458114/article/details/70161486">content</a></h5>
 
 
 
@@ -188,7 +340,8 @@ sudo service fail2ban stop
 
 
 
-   <pre class="hide">
+
+        <pre class="hide">
     1. 安装openssh-server
     yum install -y openssl openssh-server
     2. 修改配置文件
@@ -222,9 +375,9 @@ sudo service fail2ban stop
 
     systemctl enable sshd.service
 
-            <code>ssh-copy-id -i C:/Users/jack/.ssh/id_rsa.pub ubuntu@119.29.104.251 </code>
+        <code>ssh-copy-id -i C:/Users/jack/.ssh/id_rsa.pub ubuntu@119.29.104.251 </code>
 </pre>
-        
+
     </div>
-   
+
 </div>
