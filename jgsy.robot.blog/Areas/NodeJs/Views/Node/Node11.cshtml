@@ -192,9 +192,12 @@
         </pre>
 
         <h5>5、配置客户端远程登录服务器</h5>
+        <a href="http://blog.sina.com.cn/s/blog_541a3cf10101epzf.html">ssh-copy-id使用非默认22端口时 </a>
         <pre> 
-      客户端执行以下命令
+      客户端执行以下命令(默认端口)
         ssh-copy-id -i C:/Users/jack/.ssh/id_rsa.pub robot@119.29.104.251
+        (非默认端口)
+        ssh-copy-id -i  C:/Users/jack/.ssh/id_rsa.pub -p 22222 robot@119.29.104.251
 
         执行结果成功
             $ ssh-copy-id -i C:/Users/jack/.ssh/id_rsa.pub robot@119.29.104.251
@@ -362,18 +365,222 @@
 
         <pre>
         1) sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
-        2) echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+        2) echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
         3) sudo apt-get update
-        4) sudo apt-get install -y mongodb-org
+        4) 
+            a:安装MongoDB的最新版本。
+                sudo apt-get install -y mongodb-org
+            
+                @*echo "mongodb-org hold" | sudo dpkg --set-selections
+                echo "mongodb-org-server hold" | sudo dpkg --set-selections
+                echo "mongodb-org-shell hold" | sudo dpkg --set-selections
+                echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
+                echo "mongodb-org-tools hold" | sudo dpkg --set-selections*@
+            b:安装MongoDB的特定版本。
+                sudo apt-get install -y mongodb-org=4.0.2 mongodb-org-server=4.0.2 mongodb-org-shell=4.0.2 mongodb-org-mongos=4.0.2 mongodb-org-tools=4.0.2
+                @*echo "mongodb-org hold" | sudo dpkg --set-selections
+                echo "mongodb-org-server hold" | sudo dpkg --set-selections
+                echo "mongodb-org-shell hold" | sudo dpkg --set-selections
+                echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
+                echo "mongodb-org-tools hold" | sudo dpkg --set-selections*@
+            c:安装失败 没有此文件忽略
+                  sudo vi /etc/apt/apt.conf
+                   注释掉
+                   保存退出 
         5) 安装慢的话编辑  变更
-                sudo vi /etc/apt/sources.list.d/mongodb-org-3.0.list
+                sudo vi /etc/apt/sources.list.d/mongodb-org-4.0.list
                 sudo cat /etc/apt/sources.list.d/mongodb-org-4.0.list
                 由
                 deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/4.0 multiverse
                 变更为  我这里按照那个挺快 不用改了 
                 deb [ arch=amd64 ] https://mirrors.aliyun.com/mongodb/apt/ubuntu trusty/mongodb-org/4.0 multiverse
-        6) sudo apt-get update
-        7) sudo apt-get update
+        6) 启动mongo
+            开启端口 
+            sudo vi /etc/iptables.up.rules
+            # mongodb connect 注意格式
+            -A INPUT -s 127.0.0.1 -p tcp --destination-port 27017 -m state --state NEW,ESTABLISHED -j ACCEPT
+            -A OUTPUT -d 127.0.0.1 -p tcp --source-port 27017 -m state --state ESTABLISHED -j ACCEPT
+            sudo iptables-restore < /etc/iptables.up.rules
+            启动
+            sudo service mongod start
+            sudo service mongod restart
+             执行sudo service mongod start失败 
+                解决失败  sudo service mongod start 命令不可用 这种启动可以sudo systemctl start mongodb
+                Failed to start mongod.service: Unit not found
+                sudo nano /etc/systemd/system/mongodb.service
+                  添加内容       
+                                [Unit]
+                                Description=High-performance, schema-free document-oriented database
+                                After=network.target
+ 
+                                [Service]
+                                User=mongodb
+                                ExecStart=/usr/bin/mongod --quiet --config /etc/mongod.conf
+ 
+                                [Install]
+                                WantedBy=multi-user.target    
+                启动   
+                sudo systemctl start mongodb
+                sudo systemctl status mongodb
+                永久启动 
+                sudo systemctl enable mongodb
+            失败 解决成功
+                https://stackoverflow.com/questions/48092353/failed-to-start-mongod-service-unit-mongod-service-not-found
+                    Source - official instructions
+
+                    sudo service mongod stop
+                    Remove Packages
+
+                    sudo apt-get purge mongodb-org*
+                    Remove the folders
+
+                    sudo rm -r /var/log/mongodb
+                    sudo rm -r /var/lib/mongodb
+                    1) sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+                    2) echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+                    update the list
+
+                    sudo apt-get update
+                    Install the latest package
+
+                    sudo apt-get install -y mongodb-org
+                    3 - Now it should work, please try below command
+
+                    sudo service mongod start
+                    and check the status
+                    
+                    sudo service mongod start
+                    sudo service mongodb start
+                    mongo --port 27018
+            检查是否开启成功
+            cat /var/log/mongodb/mongod.log
+            到这里 开启成功
+            
+            安全升级 改变端口
+            改变端口  sudo vi /etc/mongod.conf
+                port 27017  --->  27018
+                配置
+                 sudo vi /etc/iptables.up.rules
+                # mongodb connect 注意格式
+                -A INPUT -s 127.0.0.1 -p tcp --destination-port 27018 -m state --state NEW,ESTABLISHED -j ACCEPT
+                -A OUTPUT -d 127.0.0.1 -p tcp --source-port 27018 -m state --state ESTABLISHED -j ACCEPT
+                重新载入
+                sudo iptables-restore < /etc/iptables.up.rules
+            启动 
+            sudo systemctl start mongodb
+            sudo systemctl status mongodb
+
+            sudo service mongod stop
+            sudo service mongod start
+            sudo service mongod restart
+            
+            mongo  IP地址 [：端口]  
+                    mongo  --port 27018
+                    mongo  localhost:27018   
+                    mongo   localhost:27018/admin
+            
+        7)  数据库备份、导入、导出、单表导入导出、开启安全认证等操作
+
+            sudo mongodump -h 127.0.0.1:27017 -d indust-app -o indust-app-backup
+            mongodump -u "robot" -p "robot" --authenticationDatabase "movie" -h 127.0.0.1:27017 -d movie -o ./indust-app-backup
+            打包 tar zcvf indust-app.tar.gz indust-app-backup
+
+            把本地打包好的文件 copy 到 /home/ubuntu/dbbackup/ 文件夹下
+            在服务器上/home/ubuntu/创建  mkdir dbbackup
+            scp -P 8081 ~Desktop/deploy-projects/indust-app.tar.gz ubuntu@119.29.104.251:/home/ubuntu/dbbackup/
+
+            解压 
+
+            导入mnogodb数据库
+            mongorestore --host 127.0.0.1:27018 -d indust-app ./dbbackup/indust-app-backup/
+
+            导出单表 -d 数据库  -c 表 -q可以不加 导出姓名不为空的数据
+            mongoexport -d movie -c users -q '{"name": {$ne:null}}' -o ./movie-users.json
+
+            subl users.josn 编辑文件
+
+            本地文件夹 deploy-projects 要部署的文件存储位置
+
+            scp -P 8081 ./user.json ubuntu@119.29.104.251:/home/ubuntu/dbbackup
+
+            清空数据库 
+            mongo --host 127.0.0.1:8081 ubuntu --eval "db.dropDatabase()"
+
+
+            权限控制 添加管理员的admin 
+            use admin
+             1）db.createUser(
+                        {
+                        user: "admin", //用户名
+                        pwd: "P@ssw0rd", //密码
+                        roles: [ { role: "userAdminAnyDatabase", db: "admin" } ] //权限
+                        }
+
+
+              2）db.auth("admin","P@ssw0rd")
+
+              use movie
+              执行 1）2）  创建读写用户readWrite  备份用户read ...........
+
+            开启数据库认证权限设置
+            sudo vi /etc/mongod.conf
+            取消注释
+               security
+                    authorization: 'enabled'
+            保存
+            重启服务时期生效
+            sudo service mongod restart
+     
+                 授权必须 use admin  use movie db.auth('','')
+
+                 测试
+                 mongo 127.0.0.1:27018/movie -u robot -p robot
+
+                 ----------已存在安全验证auth-------indust-app =movie 数据库----
+
+            sudo mongodump -h 127.0.0.1:27017 -d indust-app -u robot -p robot -o indust-app-backup
+
+
+            mongoexport -d movie -u robot -p robot -c users -q '{"name": {$ne:null}}' -o ./movie-users.json
+
+
+            scp -P 8081 ./user.json ubuntu@119.29.104.251:/home/ubuntu/dbbackup
+
+
+            定时备份数据库
+            ls 
+            mkdir tasks
+            cd tasks
+            vi movie.backup.sh
+
+            #!/bin/sh
+            backUpFoler=/home/robot/backup/movie
+            date_now=`date +%Y_%m_%d_%H%M`
+            backFileName=movie_$date_now
+
+            cd backUpFoler
+            mkdir -p $backFileName
+
+            mongodump -h 127.0.0.1:27018 -d movie -u robot -p robot -o $backFileName
+
+            tar zcvf $backFileName.tar.gz $backFileName
+
+            rm -rf $backFileName
+
+            保存
+            mkdir backup
+            cd /backup
+            mkdir movie
+            cd ..
+            sudo sh ./tasks/movie.backup.sh
+
+            启动系统定时任务
+            crontab -e
+            编辑器选择 2 输入
+
+            13 00 * * * sh /home/robot/tasks/movie.backup.sh
+            Ctrl+s
+            shit+Y
         2) sudo apt-get update
         2) sudo apt-get update
         2) sudo apt-get update
