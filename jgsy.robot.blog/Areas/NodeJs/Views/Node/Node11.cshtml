@@ -192,7 +192,7 @@
         </pre>
 
         <h5>5、配置客户端远程登录服务器</h5>
-        <a href="http://blog.sina.com.cn/s/blog_541a3cf10101epzf.html">ssh-copy-id使用非默认22端口时 </a>
+        <a href="http://blog.sina.com.cn/s/blog_541a3cf10101epzf.html"  target="_blank">ssh-copy-id使用非默认22端口时 </a>
         <pre> 
       客户端执行以下命令(默认端口)
         ssh-copy-id -i C:/Users/jack/.ssh/id_rsa.pub robot@119.29.104.251
@@ -319,9 +319,9 @@
     sudo service fail2ban stop
 
 </pre>
-        <h5> <a href="https://blog.csdn.net/wenyun_kang/article/details/77413714">Ubuntu ssh免密参考</a></h5>
-        <h5><a href="https://blog.csdn.net/u010458114/article/details/70161486">Ubuntu ssh免密参考</a></h5>
-        <h5><a href="https://blog.csdn.net/piaocoder/article/details/54707533">iptables配置博客</a> </h5>
+        <h5> <a href="https://blog.csdn.net/wenyun_kang/article/details/77413714"  target="_blank">Ubuntu ssh免密参考</a></h5>
+        <h5><a href="https://blog.csdn.net/u010458114/article/details/70161486"  target="_blank">Ubuntu ssh免密参考</a></h5>
+        <h5><a href="https://blog.csdn.net/piaocoder/article/details/54707533"  target="_blank">iptables配置博客</a> </h5>
 
         <h4>8、ubuntu 安装nodejs环境 </h4>
         <pre>
@@ -332,7 +332,7 @@
     sudo apt-get install vim openssl build-essential libssl-dev wget curl git 
     
     nvm管理nodejs版本
-    https://github.com/creationix/nvm
+     <a href=" https://github.com/creationix/nvm" target="_blank"> https://github.com/creationix/nvm</a>
     wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
     安装nodejs
     重新打开命令面板
@@ -358,10 +358,77 @@
 
     服务器基本环境完成
 </pre>
-        <h4>9、ubuntu 安装MongoDB数据库 </h4>
-        <a href="https://docs.mongodb.com/v3.0/tutorial/install-mongodb-on-ubuntu/">install-mongodb-on-ubuntu 官网API</a>
-
         <h4>9、ubuntu 安装Nginx </h4>
+        <pre>
+        引导
+                pm2 进程管理  
+
+                pm2 start app.js
+
+                pm2 show app  查看
+       </pre>
+        <h5>Nginx端口代理 负载均衡  </h5>
+        <pre>
+        系统一般默认会安装 apache  删除
+
+        sudo service apache2 stop
+        sudo update-rc.d -f apache2 remove 再次尝试删除
+        sudo apt-get remove apache2   清理干净
+        sudo apt-get  update 更新一下包裂表
+
+        sudo apt-get install nginx
+        nginx -v  查看版本 1.4.6 稳定版本
+
+        cd /etc/nginx
+        cd conf.d
+
+        pwd
+        添加文件
+        sudo vi dncblocks-com-8081.conf
+
+        upstream dncblocks {
+            server 127.0.0.1:8081;
+        }
+        server {
+            listen  80;
+            server_name 119.29.104.251;
+
+
+            location / {
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+                proxy_set_header Host $http_host;
+                proxy_set_header X-Nginx-Proxy true;
+
+                proxy_pass http://dncblocks;
+                proxy_redirect off;
+            }
+        }
+        cd ..
+        sudo vi nginx.conf
+        代码如下两行取消注释
+          include /etc/nginx/conf.d/*.conf;
+          include /etc/nginx/sites-enabled/*;
+        #mail {...}上面
+
+
+        测试
+        sudo nginx -t
+
+
+        重启Nginx
+        sudo nginx -s reload
+
+        隐藏nginx版本
+        sudo vi nginx.conf
+                 # server_tokens off; 取消注释
+        sudo service nginx reload
+
+</pre>
+
+
+        <h4>10、ubuntu 安装MongoDB数据库 开启认证 备份 定时备份 </h4>
+        <a href="https://docs.mongodb.com/v3.0/tutorial/install-mongodb-on-ubuntu/"  target="_blank">install-mongodb-on-ubuntu 官网API</a>
 
         <pre>
         1) sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
@@ -383,80 +450,110 @@
                 echo "mongodb-org-shell hold" | sudo dpkg --set-selections
                 echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
                 echo "mongodb-org-tools hold" | sudo dpkg --set-selections*@
-            c:安装失败 没有此文件忽略
+            @*c:安装失败 没有此文件忽略
                   sudo vi /etc/apt/apt.conf
                    注释掉
-                   保存退出 
-        5) 安装慢的话编辑  变更
+                   保存退出*@ 
+        5) 安装慢的话编辑  变更为阿里云源  (一般忽略，不用改)
                 sudo vi /etc/apt/sources.list.d/mongodb-org-4.0.list
                 sudo cat /etc/apt/sources.list.d/mongodb-org-4.0.list
                 由
-                deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/4.0 multiverse
-                变更为  我这里按照那个挺快 不用改了 
-                deb [ arch=amd64 ] https://mirrors.aliyun.com/mongodb/apt/ubuntu trusty/mongodb-org/4.0 multiverse
+                deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.0 multiverse
+                变更为 
+                deb [ arch=amd64,arm64 ] https://mirrors.aliyun.com/mongodb/apt/ubuntu xenial/mongodb-org/4.0 multiverse
         6) 启动mongo
-            开启端口 
+            开启端口 编辑
             sudo vi /etc/iptables.up.rules
+            添加如下内容
             # mongodb connect 注意格式
             -A INPUT -s 127.0.0.1 -p tcp --destination-port 27017 -m state --state NEW,ESTABLISHED -j ACCEPT
             -A OUTPUT -d 127.0.0.1 -p tcp --source-port 27017 -m state --state ESTABLISHED -j ACCEPT
+            重新载入
             sudo iptables-restore < /etc/iptables.up.rules
-            启动
+
+             停止 启动 重启   
+            sudo systemctl stop mongodb
+            sudo systemctl start mongodb
+            sudo systemctl restart mongodb
+            查看状态
+            sudo systemctl status mongodb
+            永久启动 
+            sudo systemctl enable mongodb
+            停止 启动 重启 
+            sudo service mongodb stop
+            sudo service mongodb start
+            sudo service mongodb restart
+
+            停止 启动 重启 ubuntu16.04.1  mongodb4.0 mongod  不推荐使用 设置永久启动即可
+            sudo service mongod stop
             sudo service mongod start
-            sudo service mongod restart
-             执行sudo service mongod start失败 
-                解决失败  sudo service mongod start 命令不可用 这种启动可以sudo systemctl start mongodb
-                Failed to start mongod.service: Unit not found
-                sudo nano /etc/systemd/system/mongodb.service
-                  添加内容       
-                                [Unit]
-                                Description=High-performance, schema-free document-oriented database
-                                After=network.target
+            sudo service mongod restart 
+
+/*********存在sudo systemctl status mongodb 问题： 4029 ExecStart=/usr/bin/mongod --quiet --config /etc/mongod.conf (code=exited, status=100)*********************/
+尝试方案 1：
+            sudo systemctl unmask mongodb
+            sudo systemctl restart mongodb 
+            sudo systemctl status mongodb
+尝试方案 2：添加文件  待测试
+            sudo nano /etc/systemd/system/mongodb.service
+            内容如下   
+                [Unit]
+                Description=High-performance, schema-free document-oriented database
+                After=network.target
+                Documentation=https://docs.mongodb.org/manual
  
-                                [Service]
-                                User=mongodb
-                                ExecStart=/usr/bin/mongod --quiet --config /etc/mongod.conf
+                [Service]
+                User=robot    # 改成你登录Ubuntu的用户名
+                Group=sudo   # 同上
+                ExecStart=/usr/bin/mongod --quiet --config /etc/mongod.conf   # 在本行加上--auth, 可开启数据库权限限制
+                PIDFile=/var/run/mongodb/mongod.pid
+                # file size
+                LimitFSIZE=infinity
+                # cpu time
+                LimitCPU=infinity
+                # virtual memory size
+                LimitAS=infinity
+                # open files
+                LimitNOFILE=64000
+                # processes/threads
+                LimitNPROC=64000
+                # locked memory
+                LimitMEMLOCK=infinity
+                # total threads (user+kernel)
+                TasksMax=infinity
+                TasksAccounting=false
+                # Transparent_hugepages disabled  # 取消Linux的透明大页内存设置
+                PermissionsStartOnly=true
+                ExecStartPre=/bin/sh -c "echo never > /sys/kernel/mm/transparent_hugepage/enabled"
+                ExecStartPre=/bin/sh -c "echo never > /sys/kernel/mm/transparent_hugepage/defrag"
  
-                                [Install]
-                                WantedBy=multi-user.target    
-                启动   
-                sudo systemctl start mongodb
-                sudo systemctl status mongodb
-                永久启动 
-                sudo systemctl enable mongodb
-            失败 解决成功
-                https://stackoverflow.com/questions/48092353/failed-to-start-mongod-service-unit-mongod-service-not-found
-                    Source - official instructions
+ 
+                # Recommended limits for for mongod as specified in
+                # http://docs.mongodb.org/manual/reference/ulimit/#recommended-settings
+ 
+                [Install]
+                WantedBy=multi-user.target
+         授权
+        sudo chown -R robot:sudo  /var/lib/mongodb
+尝试方案3：1或2方案未解决:，卸载老版本：重新重新安装mongodb数据库 
 
-                    sudo service mongod stop
-                    Remove Packages
+(1)如果是在ubuntu的软件源中安装的，那么用sudo apt remove mongodb-server;
 
-                    sudo apt-get purge mongodb-org*
-                    Remove the folders
+(2)如果是添加了mongodb官方提供的源，那么用sudo apt remove mongodb-org*
 
-                    sudo rm -r /var/log/mongodb
-                    sudo rm -r /var/lib/mongodb
-                    1) sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
-                    2) echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
-                    update the list
-
-                    sudo apt-get update
-                    Install the latest package
-
-                    sudo apt-get install -y mongodb-org
-                    3 - Now it should work, please try below command
-
-                    sudo service mongod start
-                    and check the status
+(3)删除数据库文件 sudo rm -r /var/lib/mongodb
                     
-                    sudo service mongod start
-                    sudo service mongodb start
-                    mongo --port 27018
-            检查是否开启成功
-            cat /var/log/mongodb/mongod.log
-            到这里 开启成功
-            
-            安全升级 改变端口
+(4)删除日志文件 sudo rm -r /var/log/mongodb
+
+(5) 启动查看状态依然存在 sudo systemctl status mongodb 问题： 4029 ExecStart=/usr/bin/mongod --quiet --config /etc/mongod.conf (code=exited, status=100)
+    尝试方案1 成功 
+            停止 启动 重启 ubuntu16.04.1  mongodb4.0 mongod 测试不好使，不推荐使用（遗留问题版本服务名称mongod和mongodb？？？）
+            sudo service mongod stop
+            sudo service mongod start
+            sudo service mongod restart 
+
+
+安全升级 改变端口
             改变端口  sudo vi /etc/mongod.conf
                 port 27017  --->  27018
                 配置
@@ -466,88 +563,113 @@
                 -A OUTPUT -d 127.0.0.1 -p tcp --source-port 27018 -m state --state ESTABLISHED -j ACCEPT
                 重新载入
                 sudo iptables-restore < /etc/iptables.up.rules
-            启动 
-            sudo systemctl start mongodb
-            sudo systemctl status mongodb
 
-            sudo service mongod stop
-            sudo service mongod start
-            sudo service mongod restart
-            
+            启动 同上
+            sudo systemctl restart mongodb
+            检查是否开启成功 或状态
+            cat /var/log/mongodb/mongod.log 或 sudo systemctl status mongodb
+
             mongo  IP地址 [：端口]  
                     mongo  --port 27018
                     mongo  localhost:27018   
                     mongo   localhost:27018/admin
+  
             
-        7)  数据库备份、导入、导出、单表导入导出、开启安全认证等操作
+            
+        7)  数据库备份、同步生产、导入、导出、单表导入导出、开启安全认证等操作
+           备份
+          linux:  sudo mongodump -h 127.0.0.1:27017 -d indust-app -o indust-app-backup
+          windows:  mongodump -u "robot" -p "robot" --authenticationDatabase "movie" -h 127.0.0.1:27017 -d movie -o ./indust-app-backup
+            通用打包 tar zcvf indust-app.tar.gz indust-app-backup
 
-            sudo mongodump -h 127.0.0.1:27017 -d indust-app -o indust-app-backup
-            mongodump -u "robot" -p "robot" --authenticationDatabase "movie" -h 127.0.0.1:27017 -d movie -o ./indust-app-backup
-            打包 tar zcvf indust-app.tar.gz indust-app-backup
+            把本地打包好的文件 copy 到 /home/robot/dbbackup/ 文件夹下
+            在服务器上/home/robot/创建  mkdir dbbackup
+           通用  scp -P 22222 E:/2018blog/blog/deploy-projects/indust-app.tar.gz robot@119.29.104.251:/home/robot/dbbackup/
 
-            把本地打包好的文件 copy 到 /home/ubuntu/dbbackup/ 文件夹下
-            在服务器上/home/ubuntu/创建  mkdir dbbackup
-            scp -P 8081 ~Desktop/deploy-projects/indust-app.tar.gz ubuntu@119.29.104.251:/home/ubuntu/dbbackup/
-
-            解压 
+            解压 cd dbbackup
+            tar zxvf indust-app.tar.gz/tar xvf indust-app.tar.gz
 
             导入mnogodb数据库
-            mongorestore --host 127.0.0.1:27018 -d indust-app ./dbbackup/indust-app-backup/
+            @*mongorestore --host 127.0.0.1:27018 -d 数据库名称 ./dbbackup/indust-app-backup/数据库名称/*@
+            mongorestore  --host 127.0.0.1:27018 -d movie ./dbbackup/indust-app-backup/movie/
 
             导出单表 -d 数据库  -c 表 -q可以不加 导出姓名不为空的数据
-            mongoexport -d movie -c users -q '{"name": {$ne:null}}' -o ./movie-users.json
+            mongoexport -u robot -p robot -d movie -c users -o E:/2018blog/users.json
 
-            subl users.josn 编辑文件
+            条件过滤  我本地数据库开启了权限认证 加上用户名密码 指定授权数据库 -u robot -p robot --authenticationDatabase movie
+            mongoexport --host 127.0.0.1 --port 27017 -u robot -p robot -d movie -c users -q  '{"name": {$ne:null}}' -o E:/2018blog/movieusers.json
+               
 
-            本地文件夹 deploy-projects 要部署的文件存储位置
+            mongoexport --host 127.0.0.1 --port 27017 -u robot -p robot -d movie -c users -o ./movieusers.json --type json --authenticationDatabase movie
+                -h,--host ：代表远程连接的数据库地址，默认连接本地Mongo数据库；
+                --port：代表远程连接的数据库的端口，默认连接的远程端口27017；
+                -u,--username：代表连接远程数据库的账号，如果设置数据库的认证，需要指定用户账号；
+                -p,--password：代表连接数据库的账号对应的密码；
+                -d,--db：代表连接的数据库；
+                -c,--collection：代表连接数据库中的集合；
+                -f, --fields：代表集合中的字段，可以根据设置选择导出的字段；
+                --type：代表导出输出的文件类型，默认json格式，包括csv和json文件；
+                -o, --out：代表导出的文件名；
+                -q, --query：代表查询条件；
+                --skip：跳过指定数量的数据；
+                --limit：读取指定数量的数据记录；
+                --sort：对数据进行排序，可以通过参数指定排序的字段，并使用 1 和 -1 来指定排序的方式，其中 1 为升序排列，而-1是用于降序排列,如sort({KEY:1})。
+                注意： 当查询时同时使用sort,skip,limit，无论位置先后，最先执行顺序 sort再skip再limit。
 
-            scp -P 8081 ./user.json ubuntu@119.29.104.251:/home/ubuntu/dbbackup
+ 
+            可以 subl users.josn 编辑文件
+            本地文件夹 deploy-projects 要部署的文件存储位置 条件过滤后导出的数据源 movieusers.json文件 同步到服务器 备份位置以便同步数据库
+            scp -P 22222 E:/2018blog/blog/deploy-projects/movieusers.json robot@119.29.104.251:/home/robot/dbbackup
+            
+            单表导入服务器数据库 
+            cd dbbackup
+            mongoimport --host 127.0.0.1:27018 -d movie -c demo ./movieusers.josn
+            指定movie清空数据库 
+            mongo --host 127.0.0.1:27018  movie --eval "db.dropDatabase()"
 
-            清空数据库 
-            mongo --host 127.0.0.1:8081 ubuntu --eval "db.dropDatabase()"
 
-
-            权限控制 添加管理员的admin 
+            权限控制 添加管理员的admin 密码设置复杂一点 这里测试用的
             use admin
              1）db.createUser(
                         {
                         user: "admin", //用户名
-                        pwd: "P@ssw0rd", //密码
+                        pwd: "admin", //密码
                         roles: [ { role: "userAdminAnyDatabase", db: "admin" } ] //权限
                         }
 
-
-              2）db.auth("admin","P@ssw0rd")
+              2）db.auth("admin","admin") 
 
               use movie
               执行 1）2）  创建读写用户readWrite  备份用户read ...........
+             db.createUser( {  user: "robot",  pwd: "robot",  roles: [ { role: "readWrite", db: "movie" } ]  })
+             db.createUser( {  user: "adminreadWrite",  pwd: "adminreadWrite",  roles: [ { role: "readWrite", db: "movie" } ]  })
+             db.createUser( {  user: "adminread",  pwd: "adminread",  roles: [ { role: "read", db: "movie" } ]  })
+              备注 只要创建用户就得 去admin 认证  即 
+                use admin  
+                db.auth("admin","admin") 
+                use movie 
+                db.createUser( {  user: "administratorDB",  pwd: "administratorDBX%^&##",  roles: [ { role: "readWrite", db: "Movie" } ]  })
 
             开启数据库认证权限设置
             sudo vi /etc/mongod.conf
             取消注释
-               security
-                    authorization: 'enabled'
-            保存
+                security:
+                  authorization: 'enabled'
+
+            
             重启服务时期生效
-            sudo service mongod restart
+            sudo service mongod/mongodb restart
      
-                 授权必须 use admin  use movie db.auth('','')
+                 授权必须 use admin  use movie db.auth('XXX','XXX')
 
                  测试
                  mongo 127.0.0.1:27018/movie -u robot -p robot
 
-                 ----------已存在安全验证auth-------indust-app =movie 数据库----
+               已开启安全验证auth备份 -u robot -p robot
+              sudo mongodump -h 127.0.0.1:27017 -d indust-app -u robot -p robot -o indust-app-backup
 
-            sudo mongodump -h 127.0.0.1:27017 -d indust-app -u robot -p robot -o indust-app-backup
-
-
-            mongoexport -d movie -u robot -p robot -c users -q '{"name": {$ne:null}}' -o ./movie-users.json
-
-
-            scp -P 8081 ./user.json ubuntu@119.29.104.251:/home/ubuntu/dbbackup
-
-
-            定时备份数据库
+ 8) 系统任务------定时备份数据库  
+            
             ls 
             mkdir tasks
             cd tasks
@@ -567,27 +689,627 @@
 
             rm -rf $backFileName
 
-            保存
-            mkdir backup
-            cd /backup
-            mkdir movie
-            cd ..
-            sudo sh ./tasks/movie.backup.sh
+            保存sh备份规则文件
+                mkdir backup
+                cd backup
+                mkdir movie
+                cd ..
+                sudo sh ./tasks/movie.backup.sh
 
             启动系统定时任务
-            crontab -e
+                crontab -e
             编辑器选择 2 输入
 
             13 00 * * * sh /home/robot/tasks/movie.backup.sh
-            Ctrl+s
-            shit+Y
-        2) sudo apt-get update
-        2) sudo apt-get update
-        2) sudo apt-get update
-        2) sudo apt-get update
+            Ctrl+O 保存修改
+            Ctrl+x 退出
+       https://www.linuxidc.com/topicnews.aspx?tid=2
 </pre>
+        <h5>Linux nano</h5>
+        <pre>
+nano是一个字符终端的文本编辑器，有点像DOS下的editor程序。它比vi/vim要简单得多，比较适合Linux初学者使用。某些Linux发行版的默认编辑器就是nano。
+
+nano命令可以打开指定文件进行编辑，默认情况下它会自动断行，即在一行中输入过长的内容时自动拆分成几行，但用这种方式来处理某些文件可能会带来问题，比如Linux系统的配置文件，自动断行就会使本来只能写在一行上的内容折断成多行了，有可能造成系统不灵了。因此，如果你想避免这种情况出现，就加上-w选项吧。
+
+语法 
 
 
+nano [选项] [[+行,列] 文件名]...
 
+选项
+•-h, -? --help 显示此信息
+•+行,列 从所指列数与行数开始
+•-A --smarthome 启用智能 HOME 键
+•-B --backup 储存既有文件的备份
+•-C <目录> --backupdir=<目录> 用以储存独一备份文件的目录
+•-D --boldtext 用粗体替代颜色反转
+•-E --tabstospaces 将已输入的制表符转换为空白
+•-F --multibuffer 启用多重文件缓冲区功能
+•-H --historylog 记录与读取搜索/替换的历史字符串
+•-I --ignorercfiles 不要参考nanorc 文件
+•-K --rebindkeypad 修正数字键区按键混淆问题
+•-L --nonewlines 不要将换行加到文件末端
+•-N --noconvert 不要从 DOS/Mac 格式转换
+•-O --morespace 编辑时多使用一行
+•-Q <字符串> --quotestr=<字符串> 引用代表字符串
+•-R --restricted 限制模式
+•-S --smooth 按行滚动而不是半屏
+•-T <#列数> --tabsize=<#列数> 设定制表符宽度为 #列数
+•-U --quickblank 状态行快速闪动
+•-V --version 显示版本资讯并离开
+•-W --wordbounds 更正确地侦测单字边界
+•-Y <字符串> --syntax=<字符串> 用于加亮的语法定义
+•-c --const 持续显示游标位置
+•-d --rebinddelete 修正退格键/删除键混淆问题
+•-i --autoindent 自动缩进新行
+•-k --cut 从游标剪切至行尾
+•-l --nofollow 不要依照符号连结，而是覆盖
+•-m --mouse 启用鼠标功能
+•-o <目录> --operatingdir=<目录> 设定操作目录
+•-p --preserve 保留XON (^Q) 和XOFF (^S) 按键
+•-q --quiet 沉默忽略启动问题, 比如rc 文件错误
+•-r <#列数> --fill=<#列数> 设定折行宽度为 #列数
+•-s <程序> --speller=<程序> 启用替代的拼写检查程序
+•-t --tempfile 离开时自动储存，不要提示
+•-u --undo 允许通用撤销[试验性特性]
+•-v --view 查看(只读)模式
+•-w --nowrap 不要自动换行
+•-x --nohelp 不要显示辅助区
+•-z --suspend 启用暂停功能
+•-$ --softwrap 启用软换行
+•-a, -b, -e,
+•-f, -g, -j (忽略，为与pico 相容)
+
+用法
+
+光标控制 
+•移动光标：使用用方向键移动。
+•选择文字：按住鼠标左键拖到。
+
+复制、剪贴和粘贴
+•复制一整行：Alt+6
+•剪贴一整行：Ctrl+K
+
+粘贴：Ctrl+U 
+
+
+如果需要复制／剪贴多行或者一行中的一部分，先将光标移动到需要复制／剪贴的文本的开头，按Ctrl+6（或者Alt+A）做标记，然后移动光标到 待复制／剪贴的文本末尾。这时选定的文本会反白，用Alt+6来复制，Ctrl+K来剪贴。若在选择文本过程中要取消，只需要再按一次Ctrl+6。
+
+搜索
+
+
+按Ctrl+W，然后输入你要搜索的关键字，回车确定。这将会定位到第一个匹配的文本，接着可以用Alt+W来定位到下一个匹配的文本。
+
+翻页 
+•Ctrl+Y到上一页
+•Ctrl+V到下一页
+
+保存
+
+
+使用Ctrl+O来保存所做的修改
+
+退出 
+
+
+按Ctrl+X 
+
+
+如果你修改了文件，下面会询问你是否需要保存修改。输入Y确认保存，输入N不保存，按Ctrl+C取消返回。如果输入了Y，下一步会让你输入想要保存的文件名。如果不需要修改文件名直接回车就行；若想要保存成别的名字（也就是另存为）则输入新名称然后确 定。这个时候也可用Ctrl+C来取消返回。
+
+</pre>
+        <h5><a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/"  target="_blank">install-mongodb-on-ubuntu官网API</a></h5>
+        <h5><a href="https://blog.csdn.net/moqsien/article/details/79818813"  target="_blank">mongodb数据库参考配置</a></h5>
+        <h5><a href="https://blog.csdn.net/xiaochendefendoushi/article/details/81228585"  target="_blank">mongodb数据库参考配置</a></h5>
     </div> 
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="hide">
+    <pre>
+mongodb导数
+ mongodump --host $IP:$PORT -u xxx -p xxx --numParallelCollections=8 --authenticationDatabase=admin --gzip --oplog -o $MONGO_DATA
+ 
+ 
+1. directory
+如果指定参数directoryperdb =yes，则会每个db一个目录。其中包含该db的所有数据文件
+directoryPerDB: true
+ 
+> show databases;
+admin         0.000GB
+local         0.009GB
+test       0.000GB
+> exit
+bye
+$ls
+admin        test         local            mongod.lock  sizeStorer.wt    WiredTiger.basecfg  WiredTiger.lock   
+ 
+mongodb 
+文档 document/
+集合 collection/
+数据库 database
+ 
+2.mongdb自带监控工具
+>> mongostat --host 主机名:端口号 --username=xxx --password=xxxx --authenticationDatabase=admin
+insert query update delete getmore command dirty  used flushes vsize  res qrw arw net_in net_out conn      set repl                time
+    *0     3     *0     *0       0     3|0  0.0% 80.0%       0  262G 201G 0|0 0|0  3.12k   51.2k  125 test222  PRI Dec 26 19:50:53.200
+    *0    34     *0     *0       0     3|0  0.0% 80.0%       0  262G 201G 0|0 1|0  28.5k   58.1k  125 test222  PRI Dec 26 19:50:54.200
+    *0     8     *0     *0       0     1|0  0.0% 80.0%       0  262G 201G 0|0 0|0  7.30k   54.1k  125 test222  PRI Dec 26 19:50:55.202
+    *0    16     *0     *0       2     7|0  0.0% 80.0%       0  262G 201G 0|0 0|0  15.1k   57.9k  125 test222  PRI Dec 26 19:50:56.199
+    *0    26     *0     *0       0     1|0  0.0% 80.0%       0  262G 201G 0|0 0|0  19.8k   54.6k  125 test222  PRI Dec 26 19:50:57.199
+    *0    30     *0     *0       0     2|0  0.0% 80.0%       1  262G 201G 0|0 0|0  24.4k   57.4k  125 test222  PRI Dec 26 19:50:58.199
+ 
+ 
+$ mongotop --host 主机名:端口号 -u=xxx -p=xxx --authenticationDatabase=admin
+2017-12-26T19:53:12.912+0800    connected to: 主机名:端口号
+ 
+                                   ns    total    read    write    2017-12-26T19:53:13+08:00                        
+                       local.oplog.rs      1ms     1ms      0ms                             
+                 admin.system.profile      0ms     0ms      0ms                             
+                   admin.system.roles      0ms     0ms      0ms                             
+                   admin.system.users      0ms     0ms      0ms                             
+                 admin.system.version      0ms     0ms      0ms                             
+ 
+			 
+ 
+ 
+3.mongdb投票
+Hidden：不会被选举为primary,对于client application是不可见的,具有投票权
+Priority：成为primary的优先值，priority越高，成为primary的可能性越高。数值范围：0—100,=0表示不可能成为primary，也不会触发election
+Voting：投票的权值，=0表示该节点没有投票的权利
+Arbiter：仲裁节点，具有投票权，没有复制数据
+ 
+4.读写模式	
+primary：主节点，默认读操作只在主节点，如果主节点不可用，报错或者抛出异常。
+primaryPreferred：首选主节点，大多情况下读操作在主节点，如果主节点不可用，如故障转移，读操作在从节点
+secondary：从节点，读操作只在从节点， 如果从节点不可用，报错或者抛出异常
+secondaryPreferred：首选从节点，大多情况下读操作在从节点，特殊情况（如单主节点架构）读操作在主节点
+nearest：最邻近节点，读操作在最邻近的成员，可能是主节点或者从节点。
+         --邻近的判断标准为client对各台匹配要求的主机进行ping，最快响应的则最近
+ 
+5.复制 oplog 		 
+>   show dbs
+admin       0.000GB
+gcrm     1445.183GB
+local      25.243GB
+test     0.000GB
+> use local
+switched to db local
+> show collections;
+me
+oplog.rs
+replset.election
+replset.minvalid
+startup_log
+system.profile
+system.replset
+ 
+> db.oplog.rs.find()
+{ "ts" : Timestamp(1513290869, 119), "t" : NumberLong(0), "h" : NumberLong("-164732681870941527"), "v" : 2, "op" : "d", "ns" : "xxxx", "fromMigrate" : true, "o" : { "_id" : ObjectId("xxxx") } }
+ts：8字节的时间戳，由4字节unix timestamp + 4字节自增计数表示。这个值很重要，在选举(如老primary宕机时)新primary时，会选择ts最大的那个secondary作为新primary。
+op：1字节的操作类型，例如i表示insert，d表示delete。
+ns：操作所在的namespace。
+o：操作所对应的document,即当前操作的内容（比如更新操作时要更新的的字段和值）
+o2: 在执行更新操作时的条件，仅限于update时才有该属性。
+其中op，可以是如下几种情形之一：
+“i”： insert
+“u”： update
+“d”： delete
+“c”： db cmd
+ 
+ 
+ 
+6.查看oplog状态
+> db.printReplicationInfo()
+configured oplog size:   200000MB
+log length start to end: 1001366secs (278.16hrs)
+oplog first event time:  Fri Dec 15 2017 06:34:29 GMT+0800 (CST)
+oplog last event time:   Tue Dec 26 2017 20:43:55 GMT+0800 (CST)
+now:                     Tue Dec 26 2017 20:44:03 GMT+0800 (CST)
+ 
+说明：oplog 使用size约为200000MB。第一个操作发生时间为Fri Dec 15 2017 06:34:29 ；最后一个操作发生时间为Tue Dec 26 2017 20:43:55 。存储了1001366秒的数据（1077.06hrs）
+ 
+ 
+> db.oplog.rs.stats()
+ 
+7.查看主从延迟
+>   db.printSlaveReplicationInfo()
+source: 10.33.57.174:24000
+        syncedTo: Tue Dec 26 2017 20:53:05 GMT+0800 (CST)
+        0 secs (0 hrs) behind the primary 
+ 
+8.查看分片状态
+mongos> db.mongos.find()db.mongos.find()
+ 
+mongos> db.stats()db.stats()
+ 
+--mongodb分区
+mongos> db.databases.find()db.databases.find()
+ 
+ 
+9.分片
+--mongodbs缩减集群容量
+1) 确认是否为database的primary shard，是，则需移除
+use admin;
+db.runCommand({movePrimary:"xx",to:"xxx"})
+2) 设置balancer为true
+use admin;
+sh.setBalancerState(true)
+3) 移除分片
+use admin;
+db.runCommand({removeShard:"s3"})
+ 
+--DATABASE设置分片
+设置：
+use admin;
+sh.enableSharding(“zydb”);
+检查：
+use config;
+db.databases.find( { "partitioned": true } )
+或
+use zydb;
+db.stats()
+ 
+10. mongoDB数据块均衡
+检查balancer设置：sh.getBalancerState()
+激活balancer：sh.setBalancerState(true)
+禁止balancer：sh.setBalancerState(false)
+ 
+检查当前balancer是否正在均衡：
+use config;
+db.locks.find( { _id : "balancer" } ).pretty()
+        State:2—正在进行均衡；
+ 
+11.WT内存
+db.serverStatus()：serverStatus 命令，或外壳程序中的 db.serverStatus() 返回数据库状态的总览，具体包括磁盘使用状况、 内存使用状况、 连接、 日志和可用的索引。此命令迅速返回，并不会影响 MongoDB 性能
+db.Stats()：Stats 命令，或外壳程序中的 db.stats() 返回一份针对存储使用情况和数据卷的文档。 dbStats 显示了存储的使用量、包含在数据库中的数据的总量以及对象、集合和索引计数器。
+db.getLastError():getLastError 命令，查看最近的错误。
+ 
+mongoDB内存使用情况
+db.serverStatus().men
+ 
+mongostat --port <xxx> -u<xxx> <password>
+若操作不在内存中进行，fault不是0
+ 
+12.mongodb日常操作
+db.addUser('test','test',true) 添加用户，readonly--false/true
+db.addUser('test','test222') 改密码
+db.system.remove({user:"test"})或者db.removeUser("test") 删除用户
+use admin  超级用户
+db.auth('test','test')  用户授权
+db.system.user.find()   查看用户列表
+show users              查看所有用户
+db.prntCollectionStats() 查看各集合状态
+db.printReplicationInfo() 查看主从状态
+show dbs
+db     查看当前database
+show collections  查看当前db下的collections
+ 
+13.日常命令
+table/collection
+column/fields
+ 
+ 
+db.dropDatabase() 删除数据库
+db.user.insert({user_id: "abc123", age: 55, status: "A"}) 隐士创建collection
+ 
+alter table users add join_date datetime;
+db.users.update({ }, {$set: {join_date: new Date()}, {multi: true}})
+ 
+alter table users drop column join_date;
+db.user.update({ }, {$unset: {join_date: ""}}, {multi: true})
+ 
+create index id_user_id_asc on users(user_id);
+db.user.ensureIndex({user_id: 1})
+ 
+create index id_user_id_asc_age_desc on user(user_id,age DESC);
+db.user.ensureIndex({user_id: 1, age: -1})
+ 
+drop table users;
+db.users.drop()
+ 
+insert into users(user_id, age, status) values ("bcd001", 45，"A")
+db.user.insert({user_id: "bcd001", age: 45, status: "A"})
+ 
+select * from users;
+db.user.find()
+ 
+select id, user_id, status from users;
+db.users.find({ }, {user_id: 1, status: 1})
+ 
+select user_id,status from users 
+db.user.find({ }, {user_id: 1, status: 1, _id: 0})
+ 
+select * from users where status = "A";
+db.user.find({status: "A"})
+ 
+select user_id,status from users where status = "A";
+db.users.find({status: "A"}, {user_id: 1,status: 1, _id: 0})
+ 
+select * from users where status != "A";
+db.users.find({status: {$ne: "A"}})
+ 
+select * from users where status = "A" and age = 50;
+db.users.find({status: "A", age: 50})
+ 
+select * from users where status = "A" or age = 50;
+db.users.find({$or: [{status: "A"}, {age: 50}]})
+ 
+select * from users where age > 25; 
+db.users.find({age: {$gt: 25}})
+ 
+select * from users where age < 25;
+db.users.find({age: {$lt: 25}})
+ 
+select * from users where age > 25 and age <=50;
+db.users.find({age: {$gt: 25, $lte: 50}})
+ 
+select * from users where user_id like "%bc%";
+db.users.find({user_id: /bc/})
+ 
+select * from user where user_id like "bc%";
+db.users.find({user_id: /^bc/}) 
+ 
+select * from users where status = "A" order by user_id asc;
+db.users.find({status: "A"}).sort({user_id: 1})
+ 
+select * from users where status="A" order by user_id desc;
+db.users.find({status:"A"}).sort({user_id: -1})
+ 
+select count(*) from users;
+db.users.count() 或者db.users.find.count()
+ 
+select count(user_id) from users;
+db.users.count({user_id: {$exist: true}})或者db.users.find({user_id: {$exists: true}}).count()
+ 
+select count(*) from users where age > 30;
+db.users.count({age: {$gt:30}})或者db.user.find({age: {$gt: 30}}).count()
+ 
+select distinct(status) from users;
+db.users.distinct("status")
+ 
+select * from users limit 1;
+db.users.findOne()或者 db.users.find().limit(1)
+ 
+select * from users limit 5 skip 10;
+db.users.find().limit(5).skip(10)
+ 
+explain select * from users where status = "A";
+db.users.find({status: "A"}).explain()
+ 
+update users set status = "C" where age > 25;
+db.users.update({age: {$gt: 25}}, {$set: {status:"C"}}, {multi: true})
+ 
+update users set age = age + 3 where status = "A";
+db.users.update({status: "A"}, {$inc: {age: 3}}, {multi:true})
+ 
+delete from users where status = "D";
+db.users.remove({status: "D"})
+ 
+delete from users;
+db.users.remove()
+ 
+truncate table users;
+db.users.remove()
+ 
+13.当前操作
+db. currentOp()：查看当前数据库上的操作语句信息，包括insert/query/update/remove/getmore/command等多种操作。
+重要参数说明：
+opid：操作进程号
+op：操作类型（query，update...）
+ns：命名空间（namespace），即操作对象
+query：显示操作的具体内容
+lockType：锁类型，表明是写锁or读锁
+ 
+db. killOp(opid)：kill当前数据上的操作，以opid为标识
+ 
+14.慢查询
+db.getProfilingStatus()：查看当前profiling status
+ 
+-----慢查询日志的常用属性说明
+>db.system.profile.find()
+ 
+重要参数说明：
+op：操作类型，有insert、query、update、remove、getmore、command
+ns : 操作的集合
+ts ：命令在何时执行
+info ：命令的详细信息
+reslen： 返回结果集的大小
+nscanned:本次查询扫描的记录数
+nreturned: 本次查询实际返回的结果集
+mills:该命令的执行耗时（单位：毫秒）
+query : 查询语句 
+ntoreturn : 返回的记录数
+ntoskip :skip()方法指定的跳跃数 
+nscanned : 扫描数量 
+keyUpdates : 索引更新的数量，改变一个索引键带有一个小的性能开销，因为数据库必须删除旧的key，并插入一个新的key到B-树索引
+lockStats :锁信息，R：全局读锁；W：全局写锁；r：特定数据库的读锁；w：特定数据库的写锁 
+timeLockedMicros : 锁 
+timeAcquiringMicros :锁等待  
+responseLength: 结果字节长度 
+millis: 消耗的时间（毫秒） 
+ts : 语句执行的时间 
+client :链接ip或则主机
+allUsers ,user:用户
+scanAndOrder：是一个布尔值，是True当一个查询不能使用的文件的顺序在索引中的排序返回结果：MongoDB中必须将其接收到的文件从一个游标后的文件进行排序。如果scanAndOrder是False，MongoDB的可使用这些文件的顺序索引返回排序的结果。
+moved:更新操作在磁盘上移动一个或多个文件到新的位置。表明本次update是否移动了硬盘上的数据，如果新记录比原记录短，通常不会移动当前记录，如果新记录比原记录长，那么可能会移动记录到其它位置，这时候会导致相关索引的更新.磁盘操作更多，加上索引更新，会使得这样的操作比较慢.
+nupdated：更新文档的数目
+getmore：这是一个getmore 操作，getmore通常发生在结果集比较大的查询时，第一个query返回了部分结果，后续的结果是通过getmore来获取的。
+如果nscanned(扫描的记录数)远大于nreturned(返回结果的记录数)的话，要考虑通过加索引来优化记录定位了。
+responseLength 如果过大，说明返回的结果集太大了，这时要看是否只需要必要的字段。
+ 
+----常用查询
+---返回最近的10条记录 
+db.system.profile.find().limit(10).sort({ ts : -1 }).pretty()
+---返回所有的操作，除command类型 
+db.system.profile.find( { op: { $ne : 'command' } } ).pretty() 
+--返回特定集合 
+db.system.profile.find( { ns : 'mydb.test' } ).pretty() 
+---返回大于500毫秒的慢操作 
+db.system.profile.find( { millis : { $gt : 500 } } ).pretty() 
+---返回特定的时间范围内的慢查询信息 
+db.system.profile.find( { ts : { $gt : new ISODate("2015-06-09T03:00:00Z") , $lt : new ISODate("2015-06-09T03:40:00Z") } } ).pretty() 
+--返回特定时间，特定用户，按照消耗时间排序 
+db.system.profile.find( { ts : { $gt : new ISODate("2015-06-09T03:00:00Z") , $lt : new ISODate("2015-06-09T03:40:00Z") } }, { user : “ucms@ucms” } ).sort( { millis : -1 } )
+
+</pre>
+</div>
+<div class="hide">
+    /*********初次尝试草稿 存在sudo systemctl status mongodb 问题： 4029 ExecStart=/usr/bin/mongod --quiet --config /etc/mongod.conf (code=exited, status=100)*********************/
+    启动
+    sudo service mongod start
+    sudo service mongod restart
+    执行sudo service mongod start失败
+    解决失败  sudo service mongod start 命令不可用 这种启动可以sudo systemctl start mongodb
+    Failed to start mongod.service: Unit not found
+    sudo nano /etc/systemd/system/mongodb.service
+    添加内容
+    [Unit]
+    Description=High-performance, schema-free document-oriented database
+    After=network.target
+
+    [Service]
+    User=mongodb
+    ExecStart=/usr/bin/mongod --quiet --config /etc/mongod.conf
+
+    [Install]
+    WantedBy=multi-user.target
+    启动
+    sudo systemctl start mongodb
+    sudo systemctl status mongodb
+    永久启动
+    sudo systemctl enable mongodb
+    失败 解决成功
+    https://stackoverflow.com/questions/48092353/failed-to-start-mongod-service-unit-mongod-service-not-found
+    Source - official instructions
+
+    sudo service mongod stop
+    Remove Packages
+
+    sudo apt-get purge mongodb-org*
+    Remove the folders
+
+    sudo rm -r /var/log/mongodb
+    sudo rm -r /var/lib/mongodb
+    1) sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+    2) echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+    update the list
+
+    sudo apt-get update
+    Install the latest package
+
+    sudo apt-get install -y mongodb-org
+    3 - Now it should work, please try below command
+
+    sudo service mongod start  and check the status
+
+    sudo service mongod start
+    sudo service mongodb start
+    mongo --port 27018
+
+    检查是否开启成功
+    cat /var/log/mongodb/mongod.log
+    到这里 开启成功
+
+    安全升级 改变端口
+    改变端口  sudo vi /etc/mongod.conf
+    port 27017  --->  27018
+    配置
+    sudo vi /etc/iptables.up.rules
+    # mongodb connect 注意格式
+    -A INPUT -s 127.0.0.1 -p tcp --destination-port 27018 -m state --state NEW,ESTABLISHED -j ACCEPT
+    -A OUTPUT -d 127.0.0.1 -p tcp --source-port 27018 -m state --state ESTABLISHED -j ACCEPT
+    重新载入
+    sudo iptables-restore < /etc/iptables.up.rules
+    启动
+    sudo systemctl start mongodb
+    sudo systemctl status mongodb
+
+    sudo service mongod stop
+    sudo service mongod start
+    sudo service mongod restart
+
+    mongo  IP地址 [：端口]
+    mongo  --port 27018
+    mongo  localhost:27018
+    mongo   localhost:27018/admin
+    /****************************************************************************************************/
+
+
 </div>
