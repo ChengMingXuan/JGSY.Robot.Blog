@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html >
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -23,8 +23,11 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
     <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet" />
-  
+
     <style>
+        html {
+            overflow: hidden ;
+        }
         .robotCenter {
             text-align: center;
         }
@@ -116,10 +119,20 @@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
     <script src="~/js/nicescroll.min.js"></script>
-    <script>
-        $(function () { $("html").niceScroll(); });
+        <script>
+            $(function () {
+                resetNiceScroll();
+            });
+            function resetNiceScroll() {
+                $("html").niceScroll({
+                    cursorborder: "",
+                    cursorcolor: "#ccc",
+                    boxzoom: false,
+                    autohidemode: true
+                });
+            }
+           //$(window).resize(function () {resetNiceScroll()});
     </script>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>
@@ -128,7 +141,7 @@
                 $("#mydiv").getNiceScroll().hide();
             $("#mydiv").getNiceScroll().resize();
         $("#mydiv").getNiceScroll(0).doScrollLeft(x, duration); // Scroll X Axis
-    $("#mydiv").getNiceScroll(0).doScrollTop(y, duration); // Scroll Y Axis 
+    $("#mydiv").getNiceScroll(0).doScrollTop(y, duration); // Scroll Y Axis
 
         $("#thisdiv").niceScroll({
                     cursorcolor: "#424242", // 改变滚动条颜色，使用16进制颜色值

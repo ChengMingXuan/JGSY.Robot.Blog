@@ -1,11 +1,29 @@
-<div class="col-lg-12 col-md-12 col-sm-12">
+﻿<div class="col-lg-12 col-md-12 col-sm-12">
     <h4>即时通讯入门篇  nodejs-websocket模块 </h4>
     <h5>1、创建websocket文件夹，安装nodejs-websocket模块 <code>cnpm i nodejs-websocket</code></h5>
     <h5>2、在websocket文件夹下创建server.js、client.html文件</h5>
     <h5>3、server.js代码如下</h5>
     <pre>
+        var ws=require('nodejs-websocket');
+        const port = 3000;
+        console.log("开始建立连接.....")   
+        var server=ws.createServer((connection)=>{    
+            console.log("开始建立websocket连接.....")   
+            connection.on('text',(data)=>{
+                connection.sendText(data)//回发数据到客户端
+            })
+            connection.on('close',(code,error)=>{
+                console.log(code,'关闭连接',error)
+            })
+            connection.on('error',(code,error)=>{
+                console.log(code,'异常关闭',error)
+            })
+        })
 
-</pre>
+        server.listen(port,function(){
+            console.log('WebSocket建立完毕.......')
+        })
+    </pre>
     <h5>4、client.html代码如下</h5>
     <pre>
         <xmp>
@@ -59,26 +77,6 @@
         </xmp>
 </pre>
   
-    <h5>5、server.js代码如下</h5>
-    <pre>
-var ws=require('nodejs-websocket');
-const port = 3000;
-console.log("开始建立连接.....")   
-var server=ws.createServer((connection)=>{    
-    console.log("开始建立websocket连接.....")   
-    connection.on('text',(data)=>{
-        connection.sendText(data)//回发数据到客户端
-    })
-    connection.on('close',(code,error)=>{
-        console.log(code,'关闭连接',error)
-    })
-    connection.on('error',(code,error)=>{
-        console.log(code,'异常关闭',error)
-    })
-})
-
-server.listen(port,function(){
-    console.log('WebSocket建立完毕.......')
-})
-</pre>
+    
+    
 </div>
