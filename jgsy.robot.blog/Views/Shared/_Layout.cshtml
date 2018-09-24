@@ -9,7 +9,7 @@
     <meta name="author" content="robot,ChenMingXuan,小萝卜儿头">
     <meta name="baidu-site-verification" content="t19ZW5hzwf" />
     <title>@*@ViewData["Title"]-*@ 小萝卜儿头的博客</title>
-    @{ 
+    @{
         ViewBag.Blog = "博客升级更新中.....";
     }
     <environment include="Development">
@@ -23,6 +23,7 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
     <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet" />
+  
     <style>
         .robotCenter {
             text-align: center;
@@ -86,35 +87,100 @@
             <p> <img src="/biao.png"> 京ICP备<a href="javascript:;">18020242</a>号<span class="hide">-2</span></p>
         </footer>
         @*<nav class="navbar navbar-default navbar-fixed-bottom">
-            <div class="container robotCenter">
-                <p>&copy; 2018 - 小萝卜儿头的博客</p>
-                <p> <img src="/biao.png"> 京ICP备<a href="javascript:;">18020242</a>号-2</p>
-            </div>
-        </nav>*@
+                <div class="container robotCenter">
+                    <p>&copy; 2018 - 小萝卜儿头的博客</p>
+                    <p> <img src="/biao.png"> 京ICP备<a href="javascript:;">18020242</a>号-2</p>
+                </div>
+            </nav>*@
 
     </div>
 
-        <environment include="Development">
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>
-        </environment>
-        <environment exclude="Development">
-            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                    asp-fallback-test="window.jQuery"
-                    crossorigin="anonymous"
-                    integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-            </script>
-            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                    crossorigin="anonymous"
-                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-            </script>
-            <script src="~/js/site.min.js" asp-append-version="true"></script>
-        </environment>
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+    <script src="~/js/nicescroll.min.js"></script>
+    <script>
+        $(function () { $("html").niceScroll(); });
+    </script>
 
-        @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
+@*//**************************************************************************
+             //https://blog.csdn.net/mss359681091/article/details/52838179?utm_source=copy
+                $("#mydiv").getNiceScroll().hide();
+            $("#mydiv").getNiceScroll().resize();
+        $("#mydiv").getNiceScroll(0).doScrollLeft(x, duration); // Scroll X Axis
+    $("#mydiv").getNiceScroll(0).doScrollTop(y, duration); // Scroll Y Axis 
+
+        $("#thisdiv").niceScroll({
+                    cursorcolor: "#424242", // 改变滚动条颜色，使用16进制颜色值
+                    cursoropacitymin: 0, // 当滚动条是隐藏状态时改变透明度, 值范围 1 到 0
+                    cursoropacitymax: 1, // 当滚动条是显示状态时改变透明度, 值范围 1 到 0
+                    cursorwidth: "5px", // 滚动条的宽度，单位：便素
+                    cursorborder: "1px solid #fff", // CSS方式定义滚动条边框
+                    cursorborderradius: "5px", // 滚动条圆角（像素）
+                    zindex: "auto" | <number>
+                , // 改变滚动条的DIV的z-index值
+                scrollspeed: 60, // 滚动速度
+                mousescrollstep: 40, // 鼠标滚轮的滚动速度 (像素)
+                touchbehavior: false, // 激活拖拽滚动
+                hwacceleration: true, // 激活硬件加速
+                boxzoom: false, // 激活放大box的内容
+                dblclickzoom: true, // (仅当 boxzoom=true时有效)双击box时放大
+                gesturezoom: true, // (仅 boxzoom=true 和触屏设备时有效) 激活变焦当out/in（两个手指外张或收缩）
+                grabcursorenabled: true // (仅当 touchbehavior=true) 显示“抓住”图标display "grab" icon
+                autohidemode: true, // 隐藏滚动条的方式, 可用的值:
+                true | // 无滚动时隐藏
+                "cursor" | // 隐藏
+                false | // 不隐藏,
+                "leave" | // 仅在指针离开内容时隐藏
+                "hidden" | // 一直隐藏
+                "scroll", // 仅在滚动时显示
+                background: "", // 轨道的背景颜色
+                iframeautoresize: true, // 在加载事件时自动重置iframe大小
+                cursorminheight: 32, // 设置滚动条的最小高度 (像素)
+                preservenativescrolling: true, // 你可以用鼠标滚动可滚动区域的滚动条和增加鼠标滚轮事件
+                railoffset: false, // 可以使用top/left来修正位置
+                bouncescroll: false, // (only hw accell) 启用滚动跳跃的内容移动
+                spacebarenabled: true, // 当按下空格时使页面向下滚动
+                railpadding: { top: 0, right: 0, left: 0, bottom: 0 }, // 设置轨道的内间距
+                disableoutline: true, // 当选中一个使用nicescroll的div时，chrome浏览器中禁用outline
+                horizrailenabled: true, // nicescroll可以管理水平滚动
+                railalign: right, // 对齐垂直轨道
+                railvalign: bottom, // 对齐水平轨道
+                enabletranslate3d: true, // nicescroll 可以使用CSS变型来滚动内容
+                enablemousewheel: true, // nicescroll可以管理鼠标滚轮事件
+                enablekeyboard: true, // nicescroll可以管理键盘事件
+                smoothscroll: true, // ease动画滚动
+                sensitiverail: true, // 单击轨道产生滚动
+                enablemouselockapi: true, // 可以用鼠标锁定API标题 (类似对象拖动)
+                cursorfixedheight: false, // 修正光标的高度（像素）
+                hidecursordelay: 400, // 设置滚动条淡出的延迟时间（毫秒）
+                directionlockdeadzone: 6, // 设定死区，为激活方向锁定（像素）
+                nativeparentscrolling: true, // 检测内容底部便于让父级滚动
+                enablescrollonselection: true, // 当选择文本时激活内容自动滚动
+                cursordragspeed: 0.3, // 设置拖拽的速度
+                rtlmode: "auto", // DIV的水平滚动从左边开始
+                cursordragontouch: false, // 使用触屏模式来实现拖拽
+                oneaxismousemode: "auto", // 当只有水平滚动时可以用鼠标滚轮来滚动，如果设为false则不支持水平滚动，如果设为auto支持双轴滚动
+                scriptpath: "" // 为boxmode图片自定义路径 ("" => same script path)
+                preventmultitouchscrolling: true // 防止多触点事件引发滚动
+                });*@

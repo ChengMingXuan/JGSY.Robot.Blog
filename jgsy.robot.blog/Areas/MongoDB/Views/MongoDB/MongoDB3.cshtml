@@ -13,7 +13,41 @@
     <h5>mongodb用户跟着库走的，有区别于其它的不同的数据库，如mysql、sqlserver等 </h5>
     <pre>
     解决方式:配置 
-    ① auth=true mongodb安装目录bin下有自己添加的mongo.config配置文件 
+    ① auth=true mongodb安装目录bin下有自己添加的mongo.config 方案1)配置文件 、方案2) yaml 
+                 ****************重新 install 的时候 清空dbpath、logpath目录下的所有文件 *************************
+                     方案1)
+                        bin 创建mongod.config
+                        dbpath=E:\software\MongoDB\Server\data\db
+                        logpath=E:\software\MongoDB\Server\data\log\mongod.log
+                        port=27017
+                        bind_ip = 127.0.0.1 
+                        auth=true
+                        #fork=true
+                        logappend=true
+                        #keyFile=/usr/tools/mongodb/keyfile
+                        #master=true
+        
+                        mongod --config "E:\software\MongoDB\Server\bin\mongo.config" --install
+                        net start MongoDB
+                    方案2) 推荐
+                        systemLog:
+                           destination: file
+                           path: E:\software\MongoDB\Server\data\log\mongod.log
+                           logAppend: true
+                        storage:
+                           journal:
+                              enabled: true
+                              dbPath: E:\software\MongoDB\Server\data\db
+                        net:
+                           bindIp: 127.0.0.1
+                           port: 27017
+                        security: 
+                           authorization: "enabled"
+                      *******************************************************************************
+                    mongod -f "E:\software\MongoDB\Server\data\config\mongod.cfg"  --install
+                    mongod --config "E:\software\MongoDB\Server\data\config\mongod.cfg" --serviceName "mongodb" --serviceDisplayName "mongodb" --install
+                    
+                    *******************************************************************************
     ② 安装服务时添加  --auth  开启认证
 </pre>
     <pre>
@@ -22,7 +56,7 @@
     删除mongodb服务 &gt;  sc delete mongodb 
     重新安装mongodb服务A: &gt; mongod --auth --bind_ip 127.0.0.1 --logpath "E:\software\MongoDB\Server\data\log\mongodb.log" 
                                     --logappend --dbpath "E:\software\MongoDB\Server\data\db" --port 27017 
-                                    --serviceName "mongodb" --serviceDisplayName "mongodb" --install
+                                    --serviceName "mongodb" --serviceDisplayName "mongodb" --install 
     启动mongodb服务 &gt;  net start mongodb
     创建用户名、密码、设置角色和认证 
             &gt;   use admin
@@ -33,6 +67,9 @@
             roles: [ { role: "userAdminAnyDatabase", db: "admin" } ] //权限
             }
             );
+        @*  db.createUser( { user: "admin",  pwd: "admin", roles: [ { role: "userAdminAnyDatabase", db: "admin" } ] } ); 
+         db.auth( "admin","admin"); 
+         db.createUser( { user: "robot",  pwd: "robot", roles: [ { role: "readWrite", db: "movie" } ] } );   *@
             &gt;   db.auth("admin","P@ssw0rd")
     退出后登录  mongo --port 27017 -u "admin" -p "P@ssw0rd" --authenticationDatabase "admin"
     完成 
@@ -107,8 +144,12 @@
 </div>
 
 <div class="col-lg-12 col-md-12 col-sm-12">
-    <h5><a href="https://blog.csdn.net/eagle89/article/details/80595060">参考MongoDB认证详解</a></h5> 
+    <h5><a href="https://blog.csdn.net/eagle89/article/details/80595060">参考MongoDB认证详解</a></h5>
     <h5><a href="https://www.cnblogs.com/yangliheng/p/6069763.html">参考MongoDB命令参数</a></h5>
+    <h5><a href="https://www.cnblogs.com/phpandmysql/p/7763394.html">mongodb yaml 配置方式</a></h5>
+    <h5><a href="https://blog.csdn.net/hkyw000/article/details/54411230">mongodb yaml 配置方式</a></h5> 
+    <h5><a href="http://blog.51cto.com/noodle/1748132">mongodb yaml 配置方式</a></h5>
+    <h6><a href="http://www.yaml.org/"> yaml </a></h6>
 </div>
 
 

@@ -192,14 +192,14 @@
         </pre>
 
         <h5>5、配置客户端远程登录服务器</h5>
-        <a href="http://blog.sina.com.cn/s/blog_541a3cf10101epzf.html"  target="_blank">ssh-copy-id使用非默认22端口时 </a>
+        <a href="http://blog.sina.com.cn/s/blog_541a3cf10101epzf.html" target="_blank">ssh-copy-id使用非默认22端口时 </a>
         <pre> 
-      客户端执行以下命令(默认端口)
-        ssh-copy-id -i C:/Users/jack/.ssh/id_rsa.pub robot@119.29.104.251
-        (非默认端口)
-        ssh-copy-id -i  C:/Users/jack/.ssh/id_rsa.pub -p 22222 robot@119.29.104.251
+         客户端执行以下命令(默认端口)
+         ssh-copy-id -i C:/Users/jack/.ssh/id_rsa.pub robot@119.29.104.251
+         (非默认端口)
+         ssh-copy-id -i  C:/Users/jack/.ssh/id_rsa.pub -p 22222 robot@119.29.104.251
 
-        执行结果成功
+         执行结果成功
             $ ssh-copy-id -i C:/Users/jack/.ssh/id_rsa.pub robot@119.29.104.251
             /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "C:/Users/jack/.ssh/id_rsa.pub"
             The authenticity of host '119.29.104.251 (119.29.104.251)' can't be established.
@@ -229,9 +229,7 @@
 
 
             Last login: Thu Sep 20 14:38:39 2018 from 222.130.143.240
-            robot@VM-0-10-ubuntu:~$
-        
-        
+            robot@VM-0-10-ubuntu:~$ 
         </pre>
 
         <h5>6、ssh 默认22端口登录不安全 </h5>
@@ -247,118 +245,119 @@
         </pre>
         <h5>7、配置iptables和Fail2Ban增强安全防护 </h5>
         <pre>
-    1、ubuntu系统
-        sudo apt-get update && sudo apt-get upgrade
-            update是下载源里面的metadata的. 包括这个源有什么包, 每个包什么版本之类的.
-            upgrade是根据update命令下载的metadata决定要更新什么包(同时获取每个包的位置).
-        iptables -F
-        sudo iptables -F 清楚默认配置
-        sudo vi /etc/iptables.up.rules  新建文件
-        *filter
-         #allow all connections
-        -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-        # allow out traffic
-        -A OUTPUT -j ACCEPT
-         #allow http https
-        -A INPUT -p tcp --dport 443 -j ACCEPT
+            1、ubuntu系统
+                sudo apt-get update && sudo apt-get upgrade
+                    update是下载源里面的metadata的. 包括这个源有什么包, 每个包什么版本之类的.
+                    upgrade是根据update命令下载的metadata决定要更新什么包(同时获取每个包的位置).
+                iptables -F
+                sudo iptables -F 清楚默认配置
+                sudo vi /etc/iptables.up.rules  新建文件
+                *filter
+                 #allow all connections
+                #-A INPUT -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT 
+                -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+                # allow out traffic
+                -A OUTPUT -j ACCEPT
+                 #allow http https
+                -A INPUT -p tcp --dport 443 -j ACCEPT
 
-        -A INPUT -p tcp --dport 80 -j ACCEPT
+                -A INPUT -p tcp --dport 80 -j ACCEPT
 
-        -A INPUT -p tcp --dport 8080 -j ACCEPT
-         #allow ssh port login
-        -A INPUT -p tcp -m state --state NEW --dport 22222 -j ACCEPT
-        #allow ssh port login
-        -A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT
-        #ping
-        -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
-        # log denied calls
-        -A INPUT -m limit --limit  5/min -j LOG --log-prefix "iptables denied:" --log-level 7
-        # drop incoming sensitive connections
-        -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --set
+                -A INPUT -p tcp --dport 8080 -j ACCEPT
+                 #allow ssh port login
+                -A INPUT -p tcp -m state --state NEW --dport 22222 -j ACCEPT
+                #allow ssh port login
+                -A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT
+                #ping
+                -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
+                # log denied calls
+                -A INPUT -m limit --limit  5/min -j LOG --log-prefix "iptables denied:" --log-level 7
+                # drop incoming sensitive connections
+                -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --set
 
-        -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --update --seconds 60 --hitcount 150 -j DROP
+                -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --update --seconds 60 --hitcount 150 -j DROP
 
-        -A INPUT -j REJECT
+                -A INPUT -j REJECT
 
-        -A FORWARD -j REJECT
-        COMMIT
+                -A FORWARD -j REJECT
+                COMMIT
 
-    保存
-    执行防火墙规则
-    sudo iptables-restore < /etc/iptables.up.rules 
+            保存
+            执行防火墙规则
+            sudo iptables-restore < /etc/iptables.up.rules 
 
 
-    sudo ufw status  查看 status : inactive
-    sudo ufw enable 激活防火墙配置
+            sudo ufw status  查看 status : inactive
+            sudo ufw enable 激活防火墙配置
 
-    留用备用方案
-    sudo vi /etc/network/if-up.d/iptables
-    #!/bin/sh
-    iptables-restore /etc/iptables.up.rules
-    保存
-    权限
-    sudo chmod +x /etc/network/if-up.d/iptables
+            留用备用方案
+            sudo vi /etc/network/if-up.d/iptables
+            #!/bin/sh
+            iptables-restore /etc/iptables.up.rules
+            保存
+            权限
+            sudo chmod +x /etc/network/if-up.d/iptables
 
-    安装Fail2ban
-    sudo apt-get install fail2ban
-    Y继续
-     sudo vi /etc/fail2ban/jail.conf
+            安装Fail2ban
+            sudo apt-get install fail2ban
+            Y继续
+             sudo vi /etc/fail2ban/jail.conf
 
-    bantime =3600
+            bantime =3600
 
-    destemail = 18810114757@163.com
+            destemail = 18810114757@163.com
 
-    action = %(action_mw)s
+            action = %(action_mw)s
 
-    maxretry =6
-    保存  
+            maxretry =6
+            保存  
 
-    sudo service fail2ban status
+            sudo service fail2ban status
 
-    sudo service fail2ban start
-    sudo service fail2ban stop
+            sudo service fail2ban start
+            sudo service fail2ban stop
 
-</pre>
-        <h5> <a href="https://blog.csdn.net/wenyun_kang/article/details/77413714"  target="_blank">Ubuntu ssh免密参考</a></h5>
-        <h5><a href="https://blog.csdn.net/u010458114/article/details/70161486"  target="_blank">Ubuntu ssh免密参考</a></h5>
-        <h5><a href="https://blog.csdn.net/piaocoder/article/details/54707533"  target="_blank">iptables配置博客</a> </h5>
+        </pre>
+        <h5> <a href="https://blog.csdn.net/wenyun_kang/article/details/77413714" target="_blank">Ubuntu ssh免密参考</a></h5>
+        <h5><a href="https://blog.csdn.net/u010458114/article/details/70161486" target="_blank">Ubuntu ssh免密参考</a></h5>
+        <h5><a href="https://blog.csdn.net/piaocoder/article/details/54707533" target="_blank">iptables配置博客</a> </h5>
 
-        <h4>8、ubuntu 安装nodejs环境 </h4>
+        <h4>8、nodejs部署之 ubuntu安装nodejs环境--所需软件工具 </h4>
         <pre>
-    nodejs部署  ubuntu
-    更新 
-    sudo apt-get update  
-    安装所需软件工具
-    sudo apt-get install vim openssl build-essential libssl-dev wget curl git 
+        更新 
+        sudo apt-get update  
+        安装所需软件工具
+        sudo apt-get install vim openssl build-essential libssl-dev wget curl git 
     
-    nvm管理nodejs版本
-     <a href=" https://github.com/creationix/nvm" target="_blank"> https://github.com/creationix/nvm</a>
-    wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-    安装nodejs
-    重新打开命令面板
-    安装
-    nvm install 8.0.0  、 nvm install v8.0.0
-    指定版本
-    nvm use 8.0.0  、 nvm use 8.0.0 
-    指定版本默认就是8.0.0
-    nvm alias default 8.0.0
+        nvm管理nodejs版本
+            <a href=" https://github.com/creationix/nvm" target="_blank"> https://github.com/creationix/nvm</a>
+        wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+        安装nodejs
+        重新打开命令面板
+        安装
+        nvm install 8.0.0  、 nvm install v8.0.0
+        指定版本
+        nvm use 8.0.0  、 nvm use 8.0.0 
+        指定版本默认就是8.0.0
+        nvm alias default 8.0.0
 
-    快速下载镜像配置  国内淘宝
-    配置npm镜像 taobao
-    npm --registry=https://registry.npm.taobao.org install -g npm
-    增加文件监控数目
-    echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p 
-    安装方式变更为 cnpm 注册
-    npm --registry=https://registry.npm.taobao.org install -g cnpm
-    淘宝更新不及时可以同步到淘宝
-    cnpm 安装不上  cnpm sync koa
+        快速下载镜像配置  国内淘宝
+        配置npm镜像 taobao
+        npm --registry=https://registry.npm.taobao.org install -g npm
+        增加文件监控数目
+        echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p 
+        安装方式变更为 cnpm 注册
+        npm --registry=https://registry.npm.taobao.org install -g cnpm
+        淘宝更新不及时可以同步到淘宝
+        cnpm 安装不上  cnpm sync koa
     
-    安装其他辅助工具 不一定用的上
-    npm i pm2 webpack gulp grunt-cli -g
+        安装其他辅助工具 不一定用的上
+        npm i pm2 webpack gulp grunt-cli -g
 
-    服务器基本环境完成
-</pre>
+        服务器基本环境完成
+        </pre>
         <h4>9、ubuntu 安装Nginx </h4>
+        <h5>引导</h5>
         <pre>
         引导
                 pm2 进程管理  
@@ -428,8 +427,7 @@
 
 
         <h4>10、ubuntu 安装MongoDB数据库 开启认证 备份 定时备份 </h4>
-        <a href="https://docs.mongodb.com/v3.0/tutorial/install-mongodb-on-ubuntu/"  target="_blank">install-mongodb-on-ubuntu 官网API</a>
-
+        <a href="https://docs.mongodb.com/v3.0/tutorial/install-mongodb-on-ubuntu/" target="_blank">install-mongodb-on-ubuntu 官网API</a>
         <pre>
         1) sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
         2) echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
@@ -584,19 +582,22 @@
 
             把本地打包好的文件 copy 到 /home/robot/dbbackup/ 文件夹下
             在服务器上/home/robot/创建  mkdir dbbackup
-           通用  scp -P 22222 E:/2018blog/blog/deploy-projects/indust-app.tar.gz robot@119.29.104.251:/home/robot/dbbackup/
-
+           通用（相对位置好使，绝对位置时灵时不灵....醉了哈哈哈  ）
+                 scp -P 22222 E:/2018blog/blog/deploy-projects/indust-app.tar.gz robot@119.29.104.251:/home/robot/dbbackup/
+                 scp -P 22222 ./indust-app.tar.gz robot@119.29.104.251:/home/robot/dbbackup/
             解压 cd dbbackup
             tar zxvf indust-app.tar.gz/tar xvf indust-app.tar.gz
 
             导入mnogodb数据库
             @*mongorestore --host 127.0.0.1:27018 -d 数据库名称 ./dbbackup/indust-app-backup/数据库名称/*@
             mongorestore  --host 127.0.0.1:27018 -d movie ./dbbackup/indust-app-backup/movie/
+            mongorestore -u robot -p robot  --host 127.0.0.1:27018 -d movie ./dbbackup/indust-app-backup/movie/
 
-            导出单表 -d 数据库  -c 表 -q可以不加 导出姓名不为空的数据
+            导出单表 -d 数据库  -c 表 -q可以不加 
             mongoexport -u robot -p robot -d movie -c users -o E:/2018blog/users.json
 
-            条件过滤  我本地数据库开启了权限认证 加上用户名密码 指定授权数据库 -u robot -p robot --authenticationDatabase movie
+            条件过滤 导出姓名不为空的数据  我本地数据库开启了权限认证 加上用户名密码 
+            指定授权数据库 -u robot -p robot --authenticationDatabase movie
             mongoexport --host 127.0.0.1 --port 27017 -u robot -p robot -d movie -c users -q  '{"name": {$ne:null}}' -o E:/2018blog/movieusers.json
                
 
@@ -620,7 +621,7 @@
             可以 subl users.josn 编辑文件
             本地文件夹 deploy-projects 要部署的文件存储位置 条件过滤后导出的数据源 movieusers.json文件 同步到服务器 备份位置以便同步数据库
             scp -P 22222 E:/2018blog/blog/deploy-projects/movieusers.json robot@119.29.104.251:/home/robot/dbbackup
-            
+            scp -P 22222 ./movieusers.json robot@119.29.104.251:/home/robot/dbbackup/
             单表导入服务器数据库 
             cd dbbackup
             mongoimport --host 127.0.0.1:27018 -d movie -c demo ./movieusers.josn
@@ -668,7 +669,7 @@
                已开启安全验证auth备份 -u robot -p robot
               sudo mongodump -h 127.0.0.1:27017 -d indust-app -u robot -p robot -o indust-app-backup
 
- 8) 系统任务------定时备份数据库  
+ 8) 系统任务------定时备份数据库  服务器本地备份
             
             ls 
             mkdir tasks
@@ -684,7 +685,7 @@
             mkdir -p $backFileName
 
             mongodump -h 127.0.0.1:27018 -d movie -u robot -p robot -o $backFileName
-
+            #D:\movieBak
             tar zcvf $backFileName.tar.gz $backFileName
 
             rm -rf $backFileName
@@ -704,12 +705,405 @@
             Ctrl+O 保存修改
             Ctrl+x 退出
        https://www.linuxidc.com/topicnews.aspx?tid=2
-</pre>
-        <h5>Linux nano</h5>
-        <pre>
-nano是一个字符终端的文本编辑器，有点像DOS下的editor程序。它比vi/vim要简单得多，比较适合Linux初学者使用。某些Linux发行版的默认编辑器就是nano。
+ 9) 系统任务------定时备份数据库 发送远程存储（上传七牛云存储空间） 
+  
+cd tasks 
+upload.js 同目录下添加upload.js文件 代码未写
 
-nano命令可以打开指定文件进行编辑，默认情况下它会自动断行，即在一行中输入过长的内容时自动拆分成几行，但用这种方式来处理某些文件可能会带来问题，比如Linux系统的配置文件，自动断行就会使本来只能写在一行上的内容折断成多行了，有可能造成系统不灵了。因此，如果你想避免这种情况出现，就加上-w选项吧。
+当前（upload.js）
+安装七牛模块 npm install qiniu 
+ 
+var qiniu = require("qiniu");
+
+var parts=process.env.NODE_ENV.split('@@')
+var file=parts[1]+'.tar.gz'
+var filePath=parts[0]+'/'+file
+
+//需要填写你的 Access Key 和 Secret Key
+qiniu.conf.ACCESS_KEY = 'Access_Key';
+qiniu.conf.SECRET_KEY = 'Secret_Key';
+//要上传的空间
+bucket = 'Bucket_Name';
+//上传到七牛后保存的文件名
+//key = 'my-nodejs-logo.png';
+key = file;
+//构建上传策略函数
+function uptoken(bucket, key) {
+  var putPolicy = new qiniu.rs.PutPolicy(bucket+":"+key);
+  return putPolicy.token();
+}
+//生成上传 Token
+token = uptoken(bucket, key);
+//要上传文件的本地路径
+//filePath = './ruby-logo.png'
+//构造上传函数
+function uploadFile(uptoken, key, localFile) {
+  var extra = new qiniu.io.PutExtra();
+    qiniu.io.putFile(uptoken, key, localFile, extra, function(err, ret) {
+      if(!err) {
+        // 上传成功， 处理返回值
+        console.log(ret.hash, ret.key, ret.persistentId);       
+      } else {
+        // 上传失败， 处理返回代码
+        console.log(err);
+      }
+  });
+}
+//调用uploadFile上传
+uploadFile(token, key, filePath);
+
+
+vi movie.backup.sh
+
+#!/bin/sh
+backUpFoler=/home/robot/backup/movie
+date_now=`date +%Y_%m_%d_%H%M`
+backFileName=movie_$date_now
+
+cd backUpFoler
+mkdir -p $backFileName
+
+mongodump -h 127.0.0.1:27018 -d movie -u robot -p robot -o $backFileName
+
+tar zcvf $backFileName.tar.gz $backFileName
+
+rm -rf $backFileName
+
+#添加 上传至远程存储
+NODE_ENV=$backUpFoler@@$backFileName node /home/robot/tasks/upload.js
+
+保存
+
+
+
+启动系统定时任务
+crontab -e
+编辑器选择 2 输入
+添加 凌晨 4点 早上8点执行各一次 
+00 4 * * * sh /home/robot/tasks/movie.backup.sh
+00 8 * * * sh /home/robot/tasks/movie.backup.sh
+Ctrl+o 保存
+Ctrl+x 退出
+   #安装mysql 提示输入密码 扩展  搜索资料
+sudo apt-get install mysql-server mysql-client
+
+
+
+
+</pre> 
+   <h4>11、pm2 deploy nodejs project</h4>
+   <pre>
+        1)#mac 安装git 扩张资料自己搜索
+            brew install git
+
+        2)gitee 创建空的项目  （我这里学习测试 没用github ）
+            备注：我这里默认初始化一个 license 
+            简易的命令行入门教程:
+            Git 全局设置:
+
+            git config --global user.name "小萝卜儿头"
+            git config --global user.email "18810114757@163.com"
+            创建 git 仓库:
+
+            mkdir jgsy.movie
+            cd jgsy.movie
+            git init
+            touch README.md
+            git add README.md
+            git commit -m "first commit"
+            git remote add origin https://gitee.com/JGSY/jgsy.movie.git
+            git push -u origin master
+            已有项目?
+
+            cd existing_git_repo
+            git remote add origin https://gitee.com/JGSY/jgsy.movie.git
+            git push -u origin master
+
+
+        3) 提交 
+            git init
+            git add .
+            git commit -m "fisrt commit"
+            git remote add origin https://gitee.com/JGSY/jgsy.movie.git 
+            git push origin master
+
+            提交失败 说明远程仓库有文件
+            git fetch 获取远程仓库信息  license
+            git merge origin/master
+            wq!保存 
+            git push -u origin master
+
+            到这里有本地到提交代码gitee仓库 完活
+
+    
+            保证服务器获取gitee上的最新代码 
+            在服务器上生成ssh key公钥 部署到gitee上
+            在服务器上创建部署部署文件夹源文件 temp
+            mkdir temp
+            cd temp
+            获取git源文件 
+            a: git clone git@gitee.com:JGSY/jgsy.movie.git
+            更新
+            b: git pull
+        4) pm2 傻瓜式进程管理 普通应用足够了
+
+
+        服务端
+        sudo mkdir /www
+        cd www
+        sudo mkdir website
+        sudo chmod 777 website
+
+        本地 client连接服务器创建并执行 第一次 加setup 初始化目录层次
+        pm2 deploy ecosystem.json production setup
+        静态资源设置
+        ecosystem.json
+         {
+            "apps": [
+                "name": "movie"
+                "script": "app.js"
+                "env"： {
+                  "COMMON_VARIABLE": "true"
+                },
+                    "env_production": { 
+                      "NODE_ENV": "production"
+                    }
+            ],
+            "deploy": {
+              "production": {
+                "user":"robot",
+                "host":["119.29.104.251"],
+                "port":"22222",
+                "ref":"origin/master",
+                "repo":"git@gitee.com:JGSY/jgsy.movie.git",
+                "path":"/www/website/production",
+                "ssh_options":"StrictHostKeyChecking=no",
+                //"post-deploy":"npm install --register=https://registry.npm.taobao.org && grunt build && pm2 startOrRestart ecosystem.json --env production", 
+                "env":{
+                  "NODE_ENV":"production"
+                }
+              }
+            }
+          }
+          服务器上 生成三个文件
+            current 当前的服务所运行的文件件
+            shared  日志等共享文件
+            source  clone的源文件
+    
+            客户端
+            pm2 deploy ecosystem.json production 不加setup 
+            执行  pm2 deploy ecosystem.json production 出错
+            原因是服务端是非交互模式
+                 bash: pm2: command not found
+
+                  post-deploy hook failed
+
+                Deploy failed
+            解决方案 在服务端修改 .bashrc 
+            注释掉一下代码 避免提前返回
+               #case $- in
+               #    *i*) ;;
+               #      *) return;;
+               #esac
+            保存 退出
+            执行
+            source .bashrc
+
+           客户端签入 ecosystem.json  再次执行
+            git add . && commit -m "ecosystem.json" && git push origin master
+   
+             pm2 deploy ecosystem.json production
+     
+            pm2 list  查看应用
+            部署成功
+        5) 绑定域名
+            ////////sudo mv a b 把a重命名为b
+            a: 修改nginx 配置
+             cd  /etc/nginx/conf.d
+             vi dncblocks-com-8081.conf
+             改成域名
+                #server_name 119.29.104.251;
+                  server_name movie.dncblocks.com; 
+            保存
+            重启nginx
+            sudo nginx -s reload
+        ****************************************
+                    upstream dncblocks {
+                                server 127.0.0.1:8081;
+                            }
+                            server {
+                                listen  80;
+                               #server_name 119.29.104.251;
+                                server_name movie.dncblocks.com;
+
+
+                                location / {
+                                    proxy_set_header X-Real-IP $remote_addr;
+                                    proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+                                    proxy_set_header Host $http_host;
+                                    proxy_set_header X-Nginx-Proxy true;
+
+                                    proxy_pass http://dncblocks;
+                                    proxy_redirect off;
+                                }
+                    }
+        备注  upstream XXX     proxy_pass http://XXX;  必须XXX=dncblocks
+        ****************************************
+
+        静态资源处理 post-deploy
+        ecosystem.json
+         {
+            "apps": [
+                "name": "movie"
+                "script": "app.js"
+                "env"： {
+                  "COMMON_VARIABLE": "true"
+                },
+                    "env_production": { 
+                      "NODE_ENV": "production"
+                    }
+            ],
+            "deploy": {
+              "production": {
+                "user":"robot",
+                "host":["119.29.104.251"],
+                "port":"22222",
+                "ref":"origin/master",
+                "repo":"git@gitee.com:JGSY/jgsy.movie.git",
+                "path":"/www/website/production",
+                "ssh_options":"StrictHostKeyChecking=no",
+                "post-deploy":"npm install --register=https://registry.npm.taobao.org && grunt build && pm2 startOrRestart ecosystem.json --env production", 
+                "env":{
+                  "NODE_ENV":"production"
+                }
+              }
+            }
+          }
+
+        客户端  
+                项目 添加忽略文件 .gitignore
+                lib-cov
+                *.seed
+                *.log
+                *.csv
+                *.dat
+                *.out
+                *.pid
+                *.gz
+
+                pids
+                logs
+                public/build
+                public/build/*
+                results
+
+                npm-debug.log
+                node_modules
+                *.graffle
+                bower_commponents
+                .DS.Store
+        服务器添加Nginx 配置
+        在原来基础上修改的。
+            如果不是需要添加  XXX-com-8082.conf 配置iptables sudo iptables-restore < /etc/iptables.up.rules
+
+        存在静态资源 处理
+         cd  /etc/nginx/conf.d
+             vi dncblocks-com-8081.conf
+        location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|js|pdf|txt) {
+          root /www/movie/production/current/public;
+        }
+        ****************************************
+                    upstream dncblocks {
+                                server 127.0.0.1:8081;
+                            }
+                            server {
+                                listen  80;
+                               #server_name 119.29.104.251;
+                                server_name movie.dncblocks.com;
+
+
+                                location / {
+                                    proxy_set_header X-Real-IP $remote_addr;
+                                    proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+                                    proxy_set_header Host $http_host;
+                                    proxy_set_header X-Nginx-Proxy true;
+
+                                    proxy_pass http://dncblocks;
+                                    proxy_redirect off;
+                                }
+                            location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|js|pdf|txt) {
+                                  root /www/website/production/current/public;
+                                }
+                    }
+        备注  upstream XXX     proxy_pass http://XXX;  必须XXX=dncblocks
+        ****************************************
+        sudo nginx -s reload 
+
+        客户端 提交代码
+         git add . && git commit -m "static file manage" && git push origin master
+        客户端 部署并启动服务
+         pm2 deploy ecosystem.json production 
+         备注：第一次要加 setup 初始化目录层次 pm2 deploy ecosystem.json production setup 
+
+
+        由于我这里没有使用bower统一管理路径 自定js css img 等静态资源放在了public下 
+            npm下载安装的jQuery bootstrap等在node_modules 下  最终nginx配置下
+
+            upstream website {
+                    server 127.0.0.1:8081;
+                }
+                server {
+                    listen  80;
+                  #server_name 119.29.104.251;
+                   server_name movie.dncblocks.com;
+
+                    location / {
+                        proxy_set_header X-Real-IP $remote_addr;
+                        proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+                        proxy_set_header Host $http_host;
+                        proxy_set_header X-Nginx-Proxy true;
+
+                        proxy_pass http://website;
+                        proxy_redirect off;
+                   }
+                   location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|js|pdf|txt) {
+                        root /www/website/production/current/public/;
+                   }
+                   location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|js|pdf|txt) {
+                       alias  /www/website/production/current/node_modules/;
+                   }
+
+
+    
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/" target="_blank">install-mongodb-on-ubuntu官网API</a></h5>
+<h5><a href="https://blog.csdn.net/moqsien/article/details/79818813" target="_blank">mongodb数据库参考配置</a></h5>
+<h5><a href="https://blog.csdn.net/xiaochendefendoushi/article/details/81228585" target="_blank">mongodb数据库参考配置</a></h5>
+<h5>Linux nano</h5>
+        <pre>
+nano是一个字符终端的文本编辑器，有点像DOS下的editor程序。它比vi/vim要简单得多，
+比较适合Linux初学者使用。某些Linux发行版的默认编辑器就是nano。
+
+nano命令可以打开指定文件进行编辑，默认情况下它会自动断行，即在一行中输入过长的内容时自动拆分成几行
+，但用这种方式来处理某些文件可能会带来问题，比如Linux系统的配置文件，
+自动断行就会使本来只能写在一行上的内容折断成多行了，有可能造成系统不灵了。
+因此，如果你想避免这种情况出现，就加上-w选项吧。
 
 语法 
 
@@ -773,12 +1167,15 @@ nano [选项] [[+行,列] 文件名]...
 粘贴：Ctrl+U 
 
 
-如果需要复制／剪贴多行或者一行中的一部分，先将光标移动到需要复制／剪贴的文本的开头，按Ctrl+6（或者Alt+A）做标记，然后移动光标到 待复制／剪贴的文本末尾。这时选定的文本会反白，用Alt+6来复制，Ctrl+K来剪贴。若在选择文本过程中要取消，只需要再按一次Ctrl+6。
+如果需要复制／剪贴多行或者一行中的一部分，先将光标移动到需要复制／剪贴的文本的开头，
+            按Ctrl+6（或者Alt+A）做标记，然后移动光标到 待复制／剪贴的文本末尾。这时选定的文本会反白
+            ，用Alt+6来复制，Ctrl+K来剪贴。若在选择文本过程中要取消，只需要再按一次Ctrl+6。
 
 搜索
 
 
-按Ctrl+W，然后输入你要搜索的关键字，回车确定。这将会定位到第一个匹配的文本，接着可以用Alt+W来定位到下一个匹配的文本。
+按Ctrl+W，然后输入你要搜索的关键字，回车确定。这将会定位到第一个匹配的文本，
+            着可以用Alt+W来定位到下一个匹配的文本。
 
 翻页 
 •Ctrl+Y到上一页
@@ -795,15 +1192,73 @@ nano [选项] [[+行,列] 文件名]...
 按Ctrl+X 
 
 
-如果你修改了文件，下面会询问你是否需要保存修改。输入Y确认保存，输入N不保存，按Ctrl+C取消返回。如果输入了Y，下一步会让你输入想要保存的文件名。如果不需要修改文件名直接回车就行；若想要保存成别的名字（也就是另存为）则输入新名称然后确 定。这个时候也可用Ctrl+C来取消返回。
+如果你修改了文件，下面会询问你是否需要保存修改。输入Y确认保存，输入N不保存，按Ctrl+C取消返回。
+            如果输入了Y，下一步会让你输入想要保存的文件名。如果不需要修改文件名直接回车就行；
+            想要保存成别的名字（也就是另存为）则输入新名称然后确 定。这个时候也可用Ctrl+C来取消返回。
 
 </pre>
-        <h5><a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/"  target="_blank">install-mongodb-on-ubuntu官网API</a></h5>
-        <h5><a href="https://blog.csdn.net/moqsien/article/details/79818813"  target="_blank">mongodb数据库参考配置</a></h5>
-        <h5><a href="https://blog.csdn.net/xiaochendefendoushi/article/details/81228585"  target="_blank">mongodb数据库参考配置</a></h5>
+
     </div> 
 </div>
+<div class="hide">
+    <pre>
+{
+  // Applications part
+  "apps" : [{
+    "name"      : "movie",
+    "script"    : "app.js",
+    "env": {
+      "COMMON_VARIABLE": "true"
+    },
+    // Environment variables injected when starting with --env production
+    // http://pm2.keymetrics.io/docs/usage/application-declaration/#switching-to-different-environments
+    "env_production" : {
+      "NODE_ENV": "production"
+    }
+  }],
+  // Deployment part
+  // Here you describe each environment
+  "deploy" : {
+    "production" : {
+      "user" : "robot",
+      // Multi host is possible, just by passing IPs/hostname as an array
+      "host" : ["119.29.104.251"],
+      // Branch
+      "ref"  : "origin/master",
+      // Git repository to clone
+      "repo" : "git@gitee.com:JGSY/jgsy.movie.git",
+      // Path of the application on target servers
+      "path" : "/www/website/production",
+      // Can be used to give options in the format used in the configura-
+      // tion file.  This is useful for specifying options for which there
+      // is no separate command-line flag, see 'man ssh' 
+      // can be either a single string or an array of strings
+      "ssh_options": "StrictHostKeyChecking=no",
+      // To prepare the host by installing required software (eg: git) 
+      // even before the setup process starts
+      // can be multiple commands separated by the character ";"
+      // or path to a script on your local machine
+      //"pre-setup" : "apt-get install git",
+      // Commands / path to a script on the host machine
+      // This will be executed on the host after cloning the repository
+      // eg: placing configurations in the shared dir etc
+      //"post-setup": "ls -la",
+      // Commands to execute locally (on the same machine you deploy things)
+      // Can be multiple commands separated by the character ";"
+      //"pre-deploy-local" : "echo 'This is a local executed command'"
+      // Commands to be executed on the server after the repo has been cloned
+      "post-deploy" : "npm install && pm2 startOrRestart ecosystem.json --env production"
+      // Environment variables that must be injected in all applications on this env
+      "env"  : {
+        "NODE_ENV": "production"
+      }
+    }
+    
+  }
+}
 
+</pre>
+</div>
 
 
 
