@@ -201,7 +201,7 @@ function broadcast(data) {
     ");
             EndContext();
             BeginContext(4613, 498, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "664171d51ecb4fe39e5a63b82be0745b", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9eddb726c0b549328a78331e79c1bda3", async() => {
                 BeginContext(4619, 485, true);
                 WriteLiteral(@"
     <meta charset=""UTF-8"">
@@ -234,7 +234,7 @@ function broadcast(data) {
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(5117, 3861, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "de9113eb396741fb9f4c4ef86e0b86bb", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fcd2e7adf5da4d3f9d81b9d1683660a9", async() => {
                 BeginContext(5123, 3848, true);
                 WriteLiteral(@"
     <div class=""row"">
@@ -364,7 +364,7 @@ function broadcast(data) {
             WriteLiteral("\r\n        </html>\r\n        </xmp>\r\n</pre>\r\n    <h5>client*.html 代码如下</h5>\r\n<pre>\r\n    <xmp>\r\n        <!DOCTYPE html>\r\n        <html lang=\"en\">\r\n\r\n        ");
             EndContext();
             BeginContext(9132, 422, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b7f3314d6a9b4e5d8d6b419d7d2393b5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "93bda97c62ed4422b6d6290a508dbc39", async() => {
                 BeginContext(9138, 409, true);
                 WriteLiteral(@"
             <meta charset=""UTF-8"">
@@ -391,7 +391,7 @@ function broadcast(data) {
             WriteLiteral("\r\n\r\n        ");
             EndContext();
             BeginContext(9566, 959, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "98b95e3e07444a138a6d9734becfb2c9", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c8c0f3b4b93f459a984f3f0907e396e5", async() => {
                 BeginContext(9599, 919, true);
                 WriteLiteral(@"
             <div class=""col-md-12"" style=""padding-bottom: 20px"">
@@ -432,7 +432,7 @@ function broadcast(data) {
             WriteLiteral("\r\n\r\n    </html>\r\n    </xmp>\r\n</pre>\r\n<pre>\r\n    <xmp>\r\n        <!DOCTYPE html>\r\n        <html lang=\"en\">\r\n\r\n        ");
             EndContext();
             BeginContext(10641, 422, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "283aa14d537c465b99fa68550a769c43", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5caec05a8dda47f5a6e0fdba4c8a4ae7", async() => {
                 BeginContext(10647, 409, true);
                 WriteLiteral(@"
             <meta charset=""UTF-8"">
@@ -459,7 +459,7 @@ function broadcast(data) {
             WriteLiteral("\r\n\r\n        ");
             EndContext();
             BeginContext(11075, 963, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7513535573fc4dedae4beba13fcacd94", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c57f7559efe144439a25d098e6e20242", async() => {
                 BeginContext(11108, 923, true);
                 WriteLiteral(@"
             <div class=""col-md-12"" style=""padding-bottom: 20px"">
@@ -502,7 +502,7 @@ function broadcast(data) {
             WriteLiteral("\r\n\r\n    </html>\r\n    </xmp>\r\n</pre>\r\n<pre>\r\n    <xmp>\r\n        <!DOCTYPE html>\r\n        <html lang=\"en\">\r\n\r\n        ");
             EndContext();
             BeginContext(12154, 422, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bf42436ca9a340df9c2a9cb478b29eca", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c6684ddde9974d27a90e18dad741f91d", async() => {
                 BeginContext(12160, 409, true);
                 WriteLiteral(@"
             <meta charset=""UTF-8"">
@@ -529,7 +529,7 @@ function broadcast(data) {
             WriteLiteral("\r\n\r\n        ");
             EndContext();
             BeginContext(12588, 970, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8b243315c61d458baa7cf0a6b9b95449", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4f80f675f9d44f3ba90705455ef6a63c", async() => {
                 BeginContext(12621, 930, true);
                 WriteLiteral(@"
             <div class=""col-md-12"" style=""padding-bottom: 20px"">
@@ -572,7 +572,7 @@ function broadcast(data) {
             WriteLiteral("\r\n\r\n    </html>\r\n    </xmp>\r\n</pre>\r\n<pre>\r\n    <xmp>\r\n        <!DOCTYPE html>\r\n        <html lang=\"en\">\r\n\r\n        ");
             EndContext();
             BeginContext(13674, 422, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6003a99b6385424b814ec8a0eb90d51e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6978d80db23c4446b57e719c3043f551", async() => {
                 BeginContext(13680, 409, true);
                 WriteLiteral(@"
             <meta charset=""UTF-8"">
@@ -599,7 +599,7 @@ function broadcast(data) {
             WriteLiteral("\r\n\r\n        ");
             EndContext();
             BeginContext(14108, 972, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2265aa26df264bdf8b97dad330d30c5a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "991d460324894fb0adb0e59d56df99fb", async() => {
                 BeginContext(14141, 932, true);
                 WriteLiteral(@"
             <div class=""col-md-12"" style=""padding-bottom: 20px"">
@@ -642,7 +642,7 @@ function broadcast(data) {
             WriteLiteral("\r\n\r\n    </html>\r\n    </xmp>\r\n</pre>\r\n<pre>\r\n    <xmp>\r\n        <!DOCTYPE html>\r\n        <html lang=\"en\">\r\n\r\n        ");
             EndContext();
             BeginContext(15196, 422, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6e7f60f5113b4171ae1800dab1d030c7", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c089c26ce83e44b782f81f6460b90a82", async() => {
                 BeginContext(15202, 409, true);
                 WriteLiteral(@"
             <meta charset=""UTF-8"">
@@ -669,7 +669,7 @@ function broadcast(data) {
             WriteLiteral("\r\n\r\n        ");
             EndContext();
             BeginContext(15630, 537, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c8f715e9877a4be585d13422488452c1", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d03d642704864943aa6c43a1a501c372", async() => {
                 BeginContext(15663, 497, true);
                 WriteLiteral(@"
             <div class=""col-md-12"">

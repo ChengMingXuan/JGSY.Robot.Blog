@@ -46,7 +46,7 @@ namespace AspNetCore
             WriteLiteral("<div class=\"col-lg-12 col-md-12 col-sm-12\">\r\n    <div class=\"col-lg-12 col-md-12 col-sm-12\">\r\n        <h4>nodejs Nginx express jade </h4>\r\n    </div>\r\n    <div class=\"col-lg-12 col-md-12 col-sm-12\">\r\n        <h5>部署结构</h5>\r\n        ");
             EndContext();
             BeginContext(231, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "92cbc213d84a4ebfb7ad75938c2f619c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "abf354267cf645a2812ed04767eaf6f8", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -64,7 +64,7 @@ namespace AspNetCore
             WriteLiteral("\r\n        <h5>ssh无密码登录配置</h5>\r\n    </div>\r\n    <div class=\"col-lg-12 col-md-12 col-sm-12 hide\">\r\n        ");
             EndContext();
             BeginContext(373, 38, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "0464309df138444da6b148ef6c61c46c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "587298fe1b914a64b53228f65f2a0c8e", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -82,7 +82,7 @@ namespace AspNetCore
             WriteLiteral("\r\n        ");
             EndContext();
             BeginContext(421, 38, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "47b8457f6e3b46f1877adfc09f206f9b", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "5a0fc7db499b47d7a84a64861a7cb3cc", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -100,7 +100,7 @@ namespace AspNetCore
             WriteLiteral("\r\n        ");
             EndContext();
             BeginContext(469, 38, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "82b807db31384285a5f5430327edf632", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "a680c9b1c01545c6ae84e73999e7f2d7", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
